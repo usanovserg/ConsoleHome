@@ -8,7 +8,11 @@ public class Position
 {
     private readonly ILogger<Position> _logger;
     private readonly Timer _timer;
+    private readonly List<Trade> _trades = new();
+    private const int RoundDecimals = 5;
 
+    public (decimal Price, decimal Quantity) AggregateShortPosition => AggregatePosition(TradeType.Short);
+    public (decimal Price, decimal Quantity) AggregateLongPosition => AggregatePosition(TradeType.Long);
 
     public Position(ILogger<Position> logger)
     {
@@ -41,6 +45,24 @@ public class Position
             TradeType = volume > 0 ? TradeType.Long : TradeType.Short
         };
 
+        _trades.Add(trade);
+
         _logger.LogInformation("Created trade: {@Trade}", trade);
+    }
+
+    private (decimal Price, decimal ContractQuantity) AggregatePosition(TradeType tradeType)
+    {
+        var trades = _trades.Where(t => t.TradeType == tradeType);
+
+        var count = 0m;
+        var sum = 0m;
+
+        foreach (var trade in trades)
+        {
+            count += trade.Volume;
+            sum += trade.Price * trade.Volume;
+        }
+
+        return (count == 0 ? 0 : Math.Round(sum / count, RoundDecimals), count);
     }
 }
