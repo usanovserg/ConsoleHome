@@ -1,68 +1,100 @@
-using System.Timers;
+using System.Diagnostics;
 using Microsoft.Extensions.Logging;
-using Timer = System.Timers.Timer;
 
 namespace ConsoleHome;
 
 public class Position
 {
+    private readonly TicketInfo _ticketInfo;
+    private readonly AccountInfo _accountInfo;
     private readonly ILogger<Position> _logger;
-    private readonly Timer _timer;
-    private readonly List<Trade> _trades = new();
-    private const int RoundDecimals = 5;
 
-    public (decimal Price, decimal Quantity) AggregateShortPosition => AggregatePosition(TradeType.Short);
-    public (decimal Price, decimal Quantity) AggregateLongPosition => AggregatePosition(TradeType.Long);
+    private readonly List<Trade> _trades;
 
-    public Position(ILogger<Position> logger)
+    public Position(TicketInfo ticketInfo,
+        AccountInfo accountInfo,
+        ILogger<Position> logger)
     {
+        _ticketInfo = ticketInfo;
+        _accountInfo = accountInfo;
         _logger = logger;
-
-        _timer = new Timer();
-
-        _timer.Interval = 5000;
-
-        _timer.Elapsed += NewTrade;
-
-        _timer.Start();
+        _trades = new List<Trade>();
+        State = PositionState.Created;
+        Direction = PositionDirection.None;
     }
 
-    private void NewTrade(object sender, ElapsedEventArgs e)
+    public PositionDirection Direction { get; private set; }
+    public PositionState State { get; private set; }
+    public decimal Fee => throw new NotImplementedException();
+    public decimal Margin => throw new NotImplementedException();
+    public decimal AveragePrice => throw new NotImplementedException();
+    public string TradeAccount => _accountInfo.Name;
+    public string TicketName => _ticketInfo.Name;
+    public decimal LotQuantity { get; private set; }
+
+    public void AddTrade(Trade trade)
     {
-        var volume = Random.Shared.Next(-10, 10);
-
-        if (volume == 0)
-            return;
-
-
-        var trade = new Trade
-        {
-            Volume = Math.Abs(volume),
-            Price = Random.Shared.Next(70000, 80000),
-            ClassCode = "SPBFUT",
-            SecCode = "SiZ3",
-            DateTime = DateTime.Now,
-            TradeType = volume > 0 ? TradeType.Long : TradeType.Short
-        };
-
         _trades.Add(trade);
 
-        _logger.LogInformation("Created trade: {@Trade}", trade);
-    }
-
-    private (decimal Price, decimal ContractQuantity) AggregatePosition(TradeType tradeType)
-    {
-        var trades = _trades.Where(t => t.TradeType == tradeType);
-
-        var count = 0m;
-        var sum = 0m;
-
-        foreach (var trade in trades)
+        if (State == PositionState.Created)
         {
-            count += trade.Volume;
-            sum += trade.Price * trade.Volume;
+            CreateFirstTrade(trade);
+
+            return;
         }
 
-        return (count == 0 ? 0 : Math.Round(sum / count, RoundDecimals), count);
+        Trace.Assert(Direction != PositionDirection.None, "Direction != PositionDirection.None");
+        Trace.Assert(State != PositionState.Close, "State != PositionState.Close");
+
+        switch (Direction)
+        {
+            case PositionDirection.Long:
+                ChangePosition(trade.TradeType == TradeType.Buy ? trade.Volume : -trade.Volume);
+                return;
+            case PositionDirection.Short:
+                ChangePosition(trade.TradeType == TradeType.Sell ? -trade.Volume : trade.Volume);
+                return;
+        }
     }
+
+    private void CreateFirstTrade(Trade trade)
+    {
+        State = PositionState.Open;
+        Direction = trade.TradeType == TradeType.Buy ? PositionDirection.Long : PositionDirection.Short;
+
+        LotQuantity = trade.TradeType == TradeType.Buy ? trade.Volume : -trade.Volume;
+    }
+
+    private void ChangePosition(decimal tradeVolume)
+    {
+        LotQuantity += tradeVolume;
+
+        switch (LotQuantity)
+        {
+            case 0:
+                State = PositionState.Close;
+                Direction = PositionDirection.None;
+                break;
+            case > 0:
+                Direction = PositionDirection.Long;
+                break;
+            case < 0:
+                Direction = PositionDirection.Short;
+                break;
+        }
+    }
+}
+
+public enum PositionState
+{
+    Created,
+    Open,
+    Close
+}
+
+public enum PositionDirection
+{
+    None,
+    Long,
+    Short
 }
