@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Xml.Linq;
 using Timer = System.Timers.Timer;
 
 
@@ -13,11 +14,14 @@ namespace ConsoleHome
     public class Position
     {
 
-        public Position() // создаем конструктор класса Position  
+        public Position(int interval,
+                            string name) // создаем конструктор класса Position  
         {
+            _name = name + " ===== ";
+
             Timer timer = new Timer(); // создаем объект Timer, из пространства имен (добавляем пространство имен using System.Timers;)
 
-            timer.Interval = 5000; // берем объект класса и задаем ему свойство Interval
+            timer.Interval = interval; // берем объект класса и задаем ему свойство Interval
 
             timer.Elapsed += NewTrade; // подписываемся на событие += NewTrade, который производит действия каждые 5 сек
 
@@ -27,6 +31,8 @@ namespace ConsoleHome
         Random random = new Random();
 
         int _totalVolium = 0; // локальная переменаая для расчета общей позиции
+
+        string _name = string.Empty;
 
 
         private void NewTrade(object sender, ElapsedEventArgs e)
@@ -69,7 +75,7 @@ namespace ConsoleHome
 
             trade.Price = random.Next(70000, 80000);
 
-            string str = DateTime.Now.ToString() + " / Лот =" + trade.Volium.ToString() + " / Цена открытие = " + trade.Price.ToString()
+            string str = _name + DateTime.Now.ToString() + " / Лот =" + trade.Volium.ToString() + " / Цена открытие = " + trade.Price.ToString()
                 + " / Направление = " + trade.TradeDirection.ToString() + " / Общая позиция = "
                 + trade.TradeTotalPosition.ToString() + " = " + trade.TotalVolium.ToString();
 

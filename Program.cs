@@ -16,7 +16,9 @@ namespace ConsoleHome
 
         static void Main(string[] args)
         {
-            Position position = new Position(); // создаем экземпляр класс Position
+            Position position = new Position(1000, "Position_1"); // создаем экземпляр класс Position
+
+            Position position2 = new Position(5000, "Position_2"); 
 
             //Trade trade = new Trade(); // создаем экземпляр класс Trade 
 
