@@ -23,6 +23,7 @@ public class Position
         Direction = PositionDirection.None;
     }
 
+    public event EventHandler<PositionChangedEventArgs>? OnPositionChanged;
     public PositionDirection Direction { get; private set; }
     public PositionState State { get; private set; }
     public decimal Fee => throw new NotImplementedException();
@@ -34,26 +35,33 @@ public class Position
 
     public void AddTrade(Trade trade)
     {
-        _trades.Add(trade);
-
-        if (State == PositionState.Created)
+        try
         {
-            CreateFirstTrade(trade);
+            _trades.Add(trade);
 
-            return;
+            if (State == PositionState.Created)
+            {
+                CreateFirstTrade(trade);
+
+                return;
+            }
+
+            Trace.Assert(Direction != PositionDirection.None, "Direction != PositionDirection.None");
+            Trace.Assert(State != PositionState.Close, "State != PositionState.Close");
+
+            switch (Direction)
+            {
+                case PositionDirection.Long:
+                    ChangePosition(trade.TradeType == TradeType.Buy ? trade.Volume : -trade.Volume);
+                    return;
+                case PositionDirection.Short:
+                    ChangePosition(trade.TradeType == TradeType.Sell ? -trade.Volume : trade.Volume);
+                    return;
+            }
         }
-
-        Trace.Assert(Direction != PositionDirection.None, "Direction != PositionDirection.None");
-        Trace.Assert(State != PositionState.Close, "State != PositionState.Close");
-
-        switch (Direction)
+        finally
         {
-            case PositionDirection.Long:
-                ChangePosition(trade.TradeType == TradeType.Buy ? trade.Volume : -trade.Volume);
-                return;
-            case PositionDirection.Short:
-                ChangePosition(trade.TradeType == TradeType.Sell ? -trade.Volume : trade.Volume);
-                return;
+            OnPositionChanged?.Invoke(this, new PositionChangedEventArgs(LotQuantity, Direction));
         }
     }
 
