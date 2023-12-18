@@ -12,6 +12,6 @@ namespace ConsoleHome.Enum
 
         None,
 
-        Buy
+        Buy 
     }
 }
