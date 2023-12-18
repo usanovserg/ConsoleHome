@@ -1,4 +1,5 @@
 ﻿using ConsoleHome;
+using ConsoleHome.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace MyConsole
         public decimal VarMarga = 0;                  // Вариационная маржа   
         public decimal NakDohod = 0;                  // Накопленный доход
 
-        public Trade.NaprSdelki LS = Trade.NaprSdelki.Long;
+        public Operation LS = Operation.Long;
 
 
         Random random = new Random();
@@ -58,7 +59,7 @@ namespace MyConsole
             {
                 OpenPoz = OpenPoz + num;
 
-                LS = Trade.NaprSdelki.Long;
+                LS = Operation.Long;
 
                 SumOpenPoz = SumOpenPoz + trade.SummaSd;
 
@@ -68,7 +69,7 @@ namespace MyConsole
             {
                 OpenPoz = OpenPoz + num;
 
-                LS = Trade.NaprSdelki.Short;
+                LS = Operation.Short;
 
                 SumOpenPoz = SumOpenPoz - trade.SummaSd;
 

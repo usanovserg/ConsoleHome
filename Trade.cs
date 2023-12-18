@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,8 @@ namespace MyConsole
 
         public string Portfolio = "";
 
+        public Operation Operation;
+
         #endregion
 
         #region Properties
@@ -50,20 +53,8 @@ namespace MyConsole
         }
         decimal _volume = 0;
 
-        #endregion
-
-
-        public enum NaprSdelki
-        {
-            Long,
-            Short
-        }
-
-
-
-
-
-
-
+        #endregion    
     }
+
+    
 }
