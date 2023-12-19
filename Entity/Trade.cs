@@ -10,9 +10,9 @@ namespace ConsoleHome.Entity
 {
     public class Trade
     {
-        public decimal Volume;
+        public decimal Volume = 0m;
          
-        public decimal Price;
+        public decimal Price = 0m;
 
         public Side Side = Side.None; // Enam
 

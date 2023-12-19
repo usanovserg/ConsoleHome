@@ -14,7 +14,7 @@ namespace ConsoleHome.Models
     {
         public Server()
         {
-            System.Timers.Timer timer = new Timer(); // сделка приходит по таймеру
+            Timer timer = new Timer(); // сделка приходит по таймеру
             timer.Interval = 5000;
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
@@ -28,8 +28,10 @@ namespace ConsoleHome.Models
         #endregion
 
         #region==========================Methods================================
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e) // событие генерируется, когда приходит новая сделка
+        private void Timer_Elapsed(object ? sender, ElapsedEventArgs e) // событие генерируется, когда приходит новая сделка
         {
+
+
             Trade trade = new Trade();  
             decimal _vol = _random.Next(-10, 10);
             if (_vol > 0)
@@ -58,7 +60,7 @@ namespace ConsoleHome.Models
         #region==========================Events================================
 
         public delegate void tradeDelegate(Trade trade); // передаем сделку во ВьюМодель
-        public event tradeDelegate EventTradeDelegate;
+        public event tradeDelegate? EventTradeDelegate;
 
         #endregion
 

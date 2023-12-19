@@ -29,7 +29,7 @@ namespace ConsoleHome.ViewModels
         #region==========================Fiels=============================
 
         Server _server;
-        public string str;
+        public string str = "";
         public decimal TotVol = 0m;
         public decimal LastTotVol = 0m;
         public Side Direction = Side.None;
@@ -111,7 +111,7 @@ namespace ConsoleHome.ViewModels
         #region==========================Events================================
 
         public delegate void MessageDelegate(string message); // передаем сообщение во Вьюшку
-        public event MessageDelegate EventMessageDelegate;
+        public event MessageDelegate? EventMessageDelegate;
 
         #endregion
 
