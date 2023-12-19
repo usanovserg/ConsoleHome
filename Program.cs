@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace ConsoleHome
         {
             Position position = new Position();
 
+            position.PositionChangeEvent += PositionChanged; //подписались на событие "изменение позиции"
+            
             Console.ReadLine();
 
             //=================работа с уровнями============================================================================================
@@ -50,7 +53,7 @@ namespace ConsoleHome
 
         static List<Level>? levels;
 
-        static decimal priceDown;
+        static decimal priceDown=0;
 
         static decimal priceUp;
 
@@ -103,7 +106,12 @@ namespace ConsoleHome
         #endregion
 
         #region ====================================================Methods========================================================
-        static void WriteLine(List<Level> i_levels)                                   //выводит кол-во элементов списка и все значения списка
+
+        /// <summary>
+        /// Выводит кол-во элементов списка и все значения списка
+        /// </summary>
+        /// <param name="i_levels"></param>
+        static void WriteLine(List<Level> i_levels)                                   
         {
             int il = i_levels.Count;
 
@@ -133,7 +141,13 @@ namespace ConsoleHome
 
 
         }
-        static decimal ReadLine(string message)                                         //запрашивает ввод значения типа decimal
+
+        /// <summary>
+        /// Запрашивает ввод значения типа decimal
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        static decimal ReadLine(string message)                                         
         {
             bool sucess = true;
 
@@ -172,18 +186,34 @@ namespace ConsoleHome
             return str;
         }
 
-        static void test()
+        /// <summary>
+        /// Обработчик события - изменения позиции
+        /// </summary>
+        /// <param name="position"></param>
+        static void PositionChanged(Position position)
         {
-            trade.Price = 1285;
+            Console.WriteLine($"Позиция изменена. Данные о всей позиции переданы в Main через Событие. Размер позиции {position.Volume} lot.");
 
-            trade.Volume = 10;
-            string str = priceUp.ToString();
+            Console.Write("Новая позиция: ");
 
-            Level level = new Level();
+            PrintProperties(position);
 
-            level.PriceLevel = 8300;
+            Console.WriteLine();
         }
 
+        /// <summary>
+        /// Вывод на экран всех свойств объекта
+        /// </summary>
+        /// <param name="obj"></param>
+        static public void PrintProperties(object obj)
+        {
+            foreach (PropertyInfo property in obj.GetType().GetProperties())
+            {
+                Console.Write($"{property.Name} = {property.GetValue(obj)}/ ");
+            }
+            Console.WriteLine();
+        }
+        
         #endregion
     }
 

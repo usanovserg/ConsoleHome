@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome.Enums;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,15 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ConsoleHome
-{
-    /// <summary>
-    /// Направление сделки (long, short)
-    /// </summary>
-    public enum Way : byte //сделал общим для всего пространства имен
-    {
-        Long, Short
-    }
-
+{   
     /// <summary>
     /// Сделка
     /// </summary>

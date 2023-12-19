@@ -1,5 +1,6 @@
 ﻿// Ignore Spelling: Сlass
 
+using ConsoleHome.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,6 +16,7 @@ namespace ConsoleHome
 {
     public class Position
     {
+        #region ========================================================Constructor=======================================================
         public Position() //конструктор, инициирующий появление событий - сделок в позиции
         {
             Timer timer = new Timer();
@@ -25,6 +27,13 @@ namespace ConsoleHome
 
             timer.Start();
         }
+        #endregion
+
+        #region ========================================================Delegate and Event=======================================================
+        public delegate void PositionChangeHandler(Position position);
+
+        public event PositionChangeHandler? PositionChangeEvent;
+        #endregion
 
         #region ========================================================Fields=======================================================
 
@@ -97,8 +106,10 @@ namespace ConsoleHome
         }
         Way _way = Way.Long;
 
+
+
         /// <summary>
-        /// Открыто контрактов в позиции
+        /// Позиция - количество открытых контрактов в позиции
         /// </summary>
         public decimal Volume
         {
@@ -109,9 +120,9 @@ namespace ConsoleHome
 
         }
         decimal _volume = 0;
-
+        
         /// <summary>
-        /// Текущая стоимость открытых контрактов в позиции
+        /// Стоимость - текущая стоимость открытых контрактов в позиции - цена позиции по действующей стоимости 
         /// </summary>
         public decimal Price
         {
@@ -178,21 +189,16 @@ namespace ConsoleHome
 
             Console.Write("Сделка: ");
 
-            PrintProperties(trade);
+            Program.PrintProperties(trade);
 
             CalculatingPosition(trade, wayVolume);
 
-            Console.Write("Позиция: ");
-
-            PrintProperties(this);
-
-            Console.WriteLine();
+            PositionChangeEvent?.Invoke(this); //через событие отдаем очередную позицию на обрадотку в основную программу
 
             if (volumeLong == volumeShort)
             {
                 Console.WriteLine("Все контракты в позиции закрыты!\n");
             }
-
         }
 
         /// <summary>
@@ -277,25 +283,15 @@ namespace ConsoleHome
             }
         }
 
-        //Пересчет текущей накопленной комиссии в позиции
+        /// <summary>
+        /// Пересчет текущей накопленной комиссии в позиции
+        /// </summary>
+        /// <param name="trade"></param>
         private void CalculatingCommission(Trade trade)
         {
             _commission += trade.Commission;
         }
 
-        /// <summary>
-        /// Вывод на экран всех свойств объекта
-        /// </summary>
-        /// <param name="obj"></param>
-        private void PrintProperties(object obj)
-        {
-            foreach (PropertyInfo property in obj.GetType().GetProperties())
-            {
-                Console.Write($"{property.Name} = {property.GetValue(obj)}/ ");
-            }
-            Console.WriteLine();
-        }
-
-        #endregion
+       #endregion
     }
 }
