@@ -8,8 +8,9 @@ using System.Threading.Tasks;
  
 using System.Threading;
 using System.Diagnostics;
+using ConsoleHome.Models;
 
-namespace ConsoleHome.Models
+namespace ConsoleHome.ViewModels
 {
     public class VM // имитируем Вью Модель (работу робота, который расчитывает нашу общую позицию и направление)
 

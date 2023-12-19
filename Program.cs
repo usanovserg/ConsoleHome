@@ -1,5 +1,5 @@
 ﻿using ConsoleHome.Models;
-
+using ConsoleHome.ViewModels;
 using System;
 
 namespace ConsoleHome
