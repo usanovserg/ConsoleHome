@@ -61,14 +61,20 @@ namespace ConsoleHome
 
                 Console.WriteLine(str);
 
-                Console.WriteLine($"SecCode: {trade.SecCode} / OpenPrice =  {OpenPrice} / Position = {Pos}\n");
+               // Console.WriteLine($"SecCode: {trade.SecCode} / OpenPrice =  {OpenPrice} / Position = {Pos}\n");
+
+                ChengePosEvent?.Invoke($"Позиция изменилась. Новая позиция: SecCode: {trade.SecCode} / OpenPrice =  {OpenPrice} / Position = {Pos}\n");
             }
         }
 
         #region Fields
 
         decimal Pos = 0m;
+
+        //decimal LastPos = 0m;
+
         decimal OpenPrice = 0m;
+
         #endregion
 
         #region Methods
@@ -107,5 +113,8 @@ namespace ConsoleHome
         }
 
         #endregion
+
+        public delegate void ChengePos(string message);
+        public event ChengePos ChengePosEvent;
     }
 }
