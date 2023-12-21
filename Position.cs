@@ -19,7 +19,6 @@ public class Position
 
     }
 
-
     Random random = new Random();
 
     private void NewTrade(object sender, ElapsedEventArgs e)
@@ -38,6 +37,8 @@ public class Position
             trade.Operation = Operation.Short;
         }
 
+        Trade.Quantity += num;
+
         trade.Volume = Math.Abs(num);
 
         trade.Price = random.Next(70000, 90000);
@@ -54,7 +55,11 @@ public class Position
 
         trade.DateTime = DateTime.Now;
 
-        string str = "Number: " + trade.NumTrade.ToString() + " ID_trans: " + trade.ID_Transaction.ToString() +  " Depo: " + trade.Depo.ToString() + " Ticker: " + trade.SecCode.ToString() + " Class: " + trade.ClassCode.ToString() + " Дата: " + trade.DateTime.Day.ToString() + "." + trade.DateTime.Month.ToString() + " Время: " + trade.DateTime.Hour.ToString() + ":" + trade.DateTime.Minute.ToString() + ":" + trade.DateTime.Second.ToString() + " Volume: " + trade.Volume.ToString() + " Price: " + trade.Price.ToString() + " Operation: " + trade.Operation.ToString() + " Comment: " + trade.Comment.ToString();
+        string str = "Number: " + trade.NumTrade.ToString() + " ID_trans: " + trade.ID_Transaction.ToString() +  " Depo: " + trade.Depo.ToString() + " Ticker: " 
+            + trade.SecCode.ToString() + " Class: " + trade.ClassCode.ToString() + " Дата: " + trade.DateTime.Day.ToString() + "." + trade.DateTime.Month.ToString() 
+            + " Время: " + trade.DateTime.Hour.ToString() + ":" + trade.DateTime.Minute.ToString() + ":" + trade.DateTime.Second.ToString() + " Volume: " 
+            + trade.Volume.ToString() + "Quantity: " + Trade.Quantity + " Price: " + trade.Price.ToString() + " Operation: " + trade.Operation.ToString() 
+            + " Comment: " + trade.Comment.ToString();
 
         Console.WriteLine(str);
 

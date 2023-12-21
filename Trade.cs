@@ -55,6 +55,11 @@ public class Trade
     /// Цена сделки
     /// </summary>
     public decimal Price;
+
+    /// <summary>
+    /// Размер позиции
+    /// </summary>
+    public static decimal Quantity = 0;
 }
 
 public enum Operation

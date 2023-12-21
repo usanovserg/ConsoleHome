@@ -24,7 +24,7 @@ namespace ConsoleHome
         /// </summary>
         public decimal Volume = 100;
 
-        public static List<Level> CalculateLevels(decimal priceUp, decimal count, decimal stepLevel)
+        public static List<Level> CalculateLevels(decimal priceUp, decimal stepLevel, decimal count)
         {
             List<Level> levels = new List<Level>();
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ConsoleHome
 {
@@ -13,91 +14,80 @@ namespace ConsoleHome
         static void Main(string[] args)
         {
 
-            Position position = new Position();
-
-            /*
+          //  Position position = new Position();
+            
+            number = WriteLine;
+            
             levels = new List<Level>();
 
-            WriteLine();
+            Load();
 
-            string str = ReadLine("Задайте верхнюю цену: ");
+            number();
+
+            string str = ReadLine("Введите кол-во уровней: ");
+
+            countLevels = Convert.ToInt32(str);
+
+            str = ReadLine("Задайте верхнюю цену: ");
 
             priceUp = decimal.Parse(str);
 
-            str = ReadLine("Задайте нижнюю цену: ");
-
-            priceDown = decimal.Parse(str);
-
             str = ReadLine("Введите шаг уровня: ");
 
-            stepLevel = decimal.Parse(str);
+            StepLevel = decimal.Parse(str);
 
-            ContLevels = FindLevels(priceUp, priceDown, stepLevel);
+            str = ReadLine("Введите лот на уровень: ");
 
-            WriteLine();
-            */
+            lotLevel = decimal.Parse(str);
+
+            number();
+
+            Save();
 
             Console.ReadLine();
 
         }
 
-       /* static List<Level> levels;
+        static List<Level> levels;
 
         static decimal priceUp;
 
-        static decimal priceDown;
+        static int countLevels;
 
-        static int contLevels;
+        static decimal lotLevel;
 
-        static decimal stepLevel;
+        static Trade trade = new Trade();
 
-        static int ContLevels
+        public static decimal StepLevel
         {
             get
             {
-                return contLevels;
+                return stepLevel;
             }
 
             set
             {
-                if (value > 0)
+                if (value <= 100)
 
                 {
-                    contLevels = value;
-                    levels = Level.CalculateLevels(priceUp, priceDown, stepLevel);
+                    stepLevel = value;
+                    levels = Level.CalculateLevels(priceUp, stepLevel, countLevels);
                 }
 
             }
         }
 
-     
+        static decimal stepLevel;
 
-        //=========================================== Fields ======================================================
-        #region fields
-
-    
-
-        static int FindLevels(decimal up, decimal down, decimal count)
-        {
-
-            contLevels = Convert.ToInt32((up - down) / count + 1);
-
-            return contLevels;
-
-        }
-
-        #endregion
 
         static void WriteLine()
         {
-            Console.WriteLine("Кол-во элементов в списке: " + contLevels.ToString());
+            Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());
 
-            for (int i = 0; i < contLevels; i++)
+            for (int i = 0; i < levels.Count; i++)
             {
-                if (levels is not null)
-                {
+
                     Console.WriteLine(levels[i].PriceLevel);
-                }
                 
             }
 
@@ -111,9 +101,51 @@ namespace ConsoleHome
 
         }
 
-        static Trade trade = new Trade();
+       static void Save()
+        {
+            using (StreamWriter writer = new StreamWriter("params.txt", false))
+            {
+                writer.WriteLine(priceUp.ToString());
+                writer.WriteLine(countLevels.ToString());
+                writer.WriteLine(stepLevel.ToString());
+            }
+        }
 
-        */
+        static void Load()
+        {
+            using(StreamReader reader = new StreamReader("params.txt"))
+            {
+                int index = 0;
+                while (true)
+                {
+                    string line = reader.ReadLine();
+                    index++;
+                    switch(index)
+                    {
+                        case 1:
+                            priceUp = decimal.Parse(line); 
+                            break;
+                        case 2:
+                            countLevels = int.Parse(line);
+                            break;
+                        case 3:
+                            StepLevel = decimal.Parse(line);
+                            break;
+                    }
 
+                    if (line == null)
+                    {
+                        break;
+                    }
+                }
+            }
+            
+        }
+        
+        delegate void Number();
+
+        static Number number;
+
+        
     }
 }
