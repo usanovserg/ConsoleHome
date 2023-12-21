@@ -63,7 +63,7 @@ namespace ConsoleHome
 
                // Console.WriteLine($"SecCode: {trade.SecCode} / OpenPrice =  {OpenPrice} / Position = {Pos}\n");
 
-                ChengePosEvent?.Invoke($"Позиция изменилась. Новая позиция: SecCode: {trade.SecCode} / OpenPrice =  {OpenPrice} / Position = {Pos}\n");
+                ChengePosEvent?.Invoke($"Новая позиция: SecCode: {trade.SecCode} / OpenPrice =  {OpenPrice} / Position = {Pos}\n");
             }
         }
 

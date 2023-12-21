@@ -25,7 +25,7 @@ namespace ConsoleHome
 
         //============================================= Methods =============================================
         #region Methods
-        static void DisplayMessage(string message) => Console.WriteLine(message);
+        static void DisplayMessage(string message) => Console.WriteLine("Позиция изменилась. " + message);
         #endregion
     }
 }
