@@ -11,7 +11,7 @@ public class Position
     {
         Timer timer = new Timer();
 
-        timer.Interval = 5000;
+        timer.Interval = 3000;
 
         timer.Elapsed += NewTrade;
         
@@ -19,9 +19,14 @@ public class Position
 
     }
 
+    public delegate void Message(string message);
+
+    public event Message Change_pos;
+
     Random random = new Random();
 
-    private void NewTrade(object sender, ElapsedEventArgs e)
+
+    public void NewTrade(object sender, ElapsedEventArgs e)
     {
 
         Trade trade = new Trade();
@@ -38,6 +43,8 @@ public class Position
         }
 
         Trade.Quantity += num;
+
+        Change_pos("Изменилась позиция: " + Trade.Quantity);
 
         trade.Volume = Math.Abs(num);
 
@@ -58,7 +65,7 @@ public class Position
         string str = "Number: " + trade.NumTrade.ToString() + " ID_trans: " + trade.ID_Transaction.ToString() +  " Depo: " + trade.Depo.ToString() + " Ticker: " 
             + trade.SecCode.ToString() + " Class: " + trade.ClassCode.ToString() + " Дата: " + trade.DateTime.Day.ToString() + "." + trade.DateTime.Month.ToString() 
             + " Время: " + trade.DateTime.Hour.ToString() + ":" + trade.DateTime.Minute.ToString() + ":" + trade.DateTime.Second.ToString() + " Volume: " 
-            + trade.Volume.ToString() + "Quantity: " + Trade.Quantity + " Price: " + trade.Price.ToString() + " Operation: " + trade.Operation.ToString() 
+            + trade.Volume.ToString() + " Quantity: " + Trade.Quantity + " Price: " + trade.Price.ToString() + " Operation: " + trade.Operation.ToString() 
             + " Comment: " + trade.Comment.ToString();
 
         Console.WriteLine(str);

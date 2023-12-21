@@ -14,35 +14,39 @@ namespace ConsoleHome
         static void Main(string[] args)
         {
 
-          //  Position position = new Position();
-            
-            number = WriteLine;
-            
+            Position position = new Position();
+
+            void DisplayMessage(string message) => Console.WriteLine(message);
+
+            position.Change_pos += DisplayMessage;
+
+            //number = WriteLine;
+
             levels = new List<Level>();
 
             Load();
 
-            number();
+           // number();
 
-            string str = ReadLine("Введите кол-во уровней: ");
+           // string str = ReadLine("Введите кол-во уровней: ");
 
-            countLevels = Convert.ToInt32(str);
+           // countLevels = Convert.ToInt32(str);
 
-            str = ReadLine("Задайте верхнюю цену: ");
+           // str = ReadLine("Задайте верхнюю цену: ");
 
-            priceUp = decimal.Parse(str);
+           // priceUp = decimal.Parse(str);
 
-            str = ReadLine("Введите шаг уровня: ");
+           // str = ReadLine("Введите шаг уровня: ");
 
-            StepLevel = decimal.Parse(str);
+           // StepLevel = decimal.Parse(str);
 
-            str = ReadLine("Введите лот на уровень: ");
+           // str = ReadLine("Введите лот на уровень: ");
 
-            lotLevel = decimal.Parse(str);
+           // lotLevel = decimal.Parse(str);
 
-            number();
+           // number();
 
-            Save();
+           // Save();
 
             Console.ReadLine();
 
