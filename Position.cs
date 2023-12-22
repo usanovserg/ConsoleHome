@@ -26,12 +26,10 @@ namespace ConsoleHome
             timer.Elapsed += NewTrade;          // вызов действия
             
             timer.Start();                      // запуск таймера в параллельном потоке
-
-            ChangePosition += PrintChangePosition;  // подписка на событие
         }
         #endregion
 
-        //===================== ПОЛЯ И СВОЙСТВА =====================
+        //===================== ПОЛЯ =====================
         #region
         /// <summary>
         /// Код клиента
@@ -87,7 +85,10 @@ namespace ConsoleHome
         /// Стоимость позиции
         /// </summary>
         private decimal value = 0;   // стоимость позиции
+        #endregion
 
+        //===================== СВОЙСТВА =====================
+        #region
         /// <summary>
         /// Цена стоп-лосса
         /// </summary>
@@ -331,17 +332,6 @@ namespace ConsoleHome
 
             Console.WriteLine("\tСтоп-лосс: " + priceStop + " ; Тейк-профит: " + priceProfit);
         }
-
-        /// <summary>
-        /// Вывод изменения позиции (по событию)
-        /// </summary>
-        /// <param name="oldQty"> предыдущая позиция </param>
-        /// <param name="newQty"> текущая позиция </param>
-        public void PrintChangePosition(decimal oldQty, decimal newQty)
-        {
-            Console.WriteLine($"Позиция изменилась: была {oldQty}, стала: {newQty}");
-        }
-
         #endregion
 
         //===================== ДЕЛЕГАТЫ И СОБЫТИЯ =====================
