@@ -27,7 +27,7 @@ namespace ConsoleHome
             
             timer.Start();                      // запуск таймера в параллельном потоке
 
-            ChangePosition += PrintChangePosition;  // подписка на событие
+            ChangePosition += PrintChangePosition;  // добавить в событие метод
         }
         #endregion
 
@@ -157,71 +157,71 @@ namespace ConsoleHome
             trade.price = random.Next(1, 9);
 
             if (num > 0)
-            {
-                // сделка в лонг
-                trade.direction = Trade.Direction.Buy;
-
-                if (direction == Direction.None || direction == Direction.Long) // если лонговая позиция или ее нет
                 {
-                    direction = Direction.Long;
+                    // сделка в лонг
+                    trade.direction = Trade.Direction.Buy;
 
-                    PlusPosition(trade.qty, trade.price);
-                }
-                else
-                {
-                    if (qty < trade.qty)   // если шортовая позиция <= кол-ва в сделке на покупку
+                    if (direction == Direction.None || direction == Direction.Long) // если лонговая позиция или ее нет
                     {
                         direction = Direction.Long;
 
-                        MinusPosition(trade.qty, trade.price);
+                        PlusPosition(trade.qty, trade.price);
                     }
-                    else if (qty == trade.qty)   // если шортовая позиция = кол-ва в сделке на покупку
+                    else
                     {
-                        direction = Direction.None;
+                        if (qty < trade.qty)   // если шортовая позиция <= кол-ва в сделке на покупку
+                        {
+                            direction = Direction.Long;
 
-                        ZeroPosition();
-                    }
-                    else                    // иначе шортовая позиция > кол-ва в сделке на покупку
-                    {
-                        direction = Direction.Short;
+                            MinusPosition(trade.qty, trade.price);
+                        }
+                        else if (qty == trade.qty)   // если шортовая позиция = кол-ва в сделке на покупку
+                        {
+                            direction = Direction.None;
 
-                        MinusPosition(trade.qty, trade.price);
+                            ZeroPosition();
+                        }
+                        else                    // иначе шортовая позиция > кол-ва в сделке на покупку
+                        {
+                            direction = Direction.Short;
+
+                            MinusPosition(trade.qty, trade.price);
+                        }
                     }
                 }
-            }
             else if (num < 0)
-            {
-                // сделка в шорт
-                trade.direction = Trade.Direction.Sell;
-
-                if (direction == Direction.None || direction == Direction.Short) // если шортовая позиция или ее нет
                 {
-                    direction = Direction.Short;
+                    // сделка в шорт
+                    trade.direction = Trade.Direction.Sell;
 
-                    PlusPosition(trade.qty, trade.price);
-                }
-                else
-                {
-                    if (qty <= trade.qty)   // если лонговая позиция <= кол-ва в сделке на продажу
+                    if (direction == Direction.None || direction == Direction.Short) // если шортовая позиция или ее нет
                     {
                         direction = Direction.Short;
 
                         PlusPosition(trade.qty, trade.price);
                     }
-                    else if (qty == trade.qty)   // если лонговая позиция = кол-ва в сделке на продажу
+                    else
                     {
-                        direction = Direction.None;
+                        if (qty <= trade.qty)   // если лонговая позиция <= кол-ва в сделке на продажу
+                        {
+                            direction = Direction.Short;
 
-                        ZeroPosition();
-                    }
-                    else                    // иначе лонговая позиция > кол-ва в сделке на продажу
-                    {
-                        direction = Direction.Long;
+                            PlusPosition(trade.qty, trade.price);
+                        }
+                        else if (qty == trade.qty)   // если лонговая позиция = кол-ва в сделке на продажу
+                        {
+                            direction = Direction.None;
 
-                        MinusPosition(trade.qty, trade.price);
+                            ZeroPosition();
+                        }
+                        else                    // иначе лонговая позиция > кол-ва в сделке на продажу
+                        {
+                            direction = Direction.Long;
+
+                            MinusPosition(trade.qty, trade.price);
+                        }
                     }
                 }
-            }
 
             if (num != 0)       // кол-во в сделке не может быть равно 0
             {
@@ -352,6 +352,4 @@ namespace ConsoleHome
         public event Handler ChangePosition;
         #endregion
     }
-
-
 }
