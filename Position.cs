@@ -19,7 +19,7 @@ namespace ConsoleHome
             timer.Start();
         }
 
-        public delegate void Handler(decimal vol);
+        public delegate void Handler(decimal volu);
         public event Handler Stuk = ShowMessage;
 
 
@@ -60,9 +60,8 @@ namespace ConsoleHome
 
             if (num != 0)
             {
-                Stuk(TotalVolume);
+                Stuk(trade.Volume);
             }
-
 
 
 
@@ -77,7 +76,7 @@ namespace ConsoleHome
 
         public static void ShowMessage(decimal volu)
         {
-            Console.WriteLine($"ПОЗИЦИЯ ИЗМЕНИЛАСЬ на {Math.Abs(volu)} лот");
+            Console.WriteLine($"ПОЗИЦИЯ ИЗМЕНИЛАСЬ на {volu} лот");
         }
 
     }
