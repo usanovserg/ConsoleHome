@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -17,6 +18,10 @@ namespace ConsoleHome
             timer.Elapsed += NewTrade;
             timer.Start();
         }
+
+        public delegate void Handler();
+        public event Handler Stuk = ShowMessage;
+
 
         Random random = new Random();
         /// <summary>
@@ -36,6 +41,11 @@ namespace ConsoleHome
             int num = random.Next(-10, 10);
             trade.Volume = Math.Abs(num);
 
+            if (num != 0)
+            {
+                Stuk();
+            }
+
             if (num > 0)
             {
                 //сделка в лонг
@@ -52,6 +62,7 @@ namespace ConsoleHome
             }
 
             
+            
 
             trade.Price = random.Next(70000, 80000);
 
@@ -61,5 +72,11 @@ namespace ConsoleHome
             Console.WriteLine(str);
 
         }
+
+        public static void ShowMessage()
+        {
+            Console.WriteLine("ПОЗИЦИЯ ИЗМЕНИЛАСЬ!");
+        }
+
     }
 }
