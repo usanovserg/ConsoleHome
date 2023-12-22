@@ -27,7 +27,7 @@ namespace ConsoleHome
             
             timer.Start();                      // запуск таймера в параллельном потоке
 
-            ChangePosition += PrintChangePosition;  // добавить в событие метод
+            ChangePosition += PrintChangePosition;  // подписка на событие
         }
         #endregion
 
@@ -229,8 +229,10 @@ namespace ConsoleHome
 
                 Console.WriteLine(str);
 
-                ChangePosition(prevQty, qty);   // вызов события
-
+                if (ChangePosition != null)         // если подписка есть,
+                {
+                    ChangePosition(prevQty, qty);   // то вызов события
+                }
                 PrintPosition();
 
                 Console.WriteLine("****************");
