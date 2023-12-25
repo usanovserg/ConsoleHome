@@ -4,6 +4,7 @@ using ConsoleHome.Enums;
 using System;
 using System.Globalization;
 using System.Net.Http.Headers;
+using System.Security.Cryptography.X509Certificates;
 
 //Дз5-6
 /*
@@ -20,6 +21,8 @@ namespace ConsoleHome
 {
     public class Program
     {
+        static List<cLevel> levels;
+        static cTrade myTrade;
         static void Main(string[] args)
         {
             //Создание счёта
@@ -66,7 +69,7 @@ namespace ConsoleHome
             decimal downPrice = decimal.Parse(Console.ReadLine().Trim());
             Console.Write("Задайте шаг цены: ");
             decimal stepPrice = decimal.Parse(Console.ReadLine().Trim());
-            List<cLevel> levels = cLevel.CalculateLevels(upPrice, downPrice,stepPrice);
+            levels = cLevel.CalculateLevels(upPrice, downPrice,stepPrice);
             Console.WriteLine($"Создано {levels.Count()} уровней в диапазоне {downPrice} до {upPrice} с шагом {stepPrice}:");
             for (int i = 0; i < levels.Count(); i++)
             {
@@ -105,6 +108,9 @@ namespace ConsoleHome
             }
 
 
+
+          
+
             
 
 
@@ -115,7 +121,6 @@ namespace ConsoleHome
             cPosition position = new cPosition();
                         */
             Console.ReadLine();
-
         }
         
         public static void DisplayMessage(string message)
@@ -126,7 +131,28 @@ namespace ConsoleHome
         public static void GetMyNewTrade(cTrade trade)
         {
             Console.WriteLine($"Cделка по {trade.Asset.ToString()} лот {trade.Lot.ToString()} @ {trade.price.ToString()}");
-            cTrade myTrade = trade;
+
+            myTrade = trade;
+
+            //Отслеживаем позицию
+            if (myTrade != null && myTrade.price <= levels[0].priceLevel)
+            {
+                cPosition position = new cPosition();
+                position.UpdateNotify += DisplayMessage;
+                decimal tradedVolume = 0;
+                if (myTrade.lot >= levels[0].lotLevel)
+                {
+                    tradedVolume = levels[0].lotLevel;
+                    if (levels.Count() != 0)
+                        levels.RemoveAt(0);
+                }
+                else
+                {
+                    tradedVolume = levels[0].lotLevel - myTrade.lot;
+                    levels[0].lotLevel -= tradedVolume;
+                }
+                position.AddPosition(myTrade.Asset, myTrade.price, tradedVolume);
+            }
 
         }
 

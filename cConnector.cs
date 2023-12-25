@@ -43,7 +43,7 @@ namespace ConsoleHome
         List<cTrade> trades = new List<cTrade>(); //список сделок, полученных от cExchange
         public void HandleNewTrade(cTrade trade) 
         {
-            //Console.WriteLine($"Прошла сделка по {trade.Asset.ToString()} @ {trade.price.ToString()}" );
+            //Console.WriteLine($"Прошла сделка по {trade.Asset.ToString()} на {trade.Lot.ToString()} @ {trade.price.ToString()}" );
 
             if (trade.Asset == conectorAsset)
             {
