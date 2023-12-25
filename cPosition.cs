@@ -1,54 +1,47 @@
-﻿using System;
+﻿using ConsoleHome.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Timers;
 using Timer = System.Timers.Timer;
 
 namespace ConsoleHome
 {
     public class cPosition
     {
-        public cPosition() 
+
+        //объявление делегатов
+        public delegate void UpdatePosition(string message);
+        public UpdatePosition? UpdateNotify { get; set; }
+        public decimal Lot
         {
-            Timer timer = new Timer();
-            timer.Interval = 5000;
-            timer.Elapsed += New_Trade;
-            timer.Start();
-        }
+            get { return _lot; }
+            set { _lot = value; }
+        }        decimal _lot = 0;
 
-        #region Fields
-        string account = "123";
-
-        
-
-        #endregion
-
-        Random random = new Random();
-        private void New_Trade(object? sender, ElapsedEventArgs e)
+        public decimal PricePosition 
         {
-            cTrade trade = new cTrade() {dateTime = DateTime.Now};
-            int num = random.Next(-10,10);
-            if (num > 0) {
-                trade.direction = cTrade.Direction.Long;
-            } else if (num < 0)
-            {
-                trade.direction = cTrade.Direction.Short;
-            }
-            else
-            {
-                trade.direction = cTrade.Direction.none;
-            }
+            get { return _pricePosition; }
+            set { _pricePosition = value; }
+        }        decimal _pricePosition;
 
-            trade.price = random.Next(100, 200);
-            trade.Lot = Math.Abs(num);
+        public Assets AssetName
+        {
+            get { return _assetName; }
+            set { _assetName = value; }
+        } Assets _assetName;
+
+        decimal tp, sl = 0;
 
 
-            string str = trade.toString(trade.direction) + " лот: " + trade.Lot.ToString() + " / цена: " + trade.price.ToString();
-
-            Console.WriteLine(str);
-
-
+        public void AddPosition(Assets name, decimal price, decimal lot)
+        { 
+            AssetName = name;
+            PricePosition = price;
+            Lot = lot;
+            tp = PricePosition + PricePosition / 100 * 3; //+3%
+            sl = PricePosition - PricePosition / 100 * 1; //-1%
+            UpdateNotify($"Новыя позиция в {AssetName} на {Lot} @ {PricePosition} тейк: {tp} стоп {sl}");
         }
     }
 }

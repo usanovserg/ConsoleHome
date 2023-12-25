@@ -10,7 +10,7 @@ namespace ConsoleHome
     { 
         #region Fields
         public decimal priceLevel = 0;
-        public decimal lotLevel = 0;
+        public decimal lotLevel = 30;
         public decimal volumeLevel = 0;
         #endregion
 

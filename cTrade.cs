@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,26 +12,24 @@ namespace ConsoleHome
         // ====== FIELDS ===== \\
         #region 
         public DateTime dateTime = DateTime.MinValue;
-        public decimal price = 0;
+        
         public decimal lot = 0;
-        public string assetName = "";
+        public decimal price = 0;
+
+
         public string codeClass = "";
         public string portfolio = "";
-        public Direction direction = Direction.none;
-
-        public enum Direction
-        { 
-            Long,
-            Short,
-            none
-        }
-
 
         #endregion
         //\\==================//\\
 
         #region Properties
-        
+        public Assets Asset 
+        {
+            get { return _assetName; }
+            set { _assetName = value; }
+        } public Assets _assetName;
+
         public decimal Lot
         {
             get { return _lot; }
@@ -39,6 +38,14 @@ namespace ConsoleHome
 
         #endregion
 
+        #region Methods
+
+        //Constructor
+        public cTrade(DateTime now, Assets curAsset) 
+        {
+            dateTime = now;
+            Asset = curAsset;
+        }
 
 
         public string toString(Direction dir) 
@@ -52,5 +59,6 @@ namespace ConsoleHome
 
             }
         }
+        #endregion
     }
 }
