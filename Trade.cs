@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,29 +9,21 @@ namespace ConsoleHome
 {
     public class Trade
     {
-        public Trade() 
-        {
-        
-        }
-
-        public enum TradeDirection : byte
-        { 
-            Buy = 1,
-            Sell
-        }
-
-        public decimal Volume = 0;
+        #region =======================================Fields=====================================================
+        public int Volume = 0;
 
         public decimal Price = 0;
 
-        public static decimal Balance = 0;
+        public DateTime DateTime = DateTime.MinValue;
 
-        // string SecCode = "";
-
-        public DateTime DateTime = DateTime.Now;
+        public TradeDirection tradeDirection;
 
         // string ClientCode = "";
 
         // string Portfolio = "";
+
+        // string SecCode = "";
+        #endregion
+
     }
 }

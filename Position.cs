@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -21,6 +22,14 @@ namespace ConsoleHome
             timer.Start();
         }
 
+        public string Account = "   ";
+        public string SecCode = "   ";
+        public decimal Price = 0;
+        int CurrentPosition = 0;
+
+        public TradeDirection deal = TradeDirection.Buy;
+
+
         Random random = new Random();
 
         private void NewTrade(object? sender, System.Timers.ElapsedEventArgs e)
@@ -33,16 +42,20 @@ namespace ConsoleHome
             
             trade.Price = random.Next(70000, 80000);
 
+            trade.DateTime = DateTime.Now;
+
             if (num > 0)
             {
-                Trade.Balance += trade.Volume;
+                CurrentPosition += trade.Volume;
+                deal = TradeDirection.Buy;
             }
             else if (num < 0)
             { 
-                Trade.Balance -= trade.Volume;
+                CurrentPosition -= trade.Volume;
+                deal = TradeDirection.Sell;
             }
 
-            string str = "Volume = " + trade.Volume.ToString() + " | Price = " + trade.Price.ToString() + " | Position = " + Trade.Balance.ToString() + " | Date -  " + trade.DateTime;
+            string str = "Volume = " + trade.Volume.ToString() + " | Price = " + trade.Price.ToString() + " | Position = " + CurrentPosition.ToString() + " | Date -  " + trade.DateTime +" | " + deal;
             
             Console.WriteLine(str);    
 
