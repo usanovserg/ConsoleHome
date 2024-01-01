@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lesson_5
+namespace Lesson_6
 {
 
     
-    internal class EnumSecCode
-    {
+    
         public enum SecCode
         { 
         Sber,
@@ -20,5 +19,5 @@ namespace Lesson_5
         }
        
 
-    }
+    
 }

@@ -5,10 +5,10 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lesson_5
+namespace Lesson_6
 {
-	public class EnumTypePosition
-	{
+	
+	
 		public  enum MyEnumOfTrades : byte
 		{ 
 			Long = 1,
@@ -17,7 +17,7 @@ namespace Lesson_5
 		}
 		
 		
-	}
+	
 		
 	
 }
