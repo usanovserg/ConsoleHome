@@ -16,12 +16,14 @@ namespace Lesson_5
 
     class Program
     {
-
+      
         static void Main(string[] args)
         {
             StarTrading star = new StarTrading();
 
             Console.ReadLine();
+          
+           
 
         }
 
