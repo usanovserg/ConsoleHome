@@ -9,21 +9,44 @@ namespace ConsoleHome
 {
     public class Trade
     {
-        #region =======================================Fields=====================================================
-        public int Volume = 0;
+        #region Fields
+
+        ///<summary>
+        /// Цена инстурмента
+        ///</summary>
 
         public decimal Price = 0;
 
+        public string SecCode = " ";
+
+        public string ClassCode = " ";
+
         public DateTime DateTime = DateTime.MinValue;
 
-        public TradeDirection tradeDirection;
+        public string Portfolio = " ";
 
-        // string ClientCode = "";
-
-        // string Portfolio = "";
-
-        // string SecCode = "";
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Объем сделки
+        /// </summary>
+
+        public decimal Volume
+        {
+            get
+            {
+                return _volume;
+            }
+            set
+            {
+                _volume = value;
+            }
+        }
+
+        decimal _volume = 0;
+
+        #endregion
     }
 }

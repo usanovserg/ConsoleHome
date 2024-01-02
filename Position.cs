@@ -9,8 +9,12 @@ using Timer = System.Timers.Timer;
 
 namespace ConsoleHome
 {
+    public delegate void PositionIsChanged(decimal volume);
+
     public class Position
     {
+        public event PositionIsChanged? positionIschanged;
+
         public Position()
         {
             Timer timer = new Timer();
@@ -25,7 +29,7 @@ namespace ConsoleHome
         public string Account = "   ";
         public string SecCode = "   ";
         public decimal Price = 0;
-        int CurrentPosition = 0;
+        decimal CurrentPosition = 0;
 
         public TradeDirection deal = TradeDirection.Buy;
 
@@ -48,11 +52,13 @@ namespace ConsoleHome
             {
                 CurrentPosition += trade.Volume;
                 deal = TradeDirection.Buy;
+                positionIschanged(trade.Volume);
             }
             else if (num < 0)
             { 
                 CurrentPosition -= trade.Volume;
                 deal = TradeDirection.Sell;
+                positionIschanged(trade.Volume * -1);
             }
 
             string str = "Volume = " + trade.Volume.ToString() + " | Price = " + trade.Price.ToString() + " | Position = " + CurrentPosition.ToString() + " | Date -  " + trade.DateTime +" | " + deal;
