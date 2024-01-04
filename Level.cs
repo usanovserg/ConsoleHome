@@ -28,7 +28,7 @@ namespace MyConsole
         /// <summary>
         /// Открытый объем на уровне
         /// </summary>
-        public decimal Volume = 0;
+        public decimal Volume = 100;
 
 
 
@@ -47,9 +47,7 @@ namespace MyConsole
 
             for (int i = 0; i < count; i++)
             {
-                Level level = new Level();
-
-                level.PriceLevel = priceLevel;
+                Level level = new Level() { PriceLevel = priceLevel};
 
                 levels.Add(level);
 

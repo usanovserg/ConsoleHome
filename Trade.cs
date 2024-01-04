@@ -15,8 +15,6 @@ namespace MyConsole
         /// </summary>
         public decimal Price = 0;   // Цена сделки
 
-        public decimal SummaSd = 0; // Сумма сделки
-
         public string SecCode = "";
 
         public string ClassCode = "";
@@ -24,6 +22,8 @@ namespace MyConsole
         public DateTime DateTime = DateTime.MinValue;
 
         public string Portfolio = "";
+
+        public decimal SummaSd= 0;
 
         #endregion
 
