@@ -14,58 +14,28 @@ using System.Timers;
 
 namespace Lesson_6
 {
-    
+
     class Program
     {
-        /*
-         * В программе созданн класс StartTrading иметирует некое подобие сделок на бирже и
-         * отправляет данные через события на внешние обрабочтики для визуализации и хранения, 
-         * для этого создана два события.
-         * 
-         */
 
         static void Main(string[] args)
         {
-            StarTrading _start = new StarTrading();
-
-            List<string> _positionData = new List<string>();
-           
-            _start.NewPositionEvent += Console.WriteLine;
-           
-            _start.NewPositionData += MyVoid;
-
-            _start.NewPositionData += MyVoid2;
-
-            // Метод для обработки наиболее важных данных позиции и записи в список
-
-            void MyVoid(string count1)
-            {
-
-            _positionData.Add(Convert.ToString(count1));
-
-            }
-
-            // Запись в файл некторых полученных данных
-                        
-            void MyVoid2(string count1)
-            {
-                using (StreamWriter myStream = new StreamWriter("Position Data.txt", true)) 
-                { 
-                    myStream.WriteLine(count1); 
-                }
-
-
-            }
-
+            StartTrading _newTrade = new StartTrading();
+            
 
             Console.ReadLine();
-                     
 
         }
-
       
-
-
+       
     }
 
+
+
+    public delegate void PositionValue(decimal value1, decimal value2, decimal value3, DateTime value4);
+
 }
+    
+   
+    
+
