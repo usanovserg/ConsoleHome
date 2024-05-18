@@ -20,7 +20,7 @@ namespace MyConsole
 
         static void Main(string[] args)
         {
-            int userStep;
+            decimal userStep;
 
             Console.OutputEncoding = Encoding.UTF8;
 
@@ -31,9 +31,11 @@ namespace MyConsole
             priceDown = decimal.Parse(ReadUserInput("Задайте нижнюю цену: "));
             priceUp = decimal.Parse(ReadUserInput("Задайте верхнюю цену: "));
 
-            while (priceDown > priceUp)
+
+
+            while (priceDown <= 0 || priceUp <= 0 || priceDown > priceUp)
             {
-                Console.WriteLine("Нижняя цена должна быть меньше верхней.");
+                Console.WriteLine("Нижняя цена должна быть меньше верхней и отличной от 0.");
                 priceDown = decimal.Parse(ReadUserInput("Задайте нижнюю цену: "));
                 priceUp = decimal.Parse(ReadUserInput("Задайте верхнюю цену: "));
 
@@ -44,13 +46,13 @@ namespace MyConsole
             {
                 string userStepInput = ReadUserInput("Введите шаг уровня: ");
 
-                if (int.TryParse(userStepInput, out userStep) && userStep > 0)
+                if (decimal.TryParse(userStepInput, out userStep) && userStep > 0)
                 {
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите целое число.");
+                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите положительное число.");
                 }
 
             } while (true);
@@ -76,6 +78,7 @@ namespace MyConsole
                 if (value <= 1000)
                 {
                     stepLevel = value;
+                    levels.Clear();
 
                     decimal priceLevel = priceUp;
 
