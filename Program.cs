@@ -1,3 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
-//
-Console.WriteLine("Hello, World!");
+﻿
+
+namespace ConsoleHome
+{
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            Position position = new Position();
+
+        }
+    }
+}
