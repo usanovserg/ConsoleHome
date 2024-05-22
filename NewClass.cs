@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleHome
 {
@@ -11,6 +7,10 @@ namespace ConsoleHome
         public NewClass()
         {
             Console.WriteLine("Команда разработчиков 2!");
+            Console.WriteLine("Hello, World!");
+            Console.WriteLine("Hello, .NET!");
+            Console.WriteLine("Hello, C#!");
+            Console.WriteLine("Hello, Robots!");
         }
     }
 }
