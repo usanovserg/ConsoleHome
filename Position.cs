@@ -41,7 +41,7 @@ namespace ConsoleHome
 
             }
 
-            trade.PositionVolume += num;
+            trade.PositionVolume += num; //вот тут что-то не получается ???
 
             trade.Volume = Math.Abs(num);
 
