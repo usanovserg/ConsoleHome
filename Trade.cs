@@ -28,7 +28,7 @@ namespace ConsoleHome
 
         public OrderType OrderType;
 
-        public double Commision;
+        public decimal Commision;
 
         public string? AccountNumber;
 

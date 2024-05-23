@@ -10,6 +10,8 @@ namespace ConsoleHome
 
         decimal sumPosition, pnlPosition;
 
+        int tradeNumber;
+
         public Position()
         {
             Timer timer = new Timer();
@@ -19,10 +21,6 @@ namespace ConsoleHome
             timer.Elapsed += NewTrade;
 
             timer.Start();
-
-            sumPosition = new decimal();
-
-            pnlPosition = new decimal();
 
         }
 
@@ -47,19 +45,21 @@ namespace ConsoleHome
 
             }
 
+            tradeNumber ++;
+
             sumPosition += num;
 
             trade.Volume = Math.Abs(num);
 
-            trade.Price = random.Next(90000, 93000);
+            trade.Price = random.Next(80000, 100000);
 
-            trade.Commision = ((double)(trade.Volume * trade.Price / 100000));
+            trade.Commision = Math.Round((trade.Volume * trade.Price / 100000), 2);
 
-            pnlPosition = (int)(trade.Price / trade.Volume);
+            pnlPosition = Math.Round(trade.Price / trade.Volume / sumPosition, 2);
 
             trade.AccountNumber = "qwe123";
 
-            string str = "DateTime: " + DateTime.Now + " Account: " + trade.AccountNumber + "\tPosition = " + sumPosition + " PnL = " + pnlPosition
+            string str = "Сделка № " + tradeNumber + " DateTime: " + DateTime.Now + " Account: " + trade.AccountNumber + "\tPosition = " + sumPosition + " PnL = " + pnlPosition
                 + "\tOrder Type: " + trade.OrderType + " Volume = " + trade.Volume.ToString() + "\tPrice = " + trade.Price.ToString() + " Commision = " + trade.Commision + "\n";
 
             Console.WriteLine(str);
