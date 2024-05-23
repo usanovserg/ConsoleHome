@@ -30,11 +30,7 @@ namespace ConsoleHome
 
         public double Commision;
 
-        public int PositionVolume;
-
         public string? AccountNumber;
-
-
 
         #endregion
 

@@ -8,15 +8,21 @@ namespace ConsoleHome
     public class Position
     {
 
+        decimal sumPosition, pnlPosition;
+
         public Position()
         {
             Timer timer = new Timer();
 
-            timer.Interval = 2000;
+            timer.Interval = 3000;
 
             timer.Elapsed += NewTrade;
 
             timer.Start();
+
+            sumPosition = new decimal();
+
+            pnlPosition = new decimal();
 
         }
 
@@ -28,7 +34,7 @@ namespace ConsoleHome
 
             int num = random.Next(-10, 10);
 
-            if (num > 0)
+            if (num >= 0)
             {
                 // Сделка в лонг
                 trade.OrderType = OrderType.Long;
@@ -41,17 +47,20 @@ namespace ConsoleHome
 
             }
 
-            trade.PositionVolume += num; //вот тут что-то не получается ???
+            sumPosition += num;
 
             trade.Volume = Math.Abs(num);
 
             trade.Price = random.Next(90000, 93000);
 
-            trade.Commision = (double)(trade.Volume * trade.Price / 100000 );
+            trade.Commision = ((double)(trade.Volume * trade.Price / 100000));
+
+            pnlPosition = (int)(trade.Price / trade.Volume);
 
             trade.AccountNumber = "qwe123";
 
-            string str = "DateTime: " + DateTime.Now + "\tAccount: " + trade.AccountNumber + "\tPosition = " + trade.PositionVolume + "\tOrder Type: " + trade.OrderType + "\tVolume = " + trade.Volume.ToString() + "\tPrice = " + trade.Price.ToString() + "\tCommision = " + trade.Commision;
+            string str = "DateTime: " + DateTime.Now + " Account: " + trade.AccountNumber + "\tPosition = " + sumPosition + " PnL = " + pnlPosition
+                + "\tOrder Type: " + trade.OrderType + " Volume = " + trade.Volume.ToString() + "\tPrice = " + trade.Price.ToString() + " Commision = " + trade.Commision + "\n";
 
             Console.WriteLine(str);
         }
