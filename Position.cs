@@ -16,7 +16,7 @@ namespace ConsoleHome
         {
             Timer timer = new Timer();
 
-            timer.Interval = 3000;
+            timer.Interval = 2500;
 
             timer.Elapsed += NewTrade;
 
@@ -32,23 +32,38 @@ namespace ConsoleHome
 
             int num = random.Next(-10, 10);
 
-            if (num >= 0)
+            if (num > 0)
             {
-                // Сделка в лонг
-                trade.OrderType = OrderType.Long;
+                // Покупка
+                trade.TradeType = TradeType.Bye;
 
             }
             else if (num < 0)
             {
-                // Сделка в шорт
-                trade.OrderType = OrderType.Short;
+                // Продажа
+                trade.TradeType = TradeType.Sell;
 
             }
 
-            tradeNumber ++;
+            tradeNumber++;
 
             sumPosition += num;
 
+
+            if (sumPosition > 0)
+            {
+                // Направление Лонг
+                trade.Direction = Direction.Long;
+
+            }
+            else if (sumPosition < 0)
+            {
+                // Направление
+                trade.Direction = Direction.Short;
+
+            }
+
+            
             trade.Volume = Math.Abs(num);
 
             trade.Price = random.Next(80000, 100000);
@@ -59,8 +74,8 @@ namespace ConsoleHome
 
             trade.AccountNumber = "qwe123";
 
-            string str = "Сделка № " + tradeNumber + " DateTime: " + DateTime.Now + " Account: " + trade.AccountNumber + "\tPosition = " + sumPosition + " PnL = " + pnlPosition
-                + "\tOrder Type: " + trade.OrderType + " Volume = " + trade.Volume.ToString() + "\tPrice = " + trade.Price.ToString() + " Commision = " + trade.Commision + "\n";
+            string str = "Trade # " + tradeNumber + "\tDateTime: " + DateTime.Now + " Account: " + trade.AccountNumber + "\n\n\t\t" + trade.Direction + " Position " +  sumPosition + " PnL = " + pnlPosition
+                + "\n\n\t\tTrade Type: " + trade.TradeType + " Volume = " + trade.Volume.ToString() + " Price = " + trade.Price.ToString() + " Commision = " + trade.Commision +  "\n----------------------------------------------------";
 
             Console.WriteLine(str);
         }

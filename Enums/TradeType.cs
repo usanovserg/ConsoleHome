@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace ConsoleHome.Enums
 {
-    public enum OrderType
+    public enum TradeType
     {
-        Long,
-        Short
+        Bye, Sell, CloseAll, Reverse
     }
-
 }
-

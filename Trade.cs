@@ -26,7 +26,9 @@ namespace ConsoleHome
 
         public string Portfolio = "";
 
-        public OrderType OrderType;
+        public Direction Direction;
+
+        public TradeType TradeType;
 
         public decimal Commision;
 
