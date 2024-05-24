@@ -14,9 +14,9 @@ namespace ConsoleHome
         { 
             Timer timer = new Timer();
 
-            timer.Interval = 1000;
+            timer.Interval = 3000;
 
-            timer.Elapsed += Timer_Elapsed;
+            timer.Elapsed += NewTrade;
 
             timer.Start();
 
@@ -24,9 +24,27 @@ namespace ConsoleHome
         Random random = new Random();
 
 
-        private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
+        private void NewTrade(object? sender, ElapsedEventArgs e)
         {
-            // to do
+            Trade trade = new Trade();
+            int num = random.Next(-10, 10);
+
+            if (num > 0)
+            {
+                // Long trade
+            }
+            else if (num < 0)
+            {
+                // Shor trade
+            }
+
+            trade.Volume = Math.Abs(num);
+
+            trade.Price = random.Next(70000, 8000);
+
+            string str = $"{DateTime.Now} Volume = {trade.Volume.ToString()} Price = {trade.Price.ToString()}";
+
+            Console.WriteLine(str);
         }
     }
 }
