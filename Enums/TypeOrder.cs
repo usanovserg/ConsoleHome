@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleHome
+namespace ConsoleHome.Enums
 {
-    public enum Exchange
+    public enum TypeOrder
     {
-        Binanse, Bibit
+        Long, Short
     }
 }
