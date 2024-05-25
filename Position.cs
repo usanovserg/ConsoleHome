@@ -1,6 +1,7 @@
 ﻿using System.Timers;
 using Timer = System.Timers.Timer;
 
+
 namespace ConsoleHome
 {
     public class Position
@@ -22,7 +23,7 @@ namespace ConsoleHome
         {
             Trade trade = new Trade();
 
-            int num = random.Next(-10, 10);xgn
+            int num = random.Next(-10, 10);
 
             if (num >= 0)
             {
