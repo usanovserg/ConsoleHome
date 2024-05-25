@@ -11,9 +11,9 @@ namespace ConsoleHome
 
             timer.Elapsed += NewTrade;
 
-            timer.Interval = 5000;
-
             timer.Start();
+
+            timer.Interval = 2000;
         }
 
         Random random = new Random();
