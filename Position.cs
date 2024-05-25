@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using System.Timers;
 using ConsoleHome.Enums;
 using Timer = System.Timers.Timer;
@@ -8,7 +9,7 @@ namespace ConsoleHome
 {
     public class Position
     {
-        public event Action<string>? PositionChanged;
+        public event EventHandler<PositionChangedEventArgs>? PositionChanged;
 
         public Position()
         {
@@ -18,8 +19,6 @@ namespace ConsoleHome
 
             timer.Start();
 
-            PositionChanged += ShowExchengePosition;
-
             timer.Interval = 4000;
         }
 
@@ -28,7 +27,7 @@ namespace ConsoleHome
         decimal binancePositionVoluem = 0;
         decimal bybitPositionVoluem = 0;
 
-        private void NewTrade(object? sender, ElapsedEventArgs e)
+        public void NewTrade(object? sender, ElapsedEventArgs e)
         {
             Trade trade = new Trade();
 
@@ -56,11 +55,12 @@ namespace ConsoleHome
             }
 
             decimal positionVoluemForOut = 0;
+
             if (trade.ExchangeName == Exchange.Binanse)
             {
                 positionVoluemForOut = binancePositionVoluem;
             }
-            else if(trade.ExchangeName == Exchange.Bybit)
+            else if (trade.ExchangeName == Exchange.Bybit)
             {
                 positionVoluemForOut = bybitPositionVoluem;
             }
@@ -79,16 +79,11 @@ namespace ConsoleHome
             Console.Write($"Направление сделки: {trade.TypeOrderTrade}, Объём сделки: {trade.Volume}, " +
                 $"Биржа {trade.ExchangeName}, Комиссия {trade.Commision}, Номер счёта {trade.AccountNumber} \n");
 
-            if (PositionChanged != null)
-            {
-                PositionChanged($"Открыта новая сделка на {trade.ExchangeName}, новый объём позиции {positionVoluemForOut}");
-            }
-        }
 
-        private void ShowExchengePosition(string messege)
-        {
-            Console.WriteLine(messege);
+            PositionChanged?.Invoke(this, new PositionChangedEventArgs(trade.ExchangeName, positionVoluemForOut));
+
         }
+        
 
     }
 }
