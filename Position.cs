@@ -16,7 +16,7 @@ namespace ConsoleHome
         {
             Timer timer = new Timer();
 
-            timer.Interval = 2500;
+            timer.Interval = 5000;
 
             timer.Elapsed += NewTrade;
 
@@ -68,14 +68,19 @@ namespace ConsoleHome
 
             trade.Price = random.Next(80000, 100000);
 
-            trade.Commision = Math.Round((trade.Volume * trade.Price / 100000), 2);
+            trade.Commision = Math.Round(trade.Volume * trade.Price / 100000, 2);
 
             pnlPosition = Math.Round(trade.Price / trade.Volume / sumPosition, 2);
 
             trade.AccountNumber = "qwe123";
 
-            string str = "Trade # " + tradeNumber + "\tDateTime: " + DateTime.Now + " Account: " + trade.AccountNumber + "\n\n\t\t" + trade.Direction + " Position " +  sumPosition + " PnL = " + pnlPosition
-                + "\n\n\t\tTrade Type: " + trade.TradeType + " Volume = " + trade.Volume.ToString() + " Price = " + trade.Price.ToString() + " Commision = " + trade.Commision +  "\n----------------------------------------------------";
+            string str = "Trade # " + tradeNumber + "\tDateTime: " + DateTime.Now + " Account: " + trade.AccountNumber + 
+
+                "\n\n\t\tTrade Type: " + trade.TradeType + " Volume = " + trade.Volume.ToString() + " Price = " + trade.Price.ToString() + " Commision = " + trade.Commision + 
+
+                "\n\n\t\t" + trade.Direction + " Position " + sumPosition + " PnL = " + pnlPosition + 
+
+                "\n----------------------------------------------------";
 
             Console.WriteLine(str);
         }

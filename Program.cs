@@ -4,17 +4,15 @@
     {
         static void Main(string[] args)
         {
-            Position position = new Position();
+            //Position position = new Position();
 
-            /*
             number = WriteLine;
-            
+
             levels = new List<Level>();
 
             Load();
 
             number();
-
 
             string str = ReadLIne("Введите кол-во уровней: ");
 
@@ -36,7 +34,6 @@
 
             Save();
 
-            */
             Console.ReadLine();
 
         }
@@ -53,12 +50,9 @@
 
         static int countLevels;
 
-        // static decimal StepLevel {  get; set; }  сокращенная запись кода ниже
-
         // ==============================================================================================
 
         static Trade trade = new Trade();
-
 
         #endregion
 
@@ -110,16 +104,63 @@
             return Console.ReadLine();
         }
 
-        static void Qwerty()
+        static void Save()
         {
+            using (StreamWriter writer = new StreamWriter("params.txt", false))
+            {
+                writer.WriteLine(priceUp.ToString());
 
+                writer.WriteLine(countLevels.ToString());
+
+                writer.WriteLine(stepLevel.ToString());
+            }
+        }
+
+        static void Load()
+        {
+            using (StreamReader reader = new StreamReader("params.txt"))
+            {
+                int index = 0;
+
+                while (true)
+                {
+                    string line = reader.ReadLine();
+
+                    index++;
+
+                    switch (index)
+                    {
+                        case 1:
+                            priceUp = decimal.Parse(line);
+                            break;
+
+                        case 2:
+                            countLevels = int.Parse(line);
+                            break;
+
+                        case 3:
+                            StepLevel = decimal.Parse(line);
+                            break;
+                    }
+
+                    if (line == null)
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         #endregion
         // ==============================================================================================
 
+        delegate void Number();
+
+        static Number number;
+
     }
 
 
 }
+
 
