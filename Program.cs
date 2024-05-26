@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            //Position position = new Position();
+            //Position position = new Position(); // код для ДЗ урока 5 и 6 
 
             number = WriteLine;
 
@@ -118,36 +118,47 @@
 
         static void Load()
         {
-            using (StreamReader reader = new StreamReader("params.txt"))
+            try
             {
-                int index = 0;
-
-                while (true)
+                using (StreamReader reader = new StreamReader("params.txt"))
                 {
-                    string line = reader.ReadLine();
+                
+                    int index = 0;
 
-                    index++;
-
-                    switch (index)
+                    while (true)
                     {
-                        case 1:
-                            priceUp = decimal.Parse(line);
-                            break;
+                        string line = reader.ReadLine();
 
-                        case 2:
-                            countLevels = int.Parse(line);
-                            break;
+                        index++;
 
-                        case 3:
-                            StepLevel = decimal.Parse(line);
+                        switch (index)
+                        {
+                            case 1:
+                                priceUp = decimal.Parse(line);
+                                break;
+
+                            case 2:
+                                countLevels = int.Parse(line);
+                                break;
+
+                            case 3:
+                                StepLevel = decimal.Parse(line);
+                                break;
+                        }
+
+                        if (line == null)
+                        {
                             break;
+                        }
                     }
 
-                    if (line == null)
-                    {
-                        break;
-                    }
                 }
+
+
+            }
+            catch
+            {
+                Console.WriteLine("File params.txt is not found");
             }
         }
 
