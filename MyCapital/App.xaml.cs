@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace GridWPF1
+namespace MyCapital
 {
     /// <summary>
     /// Interaction logic for App.xaml
