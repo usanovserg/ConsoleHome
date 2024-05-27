@@ -1,10 +1,19 @@
-﻿namespace ConsoleHome
+﻿using ConsoleHome.Enums;
+
+namespace ConsoleHome
 {
     public class Program
     {
         static void Main(string[] args)
         {
-            //Position position = new Position(); // код для ДЗ урока 5 и 6 
+            Position Position = new Position(); // код для ДЗ урока 5 и 6
+
+            Position.PositionNotify += PositionChange;
+
+            /*
+            Connector.Connect();
+
+            Connector.NewTradeEvent += WriteLine;
 
             number = WriteLine;
 
@@ -34,6 +43,8 @@
 
             Save();
 
+            */
+
             Console.ReadLine();
 
         }
@@ -49,6 +60,9 @@
         static decimal lotLevel;
 
         static int countLevels;
+
+        static Connector Connector = new Connector();
+
 
         // ==============================================================================================
 
@@ -160,6 +174,11 @@
             {
                 Console.WriteLine("File params.txt is not found");
             }
+        }
+        public static void PositionChange(object? sender, PositionDerectionEvent e)
+        {
+
+            Console.WriteLine($"Позиция {e.PositionDirection} \n");
         }
 
         #endregion

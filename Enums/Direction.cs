@@ -12,5 +12,16 @@ namespace ConsoleHome.Enums
         Short
     }
 
-}
+    public class PositionDerectionEvent : EventArgs
+    {
+        public Direction PositionDirection { get; private set; }
 
+
+        public PositionDerectionEvent(Direction direction)
+        {
+
+            PositionDirection = direction;
+        }
+
+    }
+}

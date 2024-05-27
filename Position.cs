@@ -1,12 +1,19 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using System.Timers;
 using ConsoleHome.Enums;
 using Timer = System.Timers.Timer;
 
 namespace ConsoleHome
 {
+
     public class Position
     {
+
+        //public delegate void EventHandler();
+
+        public event EventHandler<PositionDerectionEvent>? PositionNotify;
 
         decimal sumPosition, pnlPosition;
 
@@ -16,7 +23,7 @@ namespace ConsoleHome
         {
             Timer timer = new Timer();
 
-            timer.Interval = 5000;
+            timer.Interval = 3000;
 
             timer.Elapsed += NewTrade;
 
@@ -24,7 +31,7 @@ namespace ConsoleHome
 
         }
 
-        Random random = new Random();
+        Random random = new Random();  
 
         private void NewTrade(object? sender, ElapsedEventArgs e)
         {
@@ -55,6 +62,7 @@ namespace ConsoleHome
                 // Направление Лонг
                 trade.Direction = Direction.Long;
 
+
             }
             else if (sumPosition < 0)
             {
@@ -63,7 +71,6 @@ namespace ConsoleHome
 
             }
 
-            
             trade.Volume = Math.Abs(num);
 
             trade.Price = random.Next(80000, 100000);
@@ -78,11 +85,20 @@ namespace ConsoleHome
 
                 "\n\n\t\tTrade Type: " + trade.TradeType + " Volume = " + trade.Volume.ToString() + " Price = " + trade.Price.ToString() + " Commision = " + trade.Commision + 
 
-                "\n\n\t\t" + trade.Direction + " Position " + sumPosition + " PnL = " + pnlPosition + 
+                "\n\n\t\tPosition " + sumPosition + " PnL = " + pnlPosition + 
 
-                "\n----------------------------------------------------";
+                "\n----------------------------------------------------\n";
 
             Console.WriteLine(str);
+
+            PositionNotify?.Invoke(this, new PositionDerectionEvent(trade.Direction));
+
         }
+
+
+        
+
+        
+
     }
 }
