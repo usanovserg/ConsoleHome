@@ -19,11 +19,7 @@ namespace ConsoleHome
         public string Portfolio = "";
         public int tradeId;
         public TradeDirection tradeDirection;
-
-        
-
-
-
+              
         #endregion
 
 

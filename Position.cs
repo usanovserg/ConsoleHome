@@ -22,8 +22,7 @@ namespace ConsoleHome
 
         }
         Random random = new Random();
-
-        //static int tradesCount = 0; //Счетчик трейдов внутренний
+                
         static int tradesCounter = 0;
         static decimal position = 0;
         static decimal averagePrice = 0;
@@ -32,9 +31,7 @@ namespace ConsoleHome
         private void NewTrade(object sender, ElapsedEventArgs e)
         {
             Trade trade = new Trade();
-
-            //tradesCount++;
-
+          
             int num = random.Next(-10, 10);
 
             trade.DateTime = DateTime.Now;
