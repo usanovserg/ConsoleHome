@@ -17,12 +17,18 @@ namespace ConsoleHome
         public string ClassCode = "";
         public DateTime DateTime = DateTime.MinValue;
         public string Portfolio = "";
+        public int tradeId;
+        public TradeDirection tradeDirection;
+
+        
+
+
 
         #endregion
 
-        public Trade()
-        {
-            //to do
-        }
+
+
+
+
     }
 }

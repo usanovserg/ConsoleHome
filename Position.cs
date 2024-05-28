@@ -12,9 +12,9 @@ namespace ConsoleHome
     {
         public Position() 
         { 
-            Timer timer = new Timer();
+            Timer timer = new();
 
-            timer.Interval = 3000;
+            timer.Interval = 1000;
 
             timer.Elapsed += NewTrade;
 
@@ -23,28 +23,50 @@ namespace ConsoleHome
         }
         Random random = new Random();
 
+        //static int tradesCount = 0; //Счетчик трейдов внутренний
+        static int tradesCounter = 0;
+        static decimal position = 0;
+        static decimal averagePrice = 0;
+        List<Trade> trades= new List<Trade>();
 
-        private void NewTrade(object? sender, ElapsedEventArgs e)
+        private void NewTrade(object sender, ElapsedEventArgs e)
         {
             Trade trade = new Trade();
+
+            //tradesCount++;
+
             int num = random.Next(-10, 10);
+
+            trade.DateTime = DateTime.Now;
+            trade.Volume = Math.Abs(num);
+            trade.Price = random.Next(70000, 80000);
 
             if (num > 0)
             {
-                // Long trade
+                //Long deal
+                trade.tradeDirection = TradeDirection.Long;
+                position += trade.Volume * trade.Price;
+                
             }
             else if (num < 0)
             {
-                // Shor trade
+                //Short deal 
+                trade.tradeDirection = TradeDirection.Short;
+                position -= trade.Volume * trade.Price;
             }
+            else 
+            {
+                return; // нет сделки если random = 0
+            }
+            
 
-            trade.Volume = Math.Abs(num);
+            trades.Add(trade);
+            tradesCounter = trades.Count;
 
-            trade.Price = random.Next(70000, 8000);
 
-            string str = $"{DateTime.Now} Volume = {trade.Volume.ToString()} Price = {trade.Price.ToString()}";
-
-            Console.WriteLine(str);
+            string tradeInfo = $"DateTime: {trade.DateTime} Count = {tradesCounter} Volume = {trade.Volume.ToString()}" +
+                $" Price = {trade.Price.ToString()} Direction: {trade.tradeDirection}     Current position: {position} ";
+            Console.WriteLine(tradeInfo);
         }
     }
 }
