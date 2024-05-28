@@ -1,70 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 
-namespace MyConsole
+namespace ConsoleHome
 {
 
-    internal class Program
+    public class Program
     {
 
-        static List<decimal> levels;
+
+        //======================================== Fields ============================================
+        #region Fields
+        static List<Level> levels;
         static decimal priceUp;
-        static decimal priceDown;
         static decimal stepLevel;
-
-
-        static void Main(string[] args)
-        {
-            decimal userStep;
-
-            Console.OutputEncoding = Encoding.UTF8;
-
-            levels = new List<decimal>();
-
-            WriteOutput();
-
-            priceDown = decimal.Parse(ReadUserInput("Задайте нижнюю цену: "));
-            priceUp = decimal.Parse(ReadUserInput("Задайте верхнюю цену: "));
+        static int countLevels;
+        static decimal lotLevel;
 
 
 
-            while (priceDown <= 0 || priceUp <= 0 || priceDown > priceUp)
-            {
-                Console.WriteLine("Нижняя цена должна быть меньше верхней и отличной от 0.");
-                priceDown = decimal.Parse(ReadUserInput("Задайте нижнюю цену: "));
-                priceUp = decimal.Parse(ReadUserInput("Задайте верхнюю цену: "));
-
-            }
+        static Trade trade = new Trade();
 
 
-            do
-            {
-                string userStepInput = ReadUserInput("Введите шаг уровня: ");
+        #endregion
 
-                if (decimal.TryParse(userStepInput, out userStep) && userStep > 0)
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите положительное число.");
-                }
-
-            } while (true);
-
-
-            StepLevel = userStep;
-
-            WriteOutput();
-            Console.ReadLine();
-        }
-
-
+        //======================================== Properties ========================================
+        #region Properties
         public static decimal StepLevel
         {
             get
@@ -78,27 +45,61 @@ namespace MyConsole
                 if (value <= 1000)
                 {
                     stepLevel = value;
-                    levels.Clear();
+                    //levels.Clear();
+                    levels = Level.CalculateLevels(priceUp, stepLevel, countLevels);
 
-                    decimal priceLevel = priceUp;
-
-                    for (decimal i = priceDown; i <= priceUp; i += stepLevel)
-                    {
-                        if (priceLevel <= 0)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            levels.Add(i);
-                        }
-                    }
                 }
 
             }
 
         }
 
+        #endregion
+
+
+        //======================================== Methods ===========================================
+        #region Methods
+
+        static void Main(string[] args)
+        {
+
+            Console.OutputEncoding = Encoding.UTF8;
+            
+            Position position = new Position();
+
+            /*
+
+            number = WriteOutput;
+
+            levels = new List<Level>();
+
+            Load();
+
+            number();
+
+            string str = ReadUserInput("Введите количество уровней: ");
+
+            countLevels = Convert.ToInt32(str);
+
+            str = ReadUserInput("Задайте верхнюю цену: ");
+
+            priceUp = decimal.Parse(str);
+
+
+            str = ReadUserInput("Введите шаг уровня");
+
+            StepLevel = decimal.Parse(str);
+
+            str = ReadUserInput("Введите лот на уровень");
+
+            lotLevel = decimal.Parse(str);
+
+            number();
+
+            Save();
+            */
+            Console.ReadLine();
+        }
 
         static void WriteOutput()
         {
@@ -106,7 +107,7 @@ namespace MyConsole
 
             foreach (var level in levels)
             {
-                Console.WriteLine(level);
+                Console.WriteLine(level.PriceLevel);
             }
         }
 
@@ -116,5 +117,67 @@ namespace MyConsole
             Console.WriteLine(message);
             return Console.ReadLine();
         }
+
+
+        static void Save()
+        {
+            using (StreamWriter writer = new StreamWriter("params.txt", false)) 
+            {
+                writer.WriteLine(priceUp.ToString());
+                writer.WriteLine(countLevels.ToString());
+                writer.WriteLine(stepLevel.ToString());
+            }
+
+        }
+        
+        static void Load()
+        {
+            try
+            {
+
+                using (StreamReader reader = new StreamReader("params.txt"))
+                {
+                    int index = 0;
+
+                    while (true)
+                    {
+                        string line = reader.ReadLine();
+
+                        index++;
+
+                        switch (index)
+                        {
+
+                            case 1: priceUp = decimal.Parse(line); break;
+
+                            case 2: countLevels = int.Parse(line); break;
+
+                            case 3: StepLevel = decimal.Parse(line); break;
+
+                        }
+                        if (line == null)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Ошибка считывания, нет данных в файле: " + ex.Message);
+            }
+        }
+        
+
+        #endregion
+
+
+        delegate void Number();
+
+        static Number number;
+
+
     }
+
+  
 }
