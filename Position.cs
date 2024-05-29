@@ -23,10 +23,10 @@ namespace ConsoleHome
         }
         Random random = new Random();
                 
-        static int tradesCounter = 0;
-        static decimal position = 0;
-        static decimal averagePrice = 0;
-        List<Trade> trades= new List<Trade>();
+        static int _tradesCounter = 0;
+        static decimal _position = 0;
+        static decimal _averagePrice = 0;
+        List<Trade> _trades= new List<Trade>();
 
         private void NewTrade(object sender, ElapsedEventArgs e)
         {
@@ -42,14 +42,14 @@ namespace ConsoleHome
             {
                 //Long deal
                 trade.tradeDirection = TradeDirection.Long;
-                position += trade.Volume * trade.Price;
+                _position += trade.Volume * trade.Price;
                 
             }
             else if (num < 0)
             {
                 //Short deal 
                 trade.tradeDirection = TradeDirection.Short;
-                position -= trade.Volume * trade.Price;
+                _position -= trade.Volume * trade.Price;
             }
             else 
             {
@@ -57,12 +57,12 @@ namespace ConsoleHome
             }
             
 
-            trades.Add(trade);
-            tradesCounter = trades.Count;
+            _trades.Add(trade);
+            _tradesCounter = _trades.Count;
 
 
-            string tradeInfo = $"DateTime: {trade.DateTime} Count = {tradesCounter} Volume = {trade.Volume.ToString()}" +
-                $" Price = {trade.Price.ToString()} Direction: {trade.tradeDirection}     Current position: {position} ";
+            string tradeInfo = $"DateTime: {trade.DateTime} Count = {_tradesCounter} Volume = {trade.Volume.ToString()}" +
+                $" Price = {trade.Price.ToString()} Direction: {trade.tradeDirection}     Current _position: {_position} ";
             Console.WriteLine(tradeInfo);
           
         }
