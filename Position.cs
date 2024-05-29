@@ -21,16 +21,16 @@ namespace ConsoleHome
             timer.Start();
 
         }
-        Random random = new Random();
+        readonly Random random = new Random();
                 
         static int _tradesCounter = 0;
         static decimal _position = 0;
         static decimal _averagePrice = 0;
-        List<Trade> _trades= new List<Trade>();
+        List<Trade> _trades= new();
 
         private void NewTrade(object sender, ElapsedEventArgs e)
         {
-            Trade trade = new Trade();
+            Trade trade = new();
           
             int num = random.Next(-10, 11);
 
@@ -56,13 +56,12 @@ namespace ConsoleHome
                 return; // нет сделки если random = 0
             }
             
-
             _trades.Add(trade);
             _tradesCounter = _trades.Count;
 
 
             string tradeInfo = $"DateTime: {trade.DateTime} Count = {_tradesCounter} Volume = {trade.Volume.ToString()}" +
-                $" Price = {trade.Price.ToString()} Direction: {trade.tradeDirection}     Current _position: {_position} ";
+                $" Price = {trade.Price.ToString()} Direction: {trade.tradeDirection}     Current position: {_position} ";
             Console.WriteLine(tradeInfo);
           
         }
