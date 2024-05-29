@@ -4,14 +4,15 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Timers;
+using ConsoleHome.Enums;
 using Timer = System.Timers.Timer;
 
-namespace ConsoleHome
+namespace ConsoleHome.Entities
 {
     public class Position
     {
-        public Position() 
-        { 
+        public Position()
+        {
             Timer timer = new();
 
             timer.Interval = 1000;
@@ -22,16 +23,16 @@ namespace ConsoleHome
 
         }
         Random random = new Random();
-                
+
         static int tradesCounter = 0;
         static decimal position = 0;
         static decimal averagePrice = 0;
-        List<Trade> trades= new List<Trade>();
+        List<Trade> trades = new List<Trade>();
 
         private void NewTrade(object sender, ElapsedEventArgs e)
         {
             Trade trade = new Trade();
-          
+
             int num = random.Next(-10, 11);
 
             trade.DateTime = DateTime.Now;
@@ -43,7 +44,7 @@ namespace ConsoleHome
                 //Long deal
                 trade.tradeDirection = TradeDirection.Long;
                 position += trade.Volume * trade.Price;
-                
+
             }
             else if (num < 0)
             {
@@ -51,11 +52,11 @@ namespace ConsoleHome
                 trade.tradeDirection = TradeDirection.Short;
                 position -= trade.Volume * trade.Price;
             }
-            else 
+            else
             {
                 return; // нет сделки если random = 0
             }
-            
+
 
             trades.Add(trade);
             tradesCounter = trades.Count;
@@ -64,7 +65,7 @@ namespace ConsoleHome
             string tradeInfo = $"DateTime: {trade.DateTime} Count = {tradesCounter} Volume = {trade.Volume.ToString()}" +
                 $" Price = {trade.Price.ToString()} Direction: {trade.tradeDirection}     Current position: {position} ";
             Console.WriteLine(tradeInfo);
-          
+
         }
     }
 }

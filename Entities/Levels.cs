@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleHome
+namespace ConsoleHome.Entities
 {
     public class Levels
     {

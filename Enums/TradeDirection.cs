@@ -1,4 +1,4 @@
-﻿namespace ConsoleHome
+﻿namespace ConsoleHome.Enums
 {
     public enum TradeDirection
     {

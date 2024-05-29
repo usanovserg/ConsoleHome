@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleHome.Enums;
 
-namespace ConsoleHome
+namespace ConsoleHome.Entities
 {
     public class Trade
     {
@@ -20,7 +21,7 @@ namespace ConsoleHome
         public int tradeId;
         public decimal EntryPrice = 0;
         public TradeDirection tradeDirection;
-              
+
         #endregion
 
 
