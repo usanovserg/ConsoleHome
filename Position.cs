@@ -32,7 +32,7 @@ namespace ConsoleHome
         {
             Trade trade = new Trade();
           
-            int num = random.Next(-10, 10);
+            int num = random.Next(-10, 11);
 
             trade.DateTime = DateTime.Now;
             trade.Volume = Math.Abs(num);
@@ -64,6 +64,7 @@ namespace ConsoleHome
             string tradeInfo = $"DateTime: {trade.DateTime} Count = {tradesCounter} Volume = {trade.Volume.ToString()}" +
                 $" Price = {trade.Price.ToString()} Direction: {trade.tradeDirection}     Current position: {position} ";
             Console.WriteLine(tradeInfo);
+          
         }
     }
 }

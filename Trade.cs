@@ -18,6 +18,7 @@ namespace ConsoleHome
         public DateTime DateTime = DateTime.MinValue;
         public string Portfolio = "";
         public int tradeId;
+        public decimal EntryPrice = 0;
         public TradeDirection tradeDirection;
               
         #endregion
