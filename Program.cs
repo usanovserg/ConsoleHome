@@ -68,6 +68,8 @@ namespace ConsoleHome
 
         static int countLevels;
 
+        static decimal pnlPosition = 0;
+
         static Connector Connector = new Connector();
 
 
@@ -185,7 +187,9 @@ namespace ConsoleHome
         public static void PositionChange(Position position, Trade trade)
         {
 
-            Console.WriteLine($"Позиция: {trade.Direction}\tОбъем: {position.sumPosition}\tДоход:  {position.pnlPosition}\n");
+            pnlPosition += position.pnlPosition;
+
+            Console.WriteLine($"Позиция: {trade.Direction}\tОбъем: {position.sumPosition}\tДоход:  {pnlPosition}\n");
         }
 
         #endregion
