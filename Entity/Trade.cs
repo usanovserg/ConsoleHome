@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ConsoleHome.Enums;
 
-namespace ConsoleHome
+namespace ConsoleHome.Entity
 {
     public class Trade
     {
@@ -33,6 +33,7 @@ namespace ConsoleHome
         public decimal Commision;
 
         public string? AccountNumber;
+
 
         #endregion
 

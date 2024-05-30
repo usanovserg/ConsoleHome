@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,18 +11,5 @@ namespace ConsoleHome.Enums
     {
         Long,
         Short
-    }
-
-    public class PositionDerectionEvent : EventArgs
-    {
-        public Direction PositionDirection { get; private set; }
-
-
-        public PositionDerectionEvent(Direction direction)
-        {
-
-            PositionDirection = direction;
-        }
-
     }
 }

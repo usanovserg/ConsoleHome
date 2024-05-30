@@ -1,4 +1,8 @@
-﻿using ConsoleHome.Enums;
+﻿using ConsoleHome.Entity;
+using ConsoleHome.Enums;
+using System.Security.Cryptography.X509Certificates;
+using System.Timers;
+using System.Xml;
 
 namespace ConsoleHome
 {
@@ -8,7 +12,8 @@ namespace ConsoleHome
         {
             Position Position = new Position(); // код для ДЗ урока 5 и 6
 
-            Position.PositionNotify += PositionChange;
+            Position.PositionChangeDelegateNotify += PositionChange;
+
 
             /*
             Connector.Connect();
@@ -48,6 +53,8 @@ namespace ConsoleHome
             Console.ReadLine();
 
         }
+
+        
 
         //================================================= Fields ======================================
 
@@ -175,10 +182,10 @@ namespace ConsoleHome
                 Console.WriteLine("File params.txt is not found");
             }
         }
-        public static void PositionChange(object? sender, PositionDerectionEvent e)
+        public static void PositionChange(Position position, Trade trade)
         {
 
-            Console.WriteLine($"Позиция {e.PositionDirection} \n");
+            Console.WriteLine($"Позиция: {trade.Direction}\tОбъем: {position.sumPosition}\tДоход:  {position.pnlPosition}\n");
         }
 
         #endregion
