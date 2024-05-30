@@ -14,7 +14,6 @@ namespace ConsoleHome
 
             Position.PositionChangeDelegateNotify += PositionChange;
 
-
             /*
             Connector.Connect();
 
