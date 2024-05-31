@@ -1,15 +1,16 @@
 ﻿using System;
 
-// Урок 1.5. Программа ... // .NET Framework 4.8 // 31.05.2024 
+// Урок 1.5. Программа генерации и вывода сделок // .NET 6 // 31.05.2024 
 
-namespace Levels
+namespace ConsoleHome
 {
     internal class Program
     {
-
         static void Main()
         {
+            Position position = new Position();
 
+            Console.ReadLine();
         }
     }
 }
