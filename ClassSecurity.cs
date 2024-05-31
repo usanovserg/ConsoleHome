@@ -1,7 +1,7 @@
 ﻿
 namespace ConsoleHome
 {
-    public enum Security
+    public enum ClassSecurity
     {
         BR, NG, GC, SI
     }

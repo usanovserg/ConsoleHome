@@ -4,10 +4,10 @@ using System.Timers;
 
 namespace ConsoleHome
 {
-    public class Position
+    public class ClassPosition
     {
         // Метод - Конструктор класса
-        public Position()
+        public ClassPosition()
         {
             Timer timer = new Timer();
 
@@ -23,53 +23,53 @@ namespace ConsoleHome
 
         private void NewTrade(object? sender, ElapsedEventArgs e) 
         {
-            Trade trade = new Trade();
+            ClassTrade trade = new ClassTrade();
 
             Int32 num = random.Next(-10, 10);
 
             // Биржа, аккаунт
             if (num % 2 == 0 && num != 0)
             {
-                trade.ExchangeName = Exchange.MOEX;
+                trade.ExchangeName = ClassExchange.MOEX;
                 trade.TradingAccount = 24891;
             }
             else if (num % 2 != 0 && num != 0)
             {
-                trade.ExchangeName = Exchange.NYSE;
+                trade.ExchangeName = ClassExchange.NYSE;
                 trade.TradingAccount = 51658;
             }
             else
             {
-                trade.ExchangeName = Exchange.Bybit;
+                trade.ExchangeName = ClassExchange.Bybit;
                 trade.TradingAccount = 6152;
             }
 
             // Инструмент
             if (num % 2 == 0 && num >= 0)
             {
-                trade.SecurityIndex = Security.BR;
+                trade.SecurityIndex = ClassSecurity.BR;
             }
             else if (num % 2 != 0 && num >= 0)
             {
-                trade.SecurityIndex = Security.NG;
+                trade.SecurityIndex = ClassSecurity.NG;
             }
             else if (num % 2 == 0 && num < 0)
             {
-                trade.SecurityIndex = Security.GC;
+                trade.SecurityIndex = ClassSecurity.GC;
             }
             else
             {
-                trade.SecurityIndex = Security.SI;
+                trade.SecurityIndex = ClassSecurity.SI;
             }
 
             // Направление - Лонг или шорт
             if (num >= 0)
             {
-                trade.TypeOrderTrade = TypeOrder.Long;
+                trade.TypeOrderTrade = ClassTypeOrder.Long;
             }
             else
             {
-                trade.TypeOrderTrade = TypeOrder.Short;
+                trade.TypeOrderTrade = ClassTypeOrder.Short;
             }
 
             // Объём сделки
@@ -80,22 +80,22 @@ namespace ConsoleHome
                 trade.Volume = 1;
 
             // Цена сделки - диапазон в зависимости от инструмента
-            if (trade.SecurityIndex == Security.BR)
+            if (trade.SecurityIndex == ClassSecurity.BR)
             {
                 trade.Price = random.Next(55, 75);
             }
 
-            if (trade.SecurityIndex == Security.NG)
+            if (trade.SecurityIndex == ClassSecurity.NG)
             {
                 trade.Price = random.Next(2, 4);
             }
 
-            if (trade.SecurityIndex == Security.GC)
+            if (trade.SecurityIndex == ClassSecurity.GC)
             {
                 trade.Price = random.Next(1800, 2700);
             }
 
-            if (trade.SecurityIndex == Security.SI)
+            if (trade.SecurityIndex == ClassSecurity.SI)
             {
                 trade.Price = random.Next(1400, 2400);
             }

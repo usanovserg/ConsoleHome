@@ -8,11 +8,9 @@ namespace ConsoleHome
     {
         static void Main()
         {
-            Position position = new Position();
+            ClassPosition position = new ClassPosition();
 
             Console.ReadLine();
         }
     }
 }
-
-
