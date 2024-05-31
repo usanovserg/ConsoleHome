@@ -41,47 +41,7 @@ namespace Levels
 
         static void Main()
         {
-            Console.WriteLine("Расчёт уровней для робота");
 
-            Console.WriteLine();
-
-            Console.Write("Введите цену нижнего уровня:\t");
-
-            Decimal priceLow = Decimal.Parse(Console.ReadLine().Replace('.', ','));
-
-            Console.Write("Введите цену верхнего уровня:\t");
-
-            Decimal priceHigh = Decimal.Parse(Console.ReadLine().Replace('.', ','));
-
-            if (priceLow >= priceHigh)
-            {
-                Console.WriteLine("Ошибка! Введены неверные данные уровней.");
-
-                Environment.Exit(13);
-            }
-
-            Console.Write("Введите шаг уровней:\t\t");
-
-            Decimal stepLevels = Decimal.Parse(Console.ReadLine().Replace('.', ','));
-
-            if (stepLevels > (priceHigh - priceLow))
-            {
-                Console.WriteLine("Ошибка! Введён неверный шаг уровней.");
-
-                Environment.Exit(13);
-            }
-
-            UInt32 numLevels = Convert.ToUInt32((priceHigh - priceLow) / stepLevels);
-
-            Console.WriteLine("\nКоличество уровней:\t\t" + numLevels);
-
-            Console.WriteLine();
-
-            Decimal[] levels = new Decimal[numLevels];
-
-            LevelsGen(levels, numLevels, priceLow, stepLevels);
-
-            LevelsToConsole(levels, numLevels);
         }
     }
 }
