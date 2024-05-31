@@ -6,9 +6,13 @@ namespace ConsoleHome
     {
         public ClassExchange ExchangeName { get; set; }
 
-        public UInt16 TradingAccount { get; set; }
+        public UInt32 TraderAccount { get; set; }
 
-        public ClassSecurity SecurityIndex { get; set; }
+        public DateTime DateTime { get; set; }
+
+        public ClassSecurityClass SecurityClass { get; set; }
+
+        public ClassSecurity SecurityCode { get; set; }
 
         public ClassTypeOrder TypeOrderTrade { get; set; }
 
