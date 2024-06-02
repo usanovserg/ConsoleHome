@@ -1,83 +1,65 @@
-﻿using System;
+﻿using ConsoleHome;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace MyApp
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            levels = new List<decimal>();
-
-            string str = ReadLine("Введите верхнюю цену: ");
-            priceUp = decimal.Parse(str);
-
-            str = ReadLine("Введите нижнюю цену: ");
-            priceDown = decimal.Parse(str);
-
-            str = ReadLine("Введите шаг уровня: ");
-            StepLevel = decimal.Parse(str);
-
-            CalculateLevels();
-
-            WriteLine();
+            Position position = new Position("MyInstrument");
 
             Console.ReadLine();
         }
 
-        static List<decimal> levels;
-
+        #region Fields
+        static List<Level> levels;
         static decimal priceUp;
-        static decimal priceDown;
         static int contLevels;
+        static decimal lotLevel;
+        static decimal stepLevel;
 
+        static Trade trade = new Trade();
+        #endregion
+
+        #region Properties
         public static decimal StepLevel
         {
             get { return stepLevel; }
             set
             {
-                if (value > 0)
+                if (value <= 100)
                 {
                     stepLevel = value;
-                }
-                else
-                {
-                    Console.WriteLine("Шаг уровня должен быть положительным числом.");
-                    Environment.Exit(1);
+                    levels = Level.CalculateLevels(priceUp, stepLevel, contLevels);
                 }
             }
         }
+        #endregion
 
-        static decimal stepLevel;
-
-        static void CalculateLevels()
-        {
-            decimal range = priceUp - priceDown;
-            contLevels = (int)Math.Ceiling(range / stepLevel);
-
-            decimal priceLevel = priceUp;
-
-            for (int i = 0; i <= contLevels; i++)
-            {
-                levels.Add(priceLevel);
-                priceLevel -= stepLevel;
-            }
-        }
-
+        #region Methods
         static void WriteLine()
         {
-            Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());
-
+            Console.WriteLine("Кол-во элементов в списке " + levels.Count.ToString());
             for (int i = 0; i < levels.Count; i++)
             {
-                Console.WriteLine(levels[i]);
+                Console.WriteLine(levels[i].PriceLevel);
             }
         }
 
-        static string ReadLine(string message)
+        static string Readline(string message)
         {
             Console.WriteLine(message);
             return Console.ReadLine();
         }
+
+        static void asdad()
+        {
+            Level level = new Level();
+            level.PriceLevel = 9900;
+        }
+        #endregion
     }
 }

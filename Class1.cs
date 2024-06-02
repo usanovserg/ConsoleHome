@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleHome
 {
-    public class NewClass
+    public enum TradeDirection
     {
-        public NewClass()
-        {
-            Console.WriteLine("Команда разработчиков 2!");
-        }
+        Long,
+        Short
     }
 }
