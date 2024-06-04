@@ -63,7 +63,7 @@ namespace ConsoleHome.Entities
 
 
             string tradeInfo = $"DateTime: {trade.DateTime} Count = {tradesCounter} Volume = {trade.Volume.ToString()}" +
-                $" Price = {trade.Price.ToString()} Direction: {trade.tradeDirection}     Current position: {position} ";
+                $" Price = {trade.Price.ToString()} Direction: {trade.tradeDirection} ";
             Console.WriteLine(tradeInfo);
 
         }
