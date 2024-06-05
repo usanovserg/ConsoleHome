@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MyCapital.Entity;
 using MyCapital.Enums;
+using ScottPlot.WPF;
 
 namespace MyCapital
 {
@@ -22,13 +23,6 @@ namespace MyCapital
         {
             InitializeComponent();
             Init();
-
-            
-            //double[] dataX = { 1, 2, 3, 4, 5 };
-            //double[] dataY = { 1, 4, 9, 16, 25 };
-            //WpfPlot1.Plot.Add.Scatter(dataX, dataY);
-            //WpfPlot1.Refresh();
-
         }
 
         List<StrategyType> _strategies =
@@ -59,20 +53,27 @@ namespace MyCapital
             _go.Text = "5000";
         }
 
+        private int _index = 0;
+
         private void _comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox? comboBox = sender as ComboBox;
             int index = comboBox.SelectedIndex;
+
+            if (_index > 0)
+            {
+              Button_Click(this, null);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           List<Data> datas = Calaculate();
-
+           List<Data> datas = Calculate();
+           _index++;
            Draw(datas);
         }
 
-        private List<Data> Calaculate()
+        private List<Data> Calculate()
         {
             decimal depoStart = GetDecimalFromString(_depo.Text);
             int startLot = GetIntFromString(_startLot.Text);
@@ -148,84 +149,29 @@ namespace MyCapital
             return datas;
         }
 
-
         private void Draw(List<Data> datas)
         {
             int index = _comboBox.SelectedIndex;
             List<decimal> listEquity = datas[index].GetListEquity();
-
             int count = listEquity.Count;
-            ////decimal maxEquity = listEquity.Max();
-            ////decimal minEquity = listEquity.Min();
-
-            //double x = 0;
-            double y = 0;
-
-            ////double[] dataX = { 1, 2, 3, 4, 5 };
-            //var dataX = listEquity; 
-            //double[] dataX;
-
             
 
-            //double[] dataX = { 1, 2, 3, 4, 5 };
-            //double[] dataY = [1, 4, 9, 16, 25];
-            List<double> dataX = [];
+            double[] dataX = new double[listEquity.Count];
+            double[] dataY = new double[listEquity.Count];
 
             for (int i = 0; i < count; i++)
             {
-                dataX.Add(i);
+                dataX[i] = i;
+                dataY[i] = (double)(listEquity[i]);
             }
 
-
-            List<double> dataY = [];
-            
-            for (int i = 0; i < count; i++)
-            {
-                y = (double)(listEquity[i]);
-                dataY.Add(y);
-
-                //x += stepX;
-            }
-
+            WpfPlot1.Plot.Clear();
             WpfPlot1.Plot.Add.Scatter(dataX, dataY);
+            WpfPlot1.Plot.Axes.AutoScale();
             WpfPlot1.Refresh();
-
-            //ScottPlot.Plot myPlot1 = new();
-
-            //List<double> xs = new() { 1, 2, 3, 4, 5 };
-            //List<double> ys = new() { 1, 4, 9, 16, 25 };
-
-            //myPlot1.Add.Scatter(xs, ys);
-
-            ////myPlot.SavePng("demo.png", 400, 300);
-
-
-
-            //double stepX = _canvas.ActualWidth / count;
-            //double koef = (double)(maxEquity - minEquity) / _canvas.ActualHeight;
-
-            //double x = 0;
-            //double y = 0;
-
-            //for (int i = 0; i < count; i++)
-            //{
-            //    y = _canvas.ActualHeight - (double)(listEquity[i] - minEquity) / koef;
-
-            //    Ellipse ellipse = new Ellipse()
-            //    {
-            //        Width = 2,
-            //        Height = 2,
-            //        Stroke = Brushes.Black
-            //    };
-
-            //    Canvas.SetLeft(ellipse, x);
-            //    Canvas.SetTop(ellipse, y);
-
-            //    _canvas.Children.Add(ellipse);
-
-            //    x += stepX;
-            //}
         }
+
+        // Старая прорисока
 
         //private void Draw(List<Data> datas)
         //{
