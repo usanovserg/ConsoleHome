@@ -14,7 +14,7 @@ namespace ConsoleHome.Entities
     
     public class Position
     {
-        public delegate void NewTradeEventHandler(object sender, Trade trade);  // Объявление делегата
+        public delegate void NewTradeEventHandler(object sender, Trade trade, decimal position);  // Объявление делегата
         
         public event NewTradeEventHandler NewTradeEvent; // Объявляем событие
                 
@@ -31,9 +31,9 @@ namespace ConsoleHome.Entities
         }
         Random random = new Random();
 
-        static int tradesCounter = 0;
+        //static int tradesCounter = 0;
         static decimal position = 0;
-        static decimal averagePrice = 0;
+        //static decimal averagePrice = 0;
         List<Trade> trades = new List<Trade>();
 
         private void NewTrade(object sender, ElapsedEventArgs e)
@@ -68,10 +68,11 @@ namespace ConsoleHome.Entities
             trades.Add(trade); // Добавляем трейд в лист с трейдами 
             
 
-            string tradeInfo = $"DateTime: {trade.DateTime} Count = {trades.Count} Volume = {trade.Volume.ToString()}" +
-                $" Price = {trade.Price.ToString()} Direction: {trade.tradeDirection} ";
-            Console.WriteLine(tradeInfo);
+            //string tradeInfo = $"DateTime: {trade.DateTime} Count = {trades.Count} Volume = {trade.Volume.ToString()}" +
+            //    $" Price = {trade.Price.ToString()} Direction: {trade.tradeDirection} ";
+            //Console.WriteLine(tradeInfo);
 
+            NewTradeEvent?.Invoke(this, trade, position); //вызов события 
 
 
         }
