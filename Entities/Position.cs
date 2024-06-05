@@ -9,8 +9,15 @@ using Timer = System.Timers.Timer;
 
 namespace ConsoleHome.Entities
 {
+    
+    
+    
     public class Position
     {
+        public delegate void NewTradeEventHandler(object sender, Trade trade);  // Объявление делегата
+        
+        public event NewTradeEventHandler NewTradeEvent; // Объявляем событие
+                
         public Position()
         {
             Timer timer = new();
@@ -58,13 +65,14 @@ namespace ConsoleHome.Entities
             }
 
 
-            trades.Add(trade);
-            tradesCounter = trades.Count;
+            trades.Add(trade); // Добавляем трейд в лист с трейдами 
+            
 
-
-            string tradeInfo = $"DateTime: {trade.DateTime} Count = {tradesCounter} Volume = {trade.Volume.ToString()}" +
+            string tradeInfo = $"DateTime: {trade.DateTime} Count = {trades.Count} Volume = {trade.Volume.ToString()}" +
                 $" Price = {trade.Price.ToString()} Direction: {trade.tradeDirection} ";
             Console.WriteLine(tradeInfo);
+
+
 
         }
     }
