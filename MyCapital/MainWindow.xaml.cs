@@ -22,6 +22,13 @@ namespace MyCapital
         {
             InitializeComponent();
             Init();
+
+            
+            //double[] dataX = { 1, 2, 3, 4, 5 };
+            //double[] dataY = { 1, 4, 9, 16, 25 };
+            //WpfPlot1.Plot.Add.Scatter(dataX, dataY);
+            //WpfPlot1.Refresh();
+
         }
 
         List<StrategyType> _strategies =
@@ -60,10 +67,12 @@ namespace MyCapital
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Calaculate();
+           List<Data> datas = Calaculate();
+
+           Draw(datas);
         }
 
-        private void Calaculate()
+        private List<Data> Calaculate()
         {
             decimal depoStart = GetDecimalFromString(_depo.Text);
             int startLot = GetIntFromString(_startLot.Text);
@@ -135,7 +144,123 @@ namespace MyCapital
             }
 
             _dataGrid.ItemsSource = datas;
+
+            return datas;
         }
+
+
+        private void Draw(List<Data> datas)
+        {
+            int index = _comboBox.SelectedIndex;
+            List<decimal> listEquity = datas[index].GetListEquity();
+
+            int count = listEquity.Count;
+            ////decimal maxEquity = listEquity.Max();
+            ////decimal minEquity = listEquity.Min();
+
+            //double x = 0;
+            double y = 0;
+
+            ////double[] dataX = { 1, 2, 3, 4, 5 };
+            //var dataX = listEquity; 
+            //double[] dataX;
+
+            
+
+            //double[] dataX = { 1, 2, 3, 4, 5 };
+            //double[] dataY = [1, 4, 9, 16, 25];
+            List<double> dataX = [];
+
+            for (int i = 0; i < count; i++)
+            {
+                dataX.Add(i);
+            }
+
+
+            List<double> dataY = [];
+            
+            for (int i = 0; i < count; i++)
+            {
+                y = (double)(listEquity[i]);
+                dataY.Add(y);
+
+                //x += stepX;
+            }
+
+            WpfPlot1.Plot.Add.Scatter(dataX, dataY);
+            WpfPlot1.Refresh();
+
+            //ScottPlot.Plot myPlot1 = new();
+
+            //List<double> xs = new() { 1, 2, 3, 4, 5 };
+            //List<double> ys = new() { 1, 4, 9, 16, 25 };
+
+            //myPlot1.Add.Scatter(xs, ys);
+
+            ////myPlot.SavePng("demo.png", 400, 300);
+
+
+
+            //double stepX = _canvas.ActualWidth / count;
+            //double koef = (double)(maxEquity - minEquity) / _canvas.ActualHeight;
+
+            //double x = 0;
+            //double y = 0;
+
+            //for (int i = 0; i < count; i++)
+            //{
+            //    y = _canvas.ActualHeight - (double)(listEquity[i] - minEquity) / koef;
+
+            //    Ellipse ellipse = new Ellipse()
+            //    {
+            //        Width = 2,
+            //        Height = 2,
+            //        Stroke = Brushes.Black
+            //    };
+
+            //    Canvas.SetLeft(ellipse, x);
+            //    Canvas.SetTop(ellipse, y);
+
+            //    _canvas.Children.Add(ellipse);
+
+            //    x += stepX;
+            //}
+        }
+
+        //private void Draw(List<Data> datas)
+        //{
+        //    int index = _comboBox.SelectedIndex;
+        //    List<decimal> listEquity = datas[index].GetListEquity();
+
+        //    int count = listEquity.Count;
+        //    decimal maxEquity = listEquity.Max();
+        //    decimal minEquity = listEquity.Min();
+
+        //    double stepX = _canvas.ActualWidth / count;
+        //    double koef = (double)(maxEquity - minEquity)/ _canvas.ActualHeight;
+
+        //    double x = 0;
+        //    double y = 0;
+
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        y = _canvas.ActualHeight - (double)(listEquity[i] - minEquity) / koef;
+
+        //        Ellipse ellipse = new Ellipse()
+        //        {
+        //            Width = 2,
+        //            Height = 2,
+        //            Stroke = Brushes.Black
+        //        };
+
+        //        Canvas.SetLeft(ellipse, x);
+        //        Canvas.SetTop(ellipse, y);
+
+        //        _canvas.Children.Add(ellipse);
+
+        //        x += stepX;
+        //    }
+        //}
 
         private int CalculateLot(decimal currentDepo, decimal percent, decimal go)
         {
