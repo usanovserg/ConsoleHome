@@ -1,7 +1,7 @@
 ﻿
 namespace ConsoleHome
 {
-    public enum ClassExchange
+    public enum Exchange
     {
         MOEX, NYSE, Bybit
     }

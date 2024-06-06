@@ -1,7 +1,7 @@
 ﻿
 namespace ConsoleHome
 {
-    public enum ClassTypeOrder
+    public enum TypeOrder
     {
          Long, Short
     }

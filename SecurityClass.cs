@@ -1,7 +1,7 @@
 ﻿
 namespace ConsoleHome
 {
-    public enum ClassSecurityClass
+    public enum SecurityClass
     {
         Futures
     }
