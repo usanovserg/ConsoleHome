@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyCapital.Enums
+namespace MyCapital.Enums;
+
+internal enum StrategyType
 {
-    internal enum StrategyType
-    {
-        FIX,
+    FIX,
 
-        CAPITALIZATON,
+    CAPITALIZATON,
 
-        PROGRESS,
+    PROGRESS,
 
-        DOWNGRADE
-    }
+    DOWNGRADE
 }
+
