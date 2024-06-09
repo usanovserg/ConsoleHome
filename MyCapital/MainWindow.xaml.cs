@@ -148,6 +148,7 @@ public partial class MainWindow : Window
         {
             int rnd = _random.Next(0, 100);
 
+            
             if (rnd <= percProfit)
             {
                 //Сделка прибыльная
@@ -226,6 +227,10 @@ public partial class MainWindow : Window
 
     private decimal GetDecimalFromString(string str)
     {
+        if (str.Contains("."))
+        {
+            str = str.Replace(".", ",");
+        }
         return decimal.TryParse(str, out decimal result) ? result : 0;
     }
 

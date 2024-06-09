@@ -21,8 +21,11 @@ namespace MyCapital.Entity
         public decimal Depo
         {
             get => _depo;
-            set => _depo = value;
-            
+            set
+            {
+                _depo = value;
+                ResultDepo = value;
+            }
         }
 
         private decimal _depo;
@@ -71,7 +74,7 @@ namespace MyCapital.Entity
         /// <summary>
         /// Максимальная относительная просадка в процентах
         /// </summary>
-        private decimal PercentDrawDown { get; set; }
+        public decimal PercentDrawDown { get; set; }
         
         private List<decimal> ListEquity = [];
 
@@ -86,13 +89,13 @@ namespace MyCapital.Entity
 
         private void CalcDrawDown()
         {
-            if (_max < ResultDepo)
+            if (ResultDepo > _max)
             {
                 _max = ResultDepo;
                 _min = ResultDepo;
             }
 
-            if (_min > ResultDepo)
+            if (ResultDepo < _min)
             {
                 _min = ResultDepo;
 
@@ -105,11 +108,9 @@ namespace MyCapital.Entity
 
         private void CalcPercentDrawDawn()
         {
-            if (ResultDepo != 0)
-            {
-                decimal percent = MaxDrawDown * 100 /ResultDepo;
-                if (percent > PercentDrawDown) PercentDrawDown = Math.Round(percent, 2);
-            }
+            if (ResultDepo == 0) return;
+            decimal percent = MaxDrawDown * 100 /ResultDepo;
+            if (percent > PercentDrawDown) PercentDrawDown = Math.Round(percent, 2);
         }
     }
 }
