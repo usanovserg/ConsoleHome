@@ -51,14 +51,12 @@ public partial class MainWindow : Window
         ComboBox? comboBox = sender as ComboBox;
         _indexCombo = comboBox.SelectedIndex;
 
-        if (_indexCountCalc > 0)
-        {
-            PlotCalc(_indexCombo, true);
-            CheckBoxState(this, null);
-        }
+        if (_indexCountCalc <= 0) return;
+        PlotCalc(_indexCombo, true);
+        CheckBoxState(this, null);
     }
 
-    private void CheckBoxState(object sender, EventArgs e)
+    private void CheckBoxState(object sender, EventArgs? e)
     {
         CheckBox[] checkBoxArray = [CB_Fix, CB_Cap, CB_Prog, CB_Dawn];
 
@@ -130,7 +128,7 @@ public partial class MainWindow : Window
         decimal minStartProcent = GetDecimalFromString(_minStartPercent.Text);
         decimal go = GetDecimalFromString(_go.Text);
 
-        List<Data> datas = new List<Data>();
+        List<Data> datas = [];
 
         foreach (StrategyType type in _strategies)
         {
