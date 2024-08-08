@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
         xmlns:vm="clr-namespace:Capital_Test.ViewModels"
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:entity="clr-namespace:Capital_Test.Entity"
         mc:Ignorable="d"
@@ -88,7 +88,7 @@
                     Padding="5,4,0,0"/>
 
 
-        <TextBlock Text="Открыть фйал" 
+        <TextBlock Text="Открыть файл" 
                                 FontSize="14" FontWeight="Bold" 
                                 Grid.Row="2"/>
 
@@ -218,21 +218,21 @@
                                         Name="CB24"
                                         IsChecked="{ Binding Path=IsActiv}"
                                         Content="{Binding  Path=Hour}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Checked">
-                                                <i:InvokeCommandAction Command="{Binding 
+                                        <b:Interaction.Triggers>
+                                            <b:EventTrigger EventName="Checked">
+                                                <b:InvokeCommandAction Command="{Binding 
                                                     Path=DataContext.CheckedCommand, RelativeSource=
                                                     {RelativeSource AncestorType=Window}}">
 
-                                                </i:InvokeCommandAction>
-                                            </i:EventTrigger>
-                                            <i:EventTrigger EventName="Unchecked">
-                                                <i:InvokeCommandAction Command="{Binding 
+                                                </b:InvokeCommandAction>
+                                            </b:EventTrigger>
+                                            <b:EventTrigger EventName="Unchecked">
+                                                <b:InvokeCommandAction Command="{Binding 
                                                     Path=DataContext.CheckedCommand, RelativeSource=
                                                     {RelativeSource AncestorType=Window}}">
-                                                </i:InvokeCommandAction>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
+                                                </b:InvokeCommandAction>
+                                            </b:EventTrigger>
+                                        </b:Interaction.Triggers>
                                     </CheckBox>
                                     <ProgressBar Maximum="{Binding Path=Maximum}"
                                                  Minimum="0"

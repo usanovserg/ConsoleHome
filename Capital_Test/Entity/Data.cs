@@ -39,7 +39,7 @@ namespace Capital_Test.Entity;
     {
         _resultDepo = Math.Round(value, 2);
         Profit = ResultDepo - Depo;
-        PercentProfit = Math.Round((Profit * 100 / Depo), 2);
+        PercentProfit = Math.Round(Profit * 100 / Depo, 2);
         ListEquity.Add(ResultDepo);
         CalcDrawDown();
     }

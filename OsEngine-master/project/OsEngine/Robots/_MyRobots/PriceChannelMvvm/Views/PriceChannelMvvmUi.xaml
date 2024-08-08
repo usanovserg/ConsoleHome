@@ -1,0 +1,161 @@
+﻿<Window x:Class="OsEngine.Robots._MyRobots.PriceChannelMvvm.Views.PriceChannelMvvmUi"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OsEngine.Robots._MyRobots.PriceChannelMvvm.Views"
+        xmlns:vm="clr-namespace:OsEngine.Robots._MyRobots.PriceChannelMvvm.ViewModels"
+
+        xmlns:service="clr-namespace:OsEngine.Robots._MyRobots.Services" 
+
+        d:DataContext="{d:DesignInstance Type=vm:Vm}"
+        mc:Ignorable="d"
+
+        Title="PriceChannelMvvmUi" 
+        Height="370" 
+        Width="550"
+        Topmost="True"
+        WindowStyle="SingleBorderWindow"
+
+        WindowStartupLocation="CenterScreen"
+        Background="#FF151A1E">
+
+    <Window.Resources>
+        <service:NumberRow x:Key="NumberRow"/>
+        <service:DateFormatConverter x:Key="DateFormatConverter"/>
+        <service:VolumeSelectorConverter x:Key="VolumeSelectorConverter"/>
+        <service:RoundNumberConverter x:Key="RoundNumberConverter"/>
+
+
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGrid}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="HorizontalContentAlignment"  Value="Center"/>
+            <Setter Property="Margin"  Value="0,10,0,0"/>
+        </Style>
+
+        <Style TargetType="DataGridCell" x:Key="CustomCellStyleKey">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <StackPanel Orientation="Vertical" Height="40">
+                            <ContentPresenter Content="{Binding value, Converter={StaticResource DateFormatConverter}, ConverterParameter='dd.MM.yy'}"
+                                          HorizontalAlignment="Center"/>
+                            <ContentPresenter Content="{Binding value, Converter={StaticResource DateFormatConverter}, ConverterParameter='H:mm'}"
+                                          HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style  TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="Azure"/>
+            <Setter Property="Margin" Value="10,0,0,0"/>
+            <Setter Property="Width" Value="120"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Width" Value="90"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Azure"/>
+            <Setter Property="Margin" Value="0,2,0,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style  TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Foreground" Value="Azure"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style  TargetType="{x:Type DataGridRow}">
+            <Setter Property="Foreground" Value="Azure"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="-6,10,0,0"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!--<Style  TargetType="{x:Type DataGridCell}">
+        <Setter Property="HorizontalContentAlignment"  Value="Center"/>
+    </Style>-->
+
+        <Style x:Key="DGrid1" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="LightGray">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Моя Программа" Margin="10,0,0,0"/>
+                <Button Content="X"  Margin="0,0,10,0"
+                        HorizontalAlignment="Right"/>
+            </StackPanel>
+        </Border>-->
+
+
+        <StackPanel Grid.Row="0" >
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Прайс ченнел верх"/>
+                <TextBox Text="{Binding Path=PcUpLength, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=250}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Прайс ченнел низ"/>
+                <TextBox Text="{Binding Path=PcDownLength, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=250}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Лот"/>
+                <TextBox Text="{Binding Lot, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=250}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Риск"/>
+                <TextBox Text="{Binding Risk, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=250}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Размер портфеля"/>
+                <TextBox Text="{Binding PortfolioSize, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=250}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Фиксированный лот"/>
+                <CheckBox/>
+            </StackPanel>
+
+            <ComboBox 
+                ItemsSource="{Binding RegimeSelect}"
+                SelectedItem="{Binding RegimeSelectedItem}"
+                Margin="05,10,0,0"
+                HorizontalAlignment="Left"
+                Width="215" 
+                SelectedIndex="0" BorderBrush="#FFABADB3"/>
+
+            <Button Content="{Binding ButtonContent}"
+                    Command="{Binding StartCommand}"
+                    Width="215"
+                    Margin="05,20,20,0"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Center"/>
+
+        </StackPanel>
+    </Grid>
+</Window>

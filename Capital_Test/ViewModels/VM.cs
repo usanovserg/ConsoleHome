@@ -47,7 +47,7 @@ public partial class VM : ObservableRecipient
 
     public ObservableCollection<Data> Datas { get; set; } = [];
     public List<List<PnlHour>> WeekHours { get; set; }
-    public List<StrategyType> Strategies { get; set; }
+    public List<StrategyType> Strategies { get; set; } = new List<StrategyType>();
 
 
     public WpfPlot WpfPlot { get; init; } = new WpfPlot();
@@ -55,7 +55,7 @@ public partial class VM : ObservableRecipient
 
     private decimal ResultDepo;
     private static decimal _max = 0;
-    private static List<PnlDateTime> _pnls;
+    private static List<PnlDateTime>? _pnls;
     private string? _fileName;
 
     [ObservableProperty] public bool checkChanged = false;
@@ -100,14 +100,7 @@ public partial class VM : ObservableRecipient
 
         for (int i = 0; i < 4; i++)
         {
-            if (i != ComboBoxSelectedIndex)
-            {
-                CheckBoxes[i] = false;
-            }
-            else
-            {
-                CheckBoxes[i] = true;
-            }
+            CheckBoxes[i] = i == ComboBoxSelectedIndex;
         }
         IsCheckedFix = CheckBoxes[0];
         IsCheckedCap = CheckBoxes[1];
@@ -293,7 +286,7 @@ public partial class VM : ObservableRecipient
     {
         try
         {
-            List<PnlDateTime> pnls = [];
+            List<PnlDateTime>? pnls = [];
 
             if (string.IsNullOrEmpty(_fileName)) return;
 
@@ -412,6 +405,8 @@ public partial class VM : ObservableRecipient
             WpfPlot.Plot.Clear();
         }
 
+
+        //WpfPlot.Plot.Clear();
         WpfPlot.Plot.Add.ScatterLine(dataX1, dataY1, color);
         WpfPlot.Plot.Axes.AutoScale();
         WpfPlot.Refresh();

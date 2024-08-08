@@ -1,0 +1,28 @@
+﻿<Window x:Class="OsEngine.Market.ServerMasterUi_"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+
+                 xmlns:vm="clr-namespace:OsEngine.ViewModels"
+ 
+                 xmlns:service="clr-namespace:OsEngine.Robots._MyRobots.Services"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:local="clr-namespace:OsEngine.Market"
+
+                 d:DataContext="{d:DesignInstance Type=vm:MyRobotsVM}"
+                 mc:Ignorable="d"
+                 Title="Router" Height="650" Width="600" WindowStartupLocation="CenterScreen"   Icon="/Images/OsLogo.ico">
+    <Window.Resources>
+        <service:TestConvertor x:Key="TestConvertor" />
+    </Window.Resources>
+
+    <Window.DataContext>
+        <vm:MyRobotsVM/>
+    </Window.DataContext>
+
+    <Grid>
+        <TextBlock Text="{Binding ServersTypes}" />
+    </Grid>
+</Window>
