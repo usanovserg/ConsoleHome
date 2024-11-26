@@ -6,5 +6,6 @@ using System.Threading.Tasks;
 
 namespace ConsoleHome {
     internal class DZ3 {
+        //
     }
 }
