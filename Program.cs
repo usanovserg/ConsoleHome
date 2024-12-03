@@ -15,7 +15,12 @@ void T_Elapsed(object? sender, ElapsedEventArgs e) {
     p.OnTrade(t);
     Console.WriteLine(p);
 }
-;
+
+p.onPositionChangeDelegate += P_onPositionChangeDelegate;
+
+void P_onPositionChangeDelegate(decimal size) {
+    Console.WriteLine($"delegateCall: новый размер позиции: {size}");
+}
 
 Timer t = new Timer();
 t.Interval = 1000;

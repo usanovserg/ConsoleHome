@@ -14,6 +14,9 @@ namespace ConsoleHome {
         public decimal fixed_value;
         public decimal last_price;
         public decimal closed_vol;
+
+        public delegate void OnPositionChangeDelegate(decimal PositionSize);
+        public event OnPositionChangeDelegate onPositionChangeDelegate;
         public Position(string sec_code) {
             this.sec_code = sec_code;
             total_vol = 0;
@@ -49,6 +52,7 @@ namespace ConsoleHome {
             last_price = trade.price;
 
             live_value = (last_price-avg_price) * total_vol;
+            onPositionChangeDelegate(total_vol);
         }
         public override string ToString() {
             return $"{sec_code} avg_price={avg_price:f2} vol={total_vol} last_price={last_price:f2} value={live_value+fixed_value:f2} live={live_value:f2} fixed={fixed_value:f2}";
