@@ -32,8 +32,8 @@ namespace ConsoleHome.Service
         {
             int priceDelta = random.Next(-100, 100);
             
-            Order trade = strategy.Trade(currentPrice, currentPrice + priceDelta);
-            UpatePosition(trade);
+            Order order = strategy.Trade(currentPrice, currentPrice + priceDelta);
+            UpatePosition(order);
             
             currentPrice += priceDelta;
 
