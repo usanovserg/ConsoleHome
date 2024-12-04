@@ -6,6 +6,6 @@ namespace ConsoleHome.Service
     {
         void Init();
         void ShowInfo();
-        Trade Trade(decimal oldPrice, decimal newPrice);
+        Order Trade(decimal oldPrice, decimal newPrice);
     }
 }

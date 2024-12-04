@@ -42,18 +42,20 @@ namespace ConsoleHome.Strategy
             }
         }
 
-        public Trade Trade(decimal oldPrice, decimal newPrice)
+        public Order Trade(decimal oldPrice, decimal newPrice)
         {
-            int next = rnd.Next(-1, 1);
+            int next = rnd.Next(-1, 2);
             if (next < 0)
             {
-                Trade trade = new Trade();
+                Order trade = new Order();
                 trade.price = newPrice;
+                trade.secCode = "SBERP";
                 trade.volume = Level.DEFAULT_LOT;
                 return trade;
             } else if (next > 0) {
-                Trade trade = new Trade();
+                Order trade = new Order();
                 trade.price = newPrice;
+                trade.secCode = "SBERP";
                 trade.volume = -Level.DEFAULT_LOT;
                 return trade;
             }

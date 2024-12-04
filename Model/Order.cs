@@ -2,7 +2,7 @@
 
 namespace ConsoleHome.Model
 {
-    public class Trade
+    public class Order
     {
         #region Fields
 

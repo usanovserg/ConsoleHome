@@ -8,9 +8,13 @@ namespace ConsoleHome.Model
         public PositionDirection direction;
         public decimal price;
         public decimal volume;
-        public string SecCode = null;
-        public string ClassCode = null;
-        public string Portfolio = null;
-        public DateTime CreateTime = DateTime.MinValue;
+        public string secCode = null;
+        public string classCode = null;
+        public string portfolio = null;
+        public decimal takeProfitPrice;
+        public decimal stopLossPrice;
+        public DateTime openTime = DateTime.MinValue;
+        public DateTime closeTime = DateTime.MinValue;
+
     }
 }

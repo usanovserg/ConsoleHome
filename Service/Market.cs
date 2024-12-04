@@ -32,37 +32,39 @@ namespace ConsoleHome.Service
         {
             int priceDelta = random.Next(-100, 100);
             
-            Trade trade = strategy.Trade(currentPrice, priceDelta);
+            Order trade = strategy.Trade(currentPrice, currentPrice + priceDelta);
             UpatePosition(trade);
             
             currentPrice += priceDelta;
 
         }
 
-        private void UpatePosition(Trade trade)
+        private void UpatePosition(Order order)
         {
-            if (trade == null)
+            if (order == null)
             {
                 return;
             }
             if (position == null)
             {
                 position = new Position();
+                position.openTime = DateTime.Now;
+                Console.WriteLine($"Position opened at {position.openTime}");
             }
-            position.price = trade.price;
-            position.volume += trade.volume;
-            if (position.volume > 0)
+            position.price = order.price;
+            position.volume += order.volume;
+            position.direction = position.volume > 0 ? PositionDirection.Long : PositionDirection.Short;
+            position.secCode = order.secCode;
+            if (position.volume == 0)
             {
-                position.direction = PositionDirection.Long;
-            }
-            else if (position.volume < 0)
-            {
-                position.direction = PositionDirection.Short;
-            } else
-            {
+                position.closeTime = DateTime.Now;
+                Console.WriteLine($"Position closed at {position.closeTime}");
                 position = null;
             }
-            Console.WriteLine($"Position: {position?.volume} lots at price {position?.price}");
+            else
+            {
+                Console.WriteLine($"SecCode: {position.secCode}; Price: {position.price}; Volume: {position.volume}; Direction: {position.direction}");
+            }
         }
     }
 }
