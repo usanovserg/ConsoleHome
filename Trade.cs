@@ -18,7 +18,7 @@ namespace myConsole
 
         public string Symbol = "";  // инструмент для торговли
 
-        public static decimal VolumePosition = 0;
+        public static decimal VolumePosition = 0;  // объем полной позиции
 
         public string SecCode = ""; // название инструмента
 
