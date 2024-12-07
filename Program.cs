@@ -11,7 +11,10 @@ namespace Urok_1_5
     {
         static void Main(string[] args)
         {
-            levels = new List<decimal>();
+
+            Hhbjknk();
+
+            levels = new List<Level>();
 
             WriteLine();
 
@@ -27,6 +30,10 @@ namespace Urok_1_5
 
             StepLevel = decimal.Parse(str);
 
+            str = ReadLine("Введите лот на уровень: ");
+
+            lotLevel = decimal.Parse(str);
+
             WriteLine();
 
             Console.ReadLine();
@@ -36,15 +43,19 @@ namespace Urok_1_5
 
         #region Fields
 
-        static List<decimal> levels;
+        static List<Level> levels;
+
         static decimal priceUp;
+
         static int contLevels;
+
+        static decimal lotLevel;
 
         //==========================
 
         static Trade trade = new Trade();
 
-
+        
         #endregion
 
         //=========================================== Properties ========================================
@@ -64,13 +75,7 @@ namespace Urok_1_5
                 {
                     stepLevel = value;
 
-                    decimal priceLevel = priceUp;
-
-                    for (int i = 0; i < contLevels; i++)
-                    {
-                        levels.Add(priceLevel);
-                        priceLevel -= stepLevel;
-                    }
+                    levels = Level.Calculate(priceUp, stepLevel, contLevels);
                 }
 
             }
@@ -83,14 +88,13 @@ namespace Urok_1_5
 
         #region Methods
 
-
         static void WriteLine()
         {
             Console.WriteLine("Количество элементов в списке: " + levels.Count.ToString());
 
             for (int i = 0; i < levels.Count; i++)
             {
-                Console.WriteLine(levels[i]);
+                Console.WriteLine(levels[i].PriceLevel);
             }
         }
 
@@ -103,9 +107,8 @@ namespace Urok_1_5
 
         static void Hhbjknk()
         {
-            trade.Price = 2225;
-
-            trade.Volume = 232325656;
+            Level level = new Level();
+            level.PriceLevel = 9900;
 
         }
 
