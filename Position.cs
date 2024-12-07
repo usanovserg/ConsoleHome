@@ -41,7 +41,7 @@ namespace myConsole
 
             trade.Price = random.Next(70000, 80000);
 
-            Trade.VolumePosition += trade.Volume;
+            Trade.VolumePosition += num;
 
             string str = $"Volume = {trade.Volume.ToString()} / Price = {trade.Price.ToString()} / Direction = {trade.direction} " +
                 $" / Symbol = {trade.Symbol} / VolumePosition = {Trade.VolumePosition}";
