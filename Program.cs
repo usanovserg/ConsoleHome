@@ -5,13 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Urok_1_5
+namespace myConsole
 {
     internal class Program
     {
         static void Main(string[] args)
         {
 
+            Position position = new Position();
+
+            /*
             Hhbjknk();
 
             levels = new List<Level>();
@@ -36,9 +39,11 @@ namespace Urok_1_5
 
             WriteLine();
 
+            */
+
             Console.ReadLine();
         }
-
+        
         //============================================ Fields ==========================================
 
         #region Fields

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Urok_1_5
+namespace myConsole
 {
     public class Trade
     {
@@ -13,6 +13,12 @@ namespace Urok_1_5
         #region Fields
 
         public decimal Price = 0;
+
+        public Direction direction;  // enum для направления ордера
+
+        public string Symbol = "";  // инструмент для торговли
+
+        public static decimal VolumePosition = 0;
 
         public string SecCode = ""; // название инструмента
 

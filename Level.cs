@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Urok_1_5
+namespace myConsole
 {
     public class Level
     {
