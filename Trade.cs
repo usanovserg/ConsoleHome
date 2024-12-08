@@ -49,6 +49,19 @@ namespace myConsole
         }
         decimal _volume = 0;
 
+        public static decimal AvgPrice  // средняя цена позиции для примера (расчитывается не правильно)
+        {
+            get
+            {
+                return _avgPrice;
+            }
+            set
+            {
+                _avgPrice = value;
+            }
+        }
+        public static decimal _avgPrice = 0;
+
         #endregion
 
         //============================================ Methods ==========================================
