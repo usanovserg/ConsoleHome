@@ -48,23 +48,25 @@ namespace ConsoleHome.Service
             if (position == null)
             {
                 position = new Position();
+                position.PositionUpdated += OnPositionUpdated;
                 position.openTime = DateTime.Now;
                 Console.WriteLine($"Position opened at {position.openTime}");
             }
             position.price = order.price;
-            position.volume += order.volume;
             position.direction = position.volume > 0 ? PositionDirection.Long : PositionDirection.Short;
             position.secCode = order.secCode;
+            position.Volume += order.volume;
             if (position.volume == 0)
             {
                 position.closeTime = DateTime.Now;
                 Console.WriteLine($"Position closed at {position.closeTime}");
                 position = null;
             }
-            else
-            {
-                Console.WriteLine($"SecCode: {position.secCode}; Price: {position.price}; Volume: {position.volume}; Direction: {position.direction}");
-            }
+        }
+
+        private void OnPositionUpdated(decimal newPrice, decimal newVolume)
+        {
+            Console.WriteLine($"SecCode: {position.secCode}; Price: {newPrice}; Volume: {newVolume}; Direction: {position.direction}");
         }
     }
 }
