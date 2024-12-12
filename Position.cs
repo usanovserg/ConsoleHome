@@ -20,6 +20,17 @@ namespace myConsole
 
         Random random = new Random();
 
+
+        //============================================ Fields ==========================================
+
+        #region Fields
+
+
+        #endregion
+
+        //============================================ Methods ==========================================
+
+        #region Methods
         private void NewTrade(object? sender, ElapsedEventArgs e)  // метод работает в паралельном потоке
         {
             Trade trade = new Trade();
@@ -37,6 +48,7 @@ namespace myConsole
                 trade.direction = Direction.Sell;
             }
 
+
             trade.Volume = Math.Abs(num);
 
             trade.Price = random.Next(70000, 80000);
@@ -49,6 +61,23 @@ namespace myConsole
                 $" / Symbol = {trade.Symbol} / VolumePosition = {Trade.VolumePosition} / AvgPrice = {Trade.AvgPrice}";
 
             Console.WriteLine(str);
+
+            ChangePosition_delegat();  // запускаеем длегат
+
+            ChangePosition_event();  // запускаеем событие
+
+            #endregion
         }
+
+        public delegate void changePosition(); // создаем тип делегат
+        changePosition ChangePosition_delegat;  // создаем переменную типа делегат
+
+        public event changePosition ChangePosition_event;  // создаем событие
+
+        public void AddDelegat(changePosition method)
+        {
+            ChangePosition_delegat = method; // ссылка на метод записывается в переменную делегат
+        }
+
     }
 }

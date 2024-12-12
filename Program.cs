@@ -14,6 +14,10 @@ namespace myConsole
 
             Position position = new Position();
 
+            position.AddDelegat(WriteLine_delegat);
+
+            position.ChangePosition_event += WriteLine_event;
+
             /*
             Hhbjknk();
 
@@ -114,9 +118,17 @@ namespace myConsole
         {
             Level level = new Level();
             level.PriceLevel = 9900;
-
         }
 
+        public static void WriteLine_delegat()
+        {
+            Console.WriteLine($"Сработал delegat. Позиция изменилась. Текущая позиция: {Trade.VolumePosition}");
+        }
+
+        public static void WriteLine_event()
+        {
+            Console.WriteLine($"Сработал event. Позиция изменилась. Средняя цена позиции: {Trade.AvgPrice}");
+        }
         #endregion
     }
 }
