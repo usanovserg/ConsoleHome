@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace УровниСетки
@@ -9,45 +10,80 @@ namespace УровниСетки
     internal class Program
     {
         static void Main(string[] args)
-        {
-            List<decimal> levels = new List<decimal>();
+        {            
+            levels = new List<decimal>();
 
-            Console.WriteLine("Введите верхнию чену(знак припенания , ) : ");
+            WriteLine();
 
-            string str = Console.ReadLine();
+            string str = ReadLine("Введите верхнию цену(знак припенания , ) : ");          
 
             decimal priceUp = decimal.Parse(str);
 
-            Console.WriteLine("Введите нижнию чену: ");
-
-            str = Console.ReadLine();
-
+            str = ReadLine("Введите нижнию чену: ");
+                        
             decimal priceDown = decimal.Parse(str);
 
-            Console.WriteLine("Введите шаг уровня: ");
+            str = ReadLine("Введите шаг уровня: ");            
 
-            str = Console.ReadLine();
+            StepLevel = int.Parse(str);            
 
+            WriteLine();
 
-            decimal stepLevel = decimal.Parse(str);
-
-            decimal stepPrice = priceUp;
-
-            int count = (int)((priceUp - priceDown) / stepLevel);
-
-            for (decimal i = 0; i < count; i++) 
-            {
-                levels.Add(stepPrice);
-
-                stepPrice -= stepLevel;
-
-            }
-            for (int i = 0; i < count; i++)
-            {
-                Console.WriteLine(levels[i]);    
-
-            }
             Console.ReadLine();
+        }        
+
+        //static decimal StepLevel { get; set; }     .. сокращенная запись свойства
+
+        public static int StepLevel    //развернутая запись свойства
+        {
+            get
+            {
+                return stepLevel;
+            }
+
+            set
+            {
+                if (value <= 100) //проверка на коректность
+                {
+                    stepLevel = value;
+
+                    decimal stepPrice = priceUp;
+
+                    int count = (int)((priceUp - priceDown) / stepLevel);
+
+                    for (decimal i = 0; i < count; i++)
+                    {
+                        levels.Add(stepPrice);
+
+                        stepPrice -= stepLevel;
+                    }
+                }
+            }
         }
+
+        static List<decimal> levels;  //поле
+
+        static int stepLevel; //поле
+
+        static decimal priceUp;
+
+        static decimal priceDown;
+
+        static void WriteLine()
+        {
+            Console.WriteLine("Количество элементов в списке: " + levels.Count.ToString());
+
+            for (int i = 0; i < levels.Count; i++)
+            {
+                Console.WriteLine(levels[i]);
+            }           
+        }
+
+        static string ReadLine(string message)
+        {
+            Console.WriteLine(message);
+
+            return Console.ReadLine(); 
+        }          
     }
 }
