@@ -14,9 +14,9 @@ namespace myConsole
 
             Position position = new Position();
 
-            position.AddDelegat(WriteLine_delegat);
+            position.AddDelegat(WriteLine_delegat);  // вызываем метод для добавления ссылки на метод (кот. в параметрах) в делегат
 
-            position.ChangePosition_event += WriteLine_event;
+            position.ChangePosition_event += WriteLine_event;  // Сразу добавляем ссылку на метод в событие
 
             /*
             Hhbjknk();
