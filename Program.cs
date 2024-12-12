@@ -34,7 +34,7 @@ namespace УровниСетки
 
         //static decimal StepLevel { get; set; }     .. сокращенная запись свойства
 
-        public static int StepLevel    //развернутая запись свойства
+        public static int StepLevel    //развернутая запись свойства ( в ней можно расписывать различные действия)
         {
             get
             {
@@ -49,7 +49,7 @@ namespace УровниСетки
 
                     decimal stepPrice = priceUp;
 
-                    int count = (int)((priceUp - priceDown) / stepLevel);
+                    int count = (int)((priceUp - priceDown) / stepLevel);  // для СЕРГЕЯ ; запутался в этой формуле, не могу понять почему не считает
 
                     for (decimal i = 0; i < count; i++)
                     {
@@ -61,7 +61,7 @@ namespace УровниСетки
             }
         }
 
-        static List<decimal> levels;  //поле
+        static List<decimal> levels;  //поле        для СЕРГЕЯ ; почему null
 
         static int stepLevel; //поле
 
@@ -83,7 +83,7 @@ namespace УровниСетки
         {
             Console.WriteLine(message);
 
-            return Console.ReadLine(); 
+            return Console.ReadLine();       //   для СЕРГЕЯ   что не нравиться
         }          
     }
 }
