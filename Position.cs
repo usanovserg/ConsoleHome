@@ -11,7 +11,7 @@ namespace myConsole
         {
             Timer timer = new Timer();  // создаем объект класса Timer
 
-            timer.Interval = 3000;   // ставим в свойствах класса интервал (какого то действия)
+            timer.Interval = 5000;   // ставим в свойствах класса интервал (какого то действия)
 
             timer.Elapsed += NewTrade;  // после каждого интервала будет вызываться метод Timer_Elapsed
 
