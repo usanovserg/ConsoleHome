@@ -63,16 +63,6 @@ namespace myConsole
         public static decimal _avgPrice = 0;
 
         #endregion
-
-        //============================================ Methods ==========================================
-
-        #region Methods
-
-
-
-        #endregion
-
-
     }
 }
 

@@ -43,7 +43,7 @@ namespace myConsole
 
             Trade.VolumePosition += num;
 
-            Trade.AvgPrice = trade.Price;
+            Trade.AvgPrice = trade.Price; // средняя цена позиции для примера (расчитывается не правильно)
 
             string str = $"Volume = {trade.Volume.ToString()} / Price = {trade.Price.ToString()} / Direction = {trade.direction} " +
                 $" / Symbol = {trade.Symbol} / VolumePosition = {Trade.VolumePosition} / AvgPrice = {Trade.AvgPrice}";
