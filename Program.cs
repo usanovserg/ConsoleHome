@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,31 +11,34 @@ namespace УровниСетки
     internal class Program
     {
         static void Main(string[] args)
-        {            
+        {    
+            Position position = new Position();
+           
+                /*
             levels = new List<decimal>();
 
             WriteLine();
 
-            string str = ReadLine("Введите верхнию цену(знак припенания , ) : ");          
-
-            decimal priceUp = decimal.Parse(str);
+            string str = ReadLine("Введите верхнию цену(знак припенания , ) : ");               
+            
+            priceUp = decimal.Parse(str);
 
             str = ReadLine("Введите нижнию чену: ");
                         
-            decimal priceDown = decimal.Parse(str);
+            priceDown = decimal.Parse(str);
 
             str = ReadLine("Введите шаг уровня: ");            
 
-            StepLevel = int.Parse(str);            
+            StepLevel = decimal.Parse(str);            
 
             WriteLine();
-
+            */
             Console.ReadLine();
         }        
 
         //static decimal StepLevel { get; set; }     .. сокращенная запись свойства
 
-        public static int StepLevel    //развернутая запись свойства ( в ней можно расписывать различные действия)
+        public static decimal StepLevel    //развернутая запись свойства ( в ней можно расписывать различные действия)
         {
             get
             {
@@ -49,21 +53,24 @@ namespace УровниСетки
 
                     decimal stepPrice = priceUp;
 
-                    int count = (int)((priceUp - priceDown) / stepLevel);  // для СЕРГЕЯ ; запутался в этой формуле, не могу понять почему не считает
+                    int count = (int)((priceUp - priceDown) / stepLevel);  
 
-                    for (decimal i = 0; i < count; i++)
+                    if (levels != null)
                     {
-                        levels.Add(stepPrice);
+                        for (decimal i = 0; i < count; i++)
+                        {
+                            levels.Add(stepPrice);
 
-                        stepPrice -= stepLevel;
-                    }
+                            stepPrice -= stepLevel;
+                        }
+                    }                    
                 }
             }
         }
 
-        static List<decimal> levels;  //поле        для СЕРГЕЯ ; почему null
+        static List<decimal> levels = null!;  //поле        ! точно не будет null
 
-        static int stepLevel; //поле
+        static decimal stepLevel; //поле
 
         static decimal priceUp;
 
@@ -83,7 +90,11 @@ namespace УровниСетки
         {
             Console.WriteLine(message);
 
-            return Console.ReadLine();       //   для СЕРГЕЯ   что не нравиться
+            string? str = Console.ReadLine();
+
+            if (str == null) return "";
+
+            return str;       
         }          
     }
 }
