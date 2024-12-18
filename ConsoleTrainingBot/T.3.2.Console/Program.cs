@@ -19,12 +19,23 @@ namespace ConsoleTrainingBot
         {
             //PriceBoard price_board = new PriceBoard();
             //price_board.SetLowPrice().SetHighPrice().SetPriceStep().FillPriceList().PrintPriceList(System.Console.Out);
+            
+            Portfolio portfolio = new Portfolio();
 
+            //в этот файл будет выводиться информация о составе портфеле после каждой сделки
+            portfolio.FilePathToOutput = "PortfolioChanges.txt";
 
-            Position pos = new Position("RTS-12.24", "RTS", "SPBFUT123", "SPBFUT123", 1);
+            Position rtsPosition = new Position("RTS-12.24", "RTS", "SPBFUT123", "SPBFUT123", 1);
+            portfolio.SubscribeNewTrade(rtsPosition);
+            rtsPosition.Connect();
             Console.ReadLine();
+            //подписываемся на событие
+            //portfolio.SubscribeNewTrade(rtsPosition);
+
         }
     }
+
+   
 }
 
 

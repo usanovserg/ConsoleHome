@@ -7,9 +7,21 @@ using System.Threading.Tasks;
 using System.Timers;
 
 namespace ConsoleTrainingBot
-{
+{   
+    public class MyEventArgs : EventArgs
+    {
+        public Trade Trade { get; }
+
+        public MyEventArgs(Trade trade)
+        {
+            Trade = trade;
+        }
+    }
+
     internal class Position : ITimerInterface
-    {        
+    {
+        
+
         ///////////////////////////////////////Fields///////////////////////////////////////////
         #region Fields
 
@@ -34,9 +46,7 @@ namespace ConsoleTrainingBot
             trade.class_code = class_code;
             trade.trading_account = trading_account;
             trade.client_code = client_code;
-            trade.lot_volume = lot_volume;
-
-            timer = new IntervalTimerManager<Position>(this, 1000); // раз в секунду
+            trade.lot_volume = lot_volume;            
 
         }
 
@@ -45,10 +55,14 @@ namespace ConsoleTrainingBot
 
         ///////////////////////////////////////Methods//////////////////////////////////////////
         #region Methods
+        public void Connect ()
+        {
+            timer = new IntervalTimerManager<Position>(this, 1000); // раз в секунду
+        }
+
 
         public void TimerElapsed(object sender, ElapsedEventArgs e)
         {
-
             Random random = new Random();
             int num = random.Next(-10, 10);
             if (num > 0)
@@ -63,16 +77,22 @@ namespace ConsoleTrainingBot
 
             trade.price = random.Next(95000, 120000); // будем реалистами
             trade.lot_quantity = Math.Abs(num);
-            trade.volume = trade.lot_quantity * trade.price* trade.lot_volume;
+            trade.volume = trade.lot_quantity * trade.price * trade.lot_volume;
             trade.data_time = DateTime.Now;
             trade.PrintTrade();
+            OnTradeNotify(new MyEventArgs(trade));
+
+
         }
 
         #endregion
 
-
+        public event EventHandler<MyEventArgs> TradeNotify;
+        void OnTradeNotify (MyEventArgs evenArgs)
+        {
+            Console.WriteLine("вызвано событие");
+            TradeNotify?.Invoke(this, evenArgs);
+            
+        }
     }
-
-
-
 }
