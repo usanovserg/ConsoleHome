@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -21,7 +21,7 @@ namespace ConsoleHome
 
             timer.Start();
         }
-
+        
         Random random = new Random();
 
         private void NewTrade(object? sender, ElapsedEventArgs e)
@@ -45,7 +45,8 @@ namespace ConsoleHome
 
             string str = "Volume =  " + trade.Volume.ToString() + " / Price = " + trade.Price.ToString();
 
-            Console.WriteLine(str);
+            Console.WriteLine(str); 
         }
     }
 }
+*/
