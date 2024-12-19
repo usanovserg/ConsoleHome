@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace УровниСетки
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {    
-            Position position = new Position();
            
                 /*
             levels = new List<decimal>();
@@ -68,13 +67,10 @@ namespace УровниСетки
             }
         }
 
-        static List<decimal> levels = null!;  //поле        ! точно не будет null
 
-        static decimal stepLevel; //поле
+        #endregion
 
-        static decimal priceUp;
 
-        static decimal priceDown;
 
         static void WriteLine()
         {
