@@ -11,6 +11,9 @@ namespace УровниСетки
 {
     public class Program
     {
+        Position position = new Position();
+
+        /*
         static void Main(string[] args)
         {
                        
@@ -37,7 +40,7 @@ namespace УровниСетки
             WriteLine();
        
             Console.ReadLine();
-        }       
+        }       */
 
         static Trade trade = new Trade();
         
