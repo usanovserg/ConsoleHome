@@ -9,13 +9,9 @@
         /// цена инструмента        
         /// </summary>
         public decimal Price = 0;
-
         public string SecCode = "";
-
         public string ClassCode = "";
-
         public string Portfolio = "";
-
         public DateTime DateTime = DateTime.MinValue;
 
         #endregion
@@ -37,7 +33,7 @@
             }
 
         }
-        decimal _volume = 0;// приватные поля с нижнего подчеркивания и с маленькой буквы
+        decimal _volume = 0;    // приватные поля с нижнего подчеркивания и с маленькой буквы
 
         #endregion
 

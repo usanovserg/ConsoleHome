@@ -9,9 +9,7 @@ namespace ConsoleHome
     public class Level
     {
         public Level()   //можно сделать по другому, не используя конструктор
-        {
-
-           
+        {          
 
         }
         
@@ -45,7 +43,6 @@ namespace ConsoleHome
         public static List<Level> CalculatedLevels(decimal priceUp, decimal stepLevel, int count)
         {
             List<Level> levels = new List<Level>();
-
             decimal priceLevel = priceUp;                     
 
             if (levels != null)
@@ -53,20 +50,13 @@ namespace ConsoleHome
                 for (decimal i = 0; i < count; i++)
                 {
                     Level level = new Level() { PriceLevel = priceLevel };
-
                     levels.Add(level);
-
                     priceLevel -= stepLevel;
                 }
-
                 return levels;
             }
         }
     }
-
-
-        #endregion
-
-    
+        #endregion   
 
 }
