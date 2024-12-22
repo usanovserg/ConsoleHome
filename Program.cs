@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
-namespace УровниСетки
+namespace ConsoleHome
 {
     public class Program
     {       
@@ -61,7 +61,7 @@ namespace УровниСетки
                     int count = (int)((priceUp - priceDown) / stepLevel);
                     for (int i = 0; i < count; i++)
                     {
-                        levels.Add(priceLevel);
+                        levels?.Add(priceLevel);
                         priceLevel -= stepLevel;
                     }
 
@@ -81,9 +81,9 @@ namespace УровниСетки
 
         static void WriteLine()
         {
-            Console.WriteLine("Количество элементов в списке: " + levels.Count.ToString());
+            Console.WriteLine("Количество элементов в списке: " + levels?.Count.ToString());
 
-            for (int i = 0; i < levels.Count; i++)
+            for (int i = 0; i < levels?.Count; i++)
             {
                 Console.WriteLine(levels[i]);
             }
@@ -101,6 +101,7 @@ namespace УровниСетки
         {
             trade.Price = 22;
             trade.Volume = 22222;
+            string str = priceUp.ToString();
         }
 
 
