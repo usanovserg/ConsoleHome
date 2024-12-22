@@ -9,11 +9,10 @@ using System.Threading.Tasks;
 namespace УровниСетки
 {
     public class Program
-    {
-       
+    {       
+        static Trade trade = new Trade();  
         static void Main(string[] args)
         {
-
             levels = new List<decimal>();
             WriteLine();
             string str = ReadLine("Введите верхнию цену(знак припенания , ) : ");
@@ -34,12 +33,13 @@ namespace УровниСетки
         //============================================================= Fields =======================================
         #region Fields
 
-        static List<decimal> levels;  //поле       = null!   точно не будет null
+        static List<decimal>? levels;  //поле       = null!   точно не будет null  или можно ставить вопрос
         static decimal stepLevel; 
         static decimal priceUp;
         static decimal priceDown;
         static decimal lotlevel;
 
+       
         #endregion
 
 
@@ -68,10 +68,11 @@ namespace УровниСетки
                 }
             }
         }
+        
 
         #endregion
 
-        
+
 
 
 
@@ -96,9 +97,17 @@ namespace УровниСетки
             return Console.ReadLine();  //str;
         }
 
+        static void Fhjksk()
+        {
+            trade.Price = 22;
+            trade.Volume = 22222;
+        }
+
+
+
         #endregion
-       
-        
+
+
     }
     
 }
