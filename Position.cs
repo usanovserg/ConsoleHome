@@ -15,7 +15,7 @@ namespace ConsoleHome
         public string Symbol = "WLD";
         public decimal openPraci = 0;
         public decimal openVolume = 0;
-        
+        DateTime DateTime = DateTime.Now;
 
         
 
@@ -29,6 +29,7 @@ namespace ConsoleHome
         
         Random random = new Random();
 
+        
         private void NewTrade(object? sender, ElapsedEventArgs e)
         {
             Trade trade = new Trade();
@@ -36,6 +37,8 @@ namespace ConsoleHome
             trade.Volume = Math.Abs(num);
             trade.Price = random.Next(70000, 80000);
             trade.Symbol = Symbol;
+            trade.DateTime = DateTime;  
+            
 
             if (num > 0)
             {
@@ -45,11 +48,14 @@ namespace ConsoleHome
             else if (num < 0)
             {
                 // Short
+                
             }           
 
-            string str = "Volume =  " + trade.Volume.ToString() + " / Price = " + trade.Price.ToString();
+            string str = "Volume =  " + trade.Volume.ToString() + " / Price = " + trade.Price.ToString() + " / DateTime = " + trade.DateTime.ToString();
 
             Console.WriteLine(str); 
-        }
+            
+            
+        }        
     }
 }

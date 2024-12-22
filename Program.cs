@@ -11,10 +11,10 @@ namespace УровниСетки
 {
     public class Program
     {
-
+        
         Position position = new Position();
 
-        static Trade trade = new Trade();
+        static Trade trade = new Trade();        
         
         static void Main(string[] args)
         {
@@ -94,6 +94,8 @@ namespace УровниСетки
         }
 
         #endregion
+
+        
     }
     
 }
