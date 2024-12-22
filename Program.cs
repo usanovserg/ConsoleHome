@@ -1,8 +1,7 @@
 ﻿using ConsoleHome;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;                               // ВСЁ ЧТО ЗАКОМЕНТИРОВАНО ЯВЛЯЕТСЯ ПЕРВОНОЧАЛЬНОЙ ВЕРСИЕЙ
+using System.Linq;                               
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -11,15 +10,11 @@ namespace УровниСетки
 {
     public class Program
     {
-        
-        Position position = new Position();
-
-        static Trade trade = new Trade();        
-        
+       
         static void Main(string[] args)
         {
 
-            levels = new List<Level>();
+            levels = new List<decimal>();
             WriteLine();
             string str = ReadLine("Введите верхнию цену(знак припенания , ) : ");
             priceUp = decimal.Parse(str);
@@ -39,8 +34,8 @@ namespace УровниСетки
         //============================================================= Fields =======================================
         #region Fields
 
-        static List<Level> levels = null!;  //поле        ! точно не будет null
-        static decimal stepLevel; //поле
+        static List<decimal> levels;  //поле       = null!   точно не будет null
+        static decimal stepLevel; 
         static decimal priceUp;
         static decimal priceDown;
         static decimal lotlevel;
@@ -62,13 +57,21 @@ namespace УровниСетки
                 if (value <= 100)                                            //проверка на коректность
                 {
                     stepLevel = value;
+                    decimal priceLevel = priceUp;
                     int count = (int)((priceUp - priceDown) / stepLevel);
-                    levels = Level.CalculatedLevels(priceUp, stepLevel, count);
+                    for (int i = 0; i < count; i++)
+                    {
+                        levels.Add(priceLevel);
+                        priceLevel -= stepLevel;
+                    }
+
                 }
             }
         }
 
         #endregion
+
+        
 
 
 
@@ -81,20 +84,20 @@ namespace УровниСетки
 
             for (int i = 0; i < levels.Count; i++)
             {
-                Console.WriteLine(levels[i].PriceLevel);
+                Console.WriteLine(levels[i]);
             }
         }
 
         static string ReadLine(string message)
         {
             Console.WriteLine(message);
-            string? str = Console.ReadLine();
-            if (str == null) return "";
-            return str;
+            //string? str = Console.ReadLine();
+            // if (str == null) return "";
+            return Console.ReadLine();  //str;
         }
 
         #endregion
-
+       
         
     }
     
