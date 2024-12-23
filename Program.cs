@@ -11,9 +11,10 @@ namespace ConsoleHome
     public class Program
     {       
         static Trade trade = new Trade();  
+        
         static void Main(string[] args)
         {
-            levels = new List<decimal>();
+            levels = new List<Level>();
             WriteLine();
             string str = ReadLine("Введите верхнию цену(знак припенания , ) : ");
             priceUp = decimal.Parse(str);
@@ -33,8 +34,8 @@ namespace ConsoleHome
         //============================================================= Fields =======================================
         #region Fields
 
-        static List<decimal>? levels;  //поле       = null!   точно не будет null  или можно ставить вопрос
-        static decimal stepLevel; 
+        static List<Level>? levels;  //поле       = null!   точно не будет null  или можно ставить вопрос
+        static decimal stepLevel;
         static decimal priceUp;
         static decimal priceDown;
         static decimal lotlevel;
@@ -57,13 +58,7 @@ namespace ConsoleHome
                 if (value <= 100)                                            //проверка на коректность
                 {
                     stepLevel = value;
-                    decimal priceLevel = priceUp;
-                    int count = (int)((priceUp - priceDown) / stepLevel);
-                    for (int i = 0; i < count; i++)
-                    {
-                        levels?.Add(priceLevel);
-                        priceLevel -= stepLevel;
-                    }
+                    levels = Level.CalculateLevels(priceUp, stepLevel, priceDown);
 
                 }
             }
@@ -85,7 +80,7 @@ namespace ConsoleHome
 
             for (int i = 0; i < levels?.Count; i++)
             {
-                Console.WriteLine(levels[i]);
+                Console.WriteLine(levels[i].PriceLevel);
             }
         }
 
@@ -99,9 +94,8 @@ namespace ConsoleHome
 
         static void Fhjksk()
         {
-            trade.Price = 22;
-            trade.Volume = 22222;
-            string str = priceUp.ToString();
+            Level level = new Level();
+            level.PriceLevel = 9900;
         }
 
 

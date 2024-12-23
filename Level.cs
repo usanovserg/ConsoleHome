@@ -10,7 +10,7 @@ namespace ConsoleHome
     {
         public Level()
         {
-
+        
         }
 
         //================================================= Fields ======================================
@@ -23,11 +23,30 @@ namespace ConsoleHome
         /// <summary>
         /// лот на уровень
         /// </summary>
-        public decimal LotLevel = 0;
+        public static decimal LotLevel = 0;
         /// <summary>
         /// Открытый оъём на уровень
         /// </summary>
         public decimal Volume = 0;
+
+        #endregion
+
+        //============================================================= Methods ========================================
+        #region Methods
+
+        public static List<Level> CalculateLevels( decimal priceUp, decimal stepLevel, decimal priceDown)
+        {
+            List<Level> levels = new List<Level>();
+            decimal priceLevel = priceUp;            
+            int count = (int)((priceUp - priceDown) / stepLevel);  //надо притащит значение этих переменных
+            for (int i = 0; i < count; i++)
+            {
+                Level level = new Level() { PriceLevel = priceLevel };
+                levels?.Add(level);
+                priceLevel -= stepLevel;
+            }
+            return levels;
+        }
 
         #endregion
     }
