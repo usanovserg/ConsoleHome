@@ -11,9 +11,11 @@ namespace ConsoleHome
     public class Program
     {       
         static Trade trade = new Trade();  
-        
+       
         static void Main(string[] args)
         {
+            Position position = new Position();
+            /*
             levels = new List<Level>();
             WriteLine();
             string str = ReadLine("Введите верхнию цену(знак припенания , ) : ");
@@ -24,7 +26,7 @@ namespace ConsoleHome
             StepLevel = decimal.Parse(str);
             str = ReadLine("Введите лот на уровень: ");
             lotlevel = decimal.Parse(str);
-            WriteLine();
+            WriteLine();*/
             Console.ReadLine();
         }
         
