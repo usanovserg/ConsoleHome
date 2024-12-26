@@ -73,7 +73,7 @@ namespace ConsoleHome
 
             namber();
 
-            Save();
+           // Save();
             Console.ReadLine();
         }
         
@@ -184,13 +184,13 @@ namespace ConsoleHome
         }
         */
 
-        static void Save()
+        void Save()
         {
             using (StreamWriter writer = new StreamWriter("params.txt", false))  //можно писать так илил использовать try, catch , в params.txt записываем имя файла или путь к нему. 
             {                                                                    //false переписываем файл с нуля, true пишем в конце
-                writer.WriteLine(priceUp.ToString());
-                writer.WriteLine(stepLevel.ToString());
-                writer.WriteLine(priceDown.ToString());
+                //writer.WriteLine(priceUp.ToString());
+               // writer.WriteLine(stepLevel.ToString());
+               // writer.WriteLine(priceDown.ToString());
             }
         }
 
@@ -209,7 +209,7 @@ namespace ConsoleHome
 
                     if (index == 1)
                     {
-                        priceUp = decimal.Parse(line);
+                        //priceUp = decimal.Parse(line);
                     }
 
                     if (line == null) break;

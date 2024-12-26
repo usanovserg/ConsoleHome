@@ -7,7 +7,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using static ConsoleHome.Trade;
 using Timer = System.Timers.Timer;
+using System.
 
 namespace ConsoleHome
 {
@@ -38,13 +40,13 @@ namespace ConsoleHome
             int num = random.Next(-10, 10);
             if (num > 0)
             {
-                             
+                trade.
 
 
             }
             else if (num < 0)
             {
-                
+                trade.direction = Direction.Short;
             }
 
             trade.Volume = Math.Abs(num);

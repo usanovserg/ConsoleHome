@@ -45,6 +45,7 @@ namespace ConsoleHome
         /// </summary>
         public decimal PriceExit = 0;
 
+        public Direction direction;
         #endregion
 
 
@@ -67,7 +68,7 @@ namespace ConsoleHome
         }
         decimal _volume = 0;
 
-        public enum Direction : byte
+        public enum Direction 
         {
             Long,
             Short
