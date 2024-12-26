@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleHome.Enums
+namespace ConsoleHome
 {
-    public class Enum
+    internal class Enums
     {
         public Direction direction;
 
@@ -15,5 +15,6 @@ namespace ConsoleHome.Enums
             Long,
             Short
         }
+
     }
 }

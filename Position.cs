@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using static ConsoleHome.Trade;
 using Timer = System.Timers.Timer;
-using System.
+
 
 namespace ConsoleHome
 {
@@ -40,7 +40,7 @@ namespace ConsoleHome
             int num = random.Next(-10, 10);
             if (num > 0)
             {
-                trade.
+                trade.direction = Direction.Long;
 
 
             }
@@ -54,7 +54,7 @@ namespace ConsoleHome
             trade.AssetName = "WLD";
             trade.PriceEnter = random.Next(70000, 800000);
             trade.PriceExit = random.Next(60000, 900000);
-            string str = "AssetName = " + trade.AssetName.ToString() + " / Volume = " + trade.Volume.ToString() + " / Price = " + trade.Price.ToString() + " / PriceEnter = " + trade.PriceEnter.ToString() + " / PriceExit = " + trade.PriceExit.ToString();      
+            string str = "AssetName = " + trade.AssetName.ToString() + " / Short = " + trade.direction.ToString() + " / Volume = " + trade.Volume.ToString() + " / Price = " + trade.Price.ToString() + " / PriceEnter = " + trade.PriceEnter.ToString() + " / PriceExit = " + trade.PriceExit.ToString();      
             
             Console.WriteLine(str);            
         }       
