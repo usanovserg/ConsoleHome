@@ -28,6 +28,22 @@ namespace ConsoleHome
         /// название портфеля
         /// </summary>
         public string? Portfolie = "";
+        /// <summary>
+        /// напровление сделки
+        /// </summary>
+        public string DirectionTrade = "";
+        /// <summary>
+        /// имя актива
+        /// </summary>
+        public string AssetName = "WLD";
+        /// <summary>
+        /// цена входа
+        /// </summary>
+        public decimal PriceEnter = 0;
+        /// <summary>
+        /// цена выхода
+        /// </summary>
+        public decimal PriceExit = 0;
 
         #endregion
 
@@ -51,6 +67,12 @@ namespace ConsoleHome
         }
         decimal _volume = 0;
 
+        public enum Direction : byte
+        {
+            Long,
+            Short
+        }
+        
         #endregion
 
     }
