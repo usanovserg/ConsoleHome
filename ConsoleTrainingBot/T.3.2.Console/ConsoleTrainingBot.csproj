@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Levels.cs" />
+    <Compile Include="Portfolio.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="PriceBoard.cs" />
     <Compile Include="Program.cs" />

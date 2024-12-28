@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -69,13 +70,30 @@ namespace ConsoleTrainingBot
         /*public decimal Volume {
     get { return volume_; }
     set { volume_ = value; }  }*/
+public Trade (Trade trade) 
+        {
+            this.instrument_code = trade.instrument_code;
+            this.class_code = trade.class_code;
+            this.trading_account = trade.trading_account;
+            this.client_code = trade.client_code;
+            this.type_trade =trade.type_trade;
+            this.data_time = trade.data_time;
+            this.price = trade.price;
+            this.lot_volume = trade.lot_volume;
+            this.lot_quantity = trade.lot_quantity;
+            this.volume = trade.volume;
+        }
 
+        public Trade()
+        {
+        }
         public void PrintTrade ()
         {
             Console.WriteLine(
                 $"Код инструмента: {instrument_code}; " +
                 $"Тип сделки: {type_trade}; " +
                 $"Цена: {price}; " +
+                $"Количество ценных бумаг: {lot_quantity * lot_volume}; " +
                 //$"Код класса: {class_code}; " +
                 $"Время сделки: {data_time}; " +
                 $"Номер счета: {trading_account}; " +
