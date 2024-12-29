@@ -16,8 +16,7 @@ namespace ConsoleHome
         static Trade trade = new Trade();
 
         static void Main(string[] args)
-        {
-
+        {            
 
             /*string price = "100,1";   //ошибочное число
             int num = 0;
@@ -33,7 +32,6 @@ namespace ConsoleHome
                 Console.WriteLine(dec);     //пойдет дальше, не смогла спарсить ну и ладно главное не упала!
             }*/
 
-
             Connector.Connect();
             // Connector.AddDelegate(WriteLine);  Это вызов делегата
             Connector.NewTradeEvent += WriteLine;  // это событие и ему присваиваем метод который хотим в данном случае (WriteLine)
@@ -44,6 +42,8 @@ namespace ConsoleHome
             Position position = new Position();
 
             levels = new List<Level>();
+
+            Load();
 
             namber();
 
@@ -61,7 +61,7 @@ namespace ConsoleHome
                 }
             });
             */
-
+            
             string str = ReadLine("Введите верхнию цену(знак припенания , ) : ");
             priceUp = decimal.Parse(str);
             str = ReadLine("Введите нижнию чену: ");
@@ -73,7 +73,8 @@ namespace ConsoleHome
 
             namber();
 
-            // Save();
+            Save();
+
             Console.ReadLine();
         }
 
@@ -148,6 +149,63 @@ namespace ConsoleHome
             //level.PriceLevel = 9900;
             Console.WriteLine("Чего то вывели");
         }*/
+
+        static void Save()
+        {
+            using (StreamWriter writer = new StreamWriter("params.txt", false))  //можно писать так илил использовать try, catch , в params.txt записываем имя файла или путь к нему. 
+            {                                                                    //false переписываем файл с нуля, true пишем в конце
+                writer.WriteLine(priceUp.ToString());               
+                writer.WriteLine(priceDown.ToString());
+                writer.WriteLine(stepLevel.ToString());
+                writer.WriteLine(lotlevel.ToString());
+            }
+        }
+
+        static void Load()
+        {
+            try
+            {
+                using (StreamReader reader = new StreamReader("params.txt"))
+                {
+                    int index = 0;
+
+                    while (true)
+                    {
+                        string line = reader.ReadLine();
+
+                        index++;
+
+                        /*if (index == 1) priceUp = decimal.Parse(line);             //можно писать так, а можно через switch      
+                        else if (index == 2) priceDown = decimal.Parse(line);                   
+                        else if (index == 3) stepLevel = decimal.Parse(line);                   
+                        else if (index == 4) lotlevel = decimal.Parse(line);*/
+                        switch (index)
+                        {
+                            case 1:
+                                priceUp = decimal.Parse(line);
+                                break;
+                            case 2:
+                                priceDown = decimal.Parse(line);
+                                break;
+                            case 3:
+                                StepLevel = decimal.Parse(line);
+                                break;
+                            case 4:
+                                lotlevel = decimal.Parse(line);
+                                break;
+                        }
+
+                        if (line == null) break;
+                    }
+                }
+                
+                
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
 
         #endregion
 

@@ -12,6 +12,10 @@ namespace ConsoleHome
         public event newTradeEvent NewTradeEvent;    //без event это делегат, с ним стает событием
 
         public List<Trade> Trades = new List<Trade>();
+        private object? priceUp;
+        private object? stepLevel;
+        private object? priceDown;
+        public object? direction;
 
 
         //============================================================= Methods ========================================
@@ -32,44 +36,9 @@ namespace ConsoleHome
         {
             NewTradeEvent = method;
         }
-        */
+        */      
 
-        void Save()
-        {
-            using (StreamWriter writer = new StreamWriter("params.txt", false))  //можно писать так илил использовать try, catch , в params.txt записываем имя файла или путь к нему. 
-            {                                                                    //false переписываем файл с нуля, true пишем в конце
-                 writer.WriteLine(priceUp.ToString());
-                 writer.WriteLine(stepLevel.ToString());
-                 writer.WriteLine(priceDown.ToString());
-            }
-        }
-
-        static void Load()
-        {
-            try
-            {
-                StreamReader reader = new StreamReader("params.txt");
-                int index = 0;
-
-                while (true)
-                {
-                    string line = reader.ReadLine();
-
-                    index++;
-
-                    if (index == 1)
-                    {
-                        //priceUp = decimal.Parse(line);
-                    }
-
-                    if (line == null) break;
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
+       
 
         #endregion
     }

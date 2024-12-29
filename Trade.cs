@@ -44,8 +44,7 @@ namespace ConsoleHome
         /// цена выхода
         /// </summary>
         public decimal PriceExit = 0;
-
-        public Direction direction;
+        
         #endregion
 
 
@@ -68,12 +67,6 @@ namespace ConsoleHome
         }
         decimal _volume = 0;
 
-        public enum Direction 
-        {
-            Long,
-            Short
-        }
-        
         #endregion
 
     }
