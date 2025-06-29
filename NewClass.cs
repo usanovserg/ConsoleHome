@@ -13,6 +13,7 @@ namespace ConsoleHome
             Console.WriteLine("Команда разработчиков 2!");
 
             //----------------
+            //----------------
         }
     }
 }
