@@ -13,7 +13,7 @@ using System.Windows;
 namespace ConsoleHome
 {
     class Programm
-    {
+    {        
         static List<Level> PriceLevels = new List<Level>();
         static int CountLevels = 0;
         static decimal priceUp=0;
@@ -22,13 +22,14 @@ namespace ConsoleHome
         static decimal Dif = 0;
         static decimal Step = 0;
 
-        
-        
-
         static void Main(string[] args)
         {
-            WriteLine();
+            Position position = new Position(); 
 
+
+            //WriteLine();
+
+            /*
             string str = ReadLine("Задайте количество уровней: ");
             CountLevels = Convert.ToInt32(str);
 
@@ -37,16 +38,13 @@ namespace ConsoleHome
 
             str = ReadLine("Задайте нижний уровень цены: ");
             PriceLow = decimal.Parse(str);
+            */
 
             WriteLine();
-            Console.ReadLine(); 
-            
-
-
-            //Trade trade = new Trade();
-            //trade.
+            Console.ReadLine();            
         }
-        
+
+        #region fields
         public static decimal PriceUp
         {
             get
@@ -99,6 +97,7 @@ namespace ConsoleHome
                 }
             }
         }
+        #endregion
 
         static void WriteLine()
         {
@@ -124,22 +123,10 @@ namespace ConsoleHome
             Console.WriteLine(message);
             return Console.ReadLine();
         }    
-        
-        
-
-    }
-
-
-
-    //propfull
-
-
-
-
-  
+    }    
 }
 
-
+//propfull  
 
 
 
