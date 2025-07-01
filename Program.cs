@@ -14,6 +14,14 @@ namespace ConsoleHome
 {
     class Programm
     {
+        static List<decimal> Pricelevels = new List<decimal>();
+        static int CountLevels = 0;
+        static decimal priceUp=0;
+        static decimal priceLow=0;
+        static decimal Price = 0;
+        static decimal Dif = 0;
+        static decimal Step = 0;
+
         static void Main(string[] args)
         {
             WriteLine();
@@ -31,14 +39,6 @@ namespace ConsoleHome
             Console.ReadLine();           
         }
         
-        static List<decimal> Pricelevels = new List<decimal>();
-        static int CountLevels = 0;
-        static decimal priceUp;
-        static decimal priceLow;
-        static decimal Price;
-        static decimal Dif;
-        static decimal Step;
-
         public static decimal PriceUp
         {
             get
@@ -72,7 +72,7 @@ namespace ConsoleHome
                 {
                     priceLow = value;
 
-                    Dif = priceUp - priceLow;
+                    Dif = PriceUp - priceLow;
 
                     if (Dif % CountLevels != 0)
                     {
@@ -111,10 +111,20 @@ namespace ConsoleHome
         {
             Console.WriteLine(message);
             return Console.ReadLine();
-        }        
+        }    
+        
+        
+
     }
 
+
+
     //propfull
+
+
+
+
+  
 }
 
 

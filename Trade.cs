@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ConsoleHome
 {
-    internal class Trade
+    public class Trade
     {
         public decimal _price = 0;
         public decimal _volume = 0;
         public string _secCode = "";
         public string _classCode = "";
-        DateTime DateTime = DateTime.MinValue   ;
+        DateTime DateTime = DateTime.MinValue;
         public string Portfolio = "";
 
         static int Volume
@@ -27,5 +27,17 @@ namespace ConsoleHome
             _price = 0;
             _volume = 0;
         }
+
+
+
+
+
+
+        //============================
+
+
+
+
+
     }
 }
