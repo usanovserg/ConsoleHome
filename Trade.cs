@@ -9,18 +9,28 @@ namespace ConsoleHome
     public class Trade
     {
         public decimal _price = 0;
-        public decimal _volume = 0;
+        private decimal _volume = 0;
         public string _secCode = "";
         public string _classCode = "";
         DateTime DateTime = DateTime.MinValue;
         public string Portfolio = "";
 
-        static int Volume
-        {
-            get;
+        
+        
+        
 
-            set;
+        public decimal Volume       
+        {
+            get 
+            { 
+                return _volume; 
+            }
+            set 
+            { 
+                _volume = value; 
+            }
         }
+
 
         public void Action()
         {
