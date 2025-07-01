@@ -10,9 +10,9 @@ namespace ConsoleHome
     {
         public decimal PriceLevel = 0;  //цена на уровне
 
-        public int LotLevel = 0;  //лот на уровне
+        public decimal LotLevel = 0;  //лот на уровне
 
-        public int Volume = 0;  //открытый объем
+        static public decimal Volume = 0;  //открытый объем
 
 
 

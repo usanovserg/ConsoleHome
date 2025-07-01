@@ -24,7 +24,7 @@ namespace ConsoleHome
 
         static void Main(string[] args)
         {
-            Position position = new Position(); 
+            Position position = new Position();
 
 
             //WriteLine();
@@ -41,7 +41,7 @@ namespace ConsoleHome
             */
 
             WriteLine();
-            Console.ReadLine();            
+            Console.ReadLine();
         }
 
         #region fields

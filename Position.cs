@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,38 +28,89 @@ namespace ConsoleHome
         {
             //throw new NotImplementedException();
 
-            Trade trade = new Trade();
+            Trade trade = new Trade();          
 
+
+            string _dir = DefineDirection();
+
+            trade.Volume = DefineVolume();
+
+            trade._price = DefinePrice();
+
+            trade._secCode = "xxx";
+
+            trade._classCode = "zzz";
+
+            decimal totalVolume = CountTotalVolume(trade.Volume, trade._price);
+
+            string dateTimeOrder = DefineTimeOrder();
+
+            WriteLine(dateTimeOrder, trade.Volume.ToString(), trade._price.ToString(), _dir, trade._secCode, trade._classCode, totalVolume.ToString());                        
+        }
+
+        public string DefineDirection()
+        {
             int num = random.Next(-10, 10);
+            string dir ="";
 
-            string dir = "";
             if (num > 0)
             {
-                dir = Trade.direction.Long.ToString();
-
+                dir = Trade.direction.Long.ToString();             
             }
-            else if (num < 0)
+            else if (num <= 0)
             {
-                dir = Trade.direction.Short.ToString();
-
+                dir = Trade.direction.Short.ToString();               
             }
 
-            trade.Volume = Math.Abs(num);
+            return dir;
+        }
 
-            trade._price = random.Next(70000, 80000);
 
-            string str = "Volume = " + trade.Volume.ToString() + " / Price = " + trade._price.ToString() + " / направление: " + dir;
-
-            Console.WriteLine(str);
-
+        public int DefineVolume()
+        {
+            int volume = random.Next(-9, -1);
             
+            return Math.Abs(volume);
+        }
 
 
-                
-            //propfull
+        public int DefinePrice()
+        {
+            int price = random.Next(70000, 80000);
             
+            return price;
+        }
+
+
+        public void WriteLine(string datetime, string volume, string price, string dir, string secCode, string classCode, string totalVolume)
+        {
+
+            string msg = datetime + " // Lots = " + volume + " / Price = " + price + " / направление: " + dir + " / SecCode: " + secCode + "/ classCode: " + classCode + " / совокупный объем = " + totalVolume; 
+             
+            Console.WriteLine(msg);
+        }
+
+
+        public decimal CountTotalVolume(decimal lot, decimal price)
+        {
+            Level level = new Level();
+            level.LotLevel = lot;
+            Level.Volume = Level.Volume + level.LotLevel;
+            level.PriceLevel = price;
+
+            return Level.Volume;
+        }
+
+        public string DefineTimeOrder()
+        {
+            DateTime DateTime = DateTime.MinValue;
+            DateTime = DateTime.Now;
+
+            return DateTime.Now.ToString();
         }
 
 
     }
 }
+
+//propfull

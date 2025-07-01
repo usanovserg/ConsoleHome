@@ -9,10 +9,11 @@ namespace ConsoleHome
     public class Trade
     {
         public decimal _price = 0;
-        
+
         public string _secCode = "";
         public string _classCode = "";
-        DateTime DateTime = DateTime.MinValue;
+        
+        
         public string Portfolio = "";
 
 
@@ -35,23 +36,7 @@ namespace ConsoleHome
             Long
         }
 
-
-        public void Action()
-        {
-            _price = 0;
-            _volume = 0;
-        }
-
-
-
-
-
-
         //============================
-
-
-
-
 
     }
 }
