@@ -14,7 +14,7 @@ namespace ConsoleHome
 {
     class Programm
     {
-        static List<Level> Pricelevels = new List<Level>();
+        static List<Level> PriceLevels = new List<Level>();
         static int CountLevels = 0;
         static decimal priceUp=0;
         static decimal priceLow=0;
@@ -43,8 +43,8 @@ namespace ConsoleHome
             
 
 
-            Trade trade = new Trade();
-            trade.
+            //Trade trade = new Trade();
+            //trade.
         }
         
         public static decimal PriceUp
@@ -106,13 +106,17 @@ namespace ConsoleHome
 
             for (int i = 0; i < CountLevels; i++)
             {
-                Pricelevels.Add(Price);
+                Level level = new Level();
+                level.PriceLevel = Price;
+                //level.LotLevel = Lot;
+
+                PriceLevels.Add(level);
                 Price = Price - Step;
 
-                Console.WriteLine(Pricelevels[i]);
+                Console.WriteLine(Price);
             }
 
-            Console.WriteLine("Количество элементов в списке: " + Pricelevels.Count.ToString());
+            Console.WriteLine("Количество элементов в списке: " + PriceLevels.Count.ToString());
         }
 
         static string ReadLine(string message)
