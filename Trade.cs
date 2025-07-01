@@ -16,8 +16,6 @@ namespace ConsoleHome
         public string Portfolio = "";
 
 
-
-
         private decimal _volume = 0;
         public decimal Volume       
         {
@@ -29,6 +27,12 @@ namespace ConsoleHome
             { 
                 _volume = value; 
             }
+        }
+
+        public enum direction
+        {
+            Short,
+            Long
         }
 
 

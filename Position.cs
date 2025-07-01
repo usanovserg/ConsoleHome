@@ -31,14 +31,15 @@ namespace ConsoleHome
 
             int num = random.Next(-10, 10);
 
+            string dir = "";
             if (num > 0)
             {
-                // long
+                dir = Trade.direction.Long.ToString();
 
             }
             else if (num < 0)
             {
-                //short
+                dir = Trade.direction.Short.ToString();
 
             }
 
@@ -46,7 +47,7 @@ namespace ConsoleHome
 
             trade._price = random.Next(70000, 80000);
 
-            string str = "Volume = " + trade.Volume.ToString() + " / Price = " + trade._price.ToString();
+            string str = "Volume = " + trade.Volume.ToString() + " / Price = " + trade._price.ToString() + " / направление: " + dir;
 
             Console.WriteLine(str);
 
