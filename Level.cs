@@ -8,11 +8,11 @@ namespace ConsoleHome
 {
     class Level
     {
-        public decimal PriceLevel = 0;
+        public decimal PriceLevel = 0;  //цена на уровне
 
-        public decimal LotLevel = 0;
+        public decimal LotLevel = 0;  //лот на уровне
 
-        public string Voluem = "";
+        public string Voluem = "";  //открытый объем
 
 
 

@@ -14,13 +14,16 @@ namespace ConsoleHome
 {
     class Programm
     {
-        static List<decimal> Pricelevels = new List<decimal>();
+        static List<Level> Pricelevels = new List<Level>();
         static int CountLevels = 0;
         static decimal priceUp=0;
         static decimal priceLow=0;
         static decimal Price = 0;
         static decimal Dif = 0;
         static decimal Step = 0;
+
+        
+        
 
         static void Main(string[] args)
         {
@@ -36,7 +39,12 @@ namespace ConsoleHome
             PriceLow = decimal.Parse(str);
 
             WriteLine();
-            Console.ReadLine();           
+            Console.ReadLine(); 
+            
+
+
+            Trade trade = new Trade();
+            trade.
         }
         
         public static decimal PriceUp
