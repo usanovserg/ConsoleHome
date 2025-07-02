@@ -24,6 +24,8 @@ namespace ConsoleHome
 
         public string Portfolio = "";
 
+        public OrderType OrderType = new OrderType();
+
         #endregion
 
         //======================================================= Properties =========================================================

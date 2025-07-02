@@ -14,14 +14,14 @@ namespace ConsoleHome
 
             timer.Interval = 5000;
 
-            timer.Elapsed += Timer_Elapsed;
+            timer.Elapsed += NewTrade;
 
             timer.Start();
         }
 
         Random random = new Random();
 
-        private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
+        private void NewTrade(object? sender, ElapsedEventArgs e)
         {
             Trade trade = new Trade();
 
@@ -29,18 +29,18 @@ namespace ConsoleHome
 
             if (num > 0)
             {
-                // Сделка в лонг
+                trade.OrderType = OrderType.Buy;
             }
             else if (num < 0)
             {
-                // Сделка в шорт
+                trade.OrderType = OrderType.Sell;
             }
 
-            trade.Volume = Math.Abs(num);  
+            trade.Volume = Math.Abs(num);
 
-            trade.Price = random.Next(70000,80000);
+            trade.Price = random.Next(70000, 80000);
 
-            string str = "Volume = " + trade.Volume. ToString() + " / Price = " + trade.Price.ToString();
+            string str = "Volume = " + trade.Volume.ToString() + " / Price = " + trade.Price.ToString() + " / OrderType = " + trade.OrderType.ToString();
 
             Console.WriteLine(str);
         }
