@@ -1,31 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Timers;
 
-namespace AlexHolyGun
+namespace ConsoleHome
 {
     public class Position
     {
-        #region Fields //--------------------------------------------------------------//
-        public static System.Timers.Timer timer = new();
-        private Random rand = new();
-        #endregion
+        readonly Random rand = new();
+        public static decimal Volume = 0;
+        public static decimal AvPrice = 0;
 
-        #region Properties  //--------------------------------------------------------------//
-
-        #endregion
-
-        #region Methods  //--------------------------------------------------------------//
         public Position()
         {
-            timer.Interval = 5000;
+            System.Timers.Timer timer = new(2000);
             timer.Elapsed += NewTrade;
             timer.Start();
         }
-        
+
+
         private void NewTrade(object? sender, ElapsedEventArgs e)
         {
             int num = rand.Next(-10, 10);
@@ -34,13 +30,24 @@ namespace AlexHolyGun
             trade.Volume = Math.Abs(num);
 
             if (num > 0) //сделка в лонг
-                trade.Direction = Trade.Dir.Long;
-            else //сделка в шорт
-                trade.Direction = Trade.Dir.Short;
+            {
+                trade.Direction = Direction.Long;
+                Volume += trade.Volume;
+                AvPrice = (AvPrice == 0) ? trade.Price : (Volume * AvPrice + trade.Volume * trade.Price) / (Volume + trade.Volume);
+            }
+            else if (num < 0) //сделка в шорт
+            {
+                trade.Direction = Direction.Short;
+                Volume -= trade.Volume;
+                AvPrice = (AvPrice == 0)? trade.Price : (Volume * AvPrice - trade.Volume * trade.Price) / (Volume - trade.Volume);
+            }
+            else //нет сделки
+                return;
 
-            Console.WriteLine($"Volume: {trade.Volume.ToString()}  Price: {trade.Price.ToString()}  Direction:{trade.Direction.ToString()} ");
+            Console.WriteLine($"TRADE Volume:\t{trade.Volume.ToString()}\t  Price:\t{trade.Price.ToString()}\tDirection:{trade.Direction.ToString()} ");
+            Console.WriteLine($"POSITION Vol:\t{Volume}\tAvPrice:\t{AvPrice}\n");
+
         }
-        #endregion
-
-    }
+    }    
+            
 }

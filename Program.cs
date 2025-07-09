@@ -1,8 +1,8 @@
-﻿using AlexHolyGun;
+﻿using ConsoleHome;
 using System.Collections.Generic;
 
 Position position = new();
-
+Console.ReadLine();
 /*
 decimal priceHi = ReadDcm("Задайте верхнюю цену: ");
 decimal priceLow = ReadDcm("Задайте нижнюю цену: ");

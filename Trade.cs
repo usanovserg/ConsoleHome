@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlexHolyGun
+namespace ConsoleHome
 {
+    public enum Direction
+    {
+        Long,
+        Short
+    }
     public class Trade
     {
         #region Fields //------------------------------------------------------------------//
-        public enum Dir
-        {
-            Long,
-            Short
-        }
+        
         public decimal Price = 0;
         public decimal Volume = 0;
 
@@ -25,7 +26,7 @@ namespace AlexHolyGun
         public DateTime DateTime = DateTime.MinValue;
         public string Portfolio = "";
         public string ClientCode = "";
-        public Dir Direction = Dir.Long;
+        public Direction Direction = Direction.Long;
         #endregion
         
         #region Properties  //------------------------------------------------------------------//
