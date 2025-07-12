@@ -45,7 +45,14 @@ namespace ConsoleHome
 
             string dateTimeOrder = DefineTimeOrder();
 
-            WriteLine(dateTimeOrder, trade.Volume.ToString(), trade._price.ToString(), _dir, trade._secCode, trade._classCode, totalVolume.ToString());                        
+            WriteLine(dateTimeOrder, trade.Volume.ToString(), trade._price.ToString(), _dir, trade._secCode, trade._classCode, totalVolume.ToString());
+
+            //int h = 9;
+            //int y = 54;
+            //int b = 45;
+            //int z = h * y / b;
+
+            //Console.WriteLine(z.ToString());
         }
 
         public string DefineDirection()
