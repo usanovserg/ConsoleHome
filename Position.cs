@@ -6,20 +6,22 @@ using Timer = System.Timers.Timer;
 
 namespace ConsoleHome
 {
+    public delegate void ChangePosition(decimal volume);
+
     public class Position
-    {
+    {                     
+        //=========================================================== Methods ==============================================================
+        #region Methods
         public Position()
         {
             Timer timer = new Timer();
 
-            timer.Interval = 5000;
+            timer.Interval = 1000;
 
             timer.Elapsed += NewTrade;
 
             timer.Start();
         }
-
-        Random random = new Random();
 
         private void NewTrade(object? sender, ElapsedEventArgs e)
         {
@@ -38,11 +40,56 @@ namespace ConsoleHome
 
             trade.Volume = Math.Abs(num);
 
-            trade.Price = random.Next(70000, 80000);
+            if (trade.Volume != 0)
+            {
+                trade.Price = random.Next(70000, 80000);
 
-            string str = "Volume = " + trade.Volume.ToString() + " / Price = " + trade.Price.ToString() + " / OrderType = " + trade.OrderType.ToString();
+                string str = "Volume = " + trade.Volume.ToString() + " / Price = " + trade.Price.ToString() + " / OrderType = " + trade.OrderType.ToString();
 
-            Console.WriteLine(str);
+                Console.WriteLine(str);
+
+                switch (trade.OrderType)
+                {
+                    case OrderType.Buy: _positionSize += trade.Volume; break;
+                    case OrderType.Sell: _positionSize -= trade.Volume; break;
+                }
+
+                if (ChangePosition != null)
+                {
+                    ChangePosition(_positionSize);
+                }
+            }
         }
+
+        #endregion
+
+        //=========================================================== Propeties ============================================================
+        #region Properties
+
+        public ChangePosition ChangePosition
+        {
+            get
+            { 
+                return _changePosition; 
+            }
+            set
+            { 
+                _changePosition = value; 
+            }
+        }
+
+        #endregion
+
+        //=========================================================== Fields ===============================================================
+        #region Fields
+
+        decimal _positionSize;
+
+        event ChangePosition _changePosition;
+
+        Random random = new Random();
+
+        #endregion
+
     }
 }
