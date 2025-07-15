@@ -85,7 +85,7 @@ namespace ConsoleHome
 
         decimal _positionSize = 0;
 
-        event ChangePosition _changePosition = null;
+        event ChangePosition _changePosition;
 
         Random random = new Random();
 
