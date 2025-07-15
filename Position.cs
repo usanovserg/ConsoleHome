@@ -83,9 +83,9 @@ namespace ConsoleHome
         //=========================================================== Fields ===============================================================
         #region Fields
 
-        decimal _positionSize;
+        decimal _positionSize = 0;
 
-        event ChangePosition _changePosition;
+        event ChangePosition _changePosition = null;
 
         Random random = new Random();
 
