@@ -1,21 +1,22 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-namespace ConsoleHome
+﻿namespace ConsoleHome
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            
-            Load();
 
-            //Position position = new();
-            //Console.ReadLine();
 
-            //priceHi = ReadDcm("Задайте верхнюю цену: ");
-            //priceLow = ReadDcm("Задайте нижнюю цену: ");
-            //priceStep = ReadDcm("Задайте шаг цены: ");
+            Position position = new();
+            position.PositionChanged += Notify;
+           
+            Console.ReadLine();
+
+            /*Load();
+
+
+            priceHi = ReadDcm("Задайте верхнюю цену: ");
+            priceLow = ReadDcm("Задайте нижнюю цену: ");
+            priceStep = ReadDcm("Задайте шаг цены: ");
 
             List<Level> LevelList = Level.GetLevels(priceHi, priceLow, priceStep);
 
@@ -24,7 +25,7 @@ namespace ConsoleHome
             WrtLst(LevelList);
 
             Save();
-            
+            */
         }
         #region Fields     //==================================================================================//
         static decimal priceHi;
@@ -80,6 +81,11 @@ namespace ConsoleHome
             }
 
 
+        }
+
+        static void Notify(decimal position)
+        {
+            Console.WriteLine("Позиция изменилась! " + position.ToString() + "\n");
         }
         #endregion
 

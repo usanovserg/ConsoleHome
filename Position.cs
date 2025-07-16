@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Timers;
+﻿using System.Timers;
 
 namespace ConsoleHome
 {
     public class Position
     {
         readonly Random rand = new();
-        public static decimal Volume = 0;
-        public static decimal AvPrice = 0;
+        public decimal Volume = 0;
+        public decimal AvPrice = 0;
+        public string Code = "noName";
 
+        public delegate void PositionDelegate(decimal openPos);
+        public event PositionDelegate PositionChanged;
         public Position()
         {
             System.Timers.Timer timer = new(2000);
@@ -31,21 +28,23 @@ namespace ConsoleHome
 
             if (num > 0) //сделка в лонг
             {
-                trade.Direction = Direction.Long;
+                trade.Direction = Direction.Long;  
+                AvPrice = (AvPrice == 0) ? trade.Price : (Volume * AvPrice + trade.Volume * trade.Price) / (Volume + trade.Volume);
                 Volume += trade.Volume;
-                //AvPrice = (AvPrice == 0) ? trade.Price : (Volume * AvPrice + trade.Volume * trade.Price) / (Volume + trade.Volume);
             }
             else if (num < 0) //сделка в шорт
             {
                 trade.Direction = Direction.Short;
+                AvPrice = (AvPrice == 0 && (Volume - trade.Volume) != 0) ? trade.Price : (Volume * AvPrice - trade.Volume * trade.Price) / (Volume - trade.Volume);
                 Volume -= trade.Volume;
-                //AvPrice = (AvPrice == 0)? trade.Price : (Volume * AvPrice - trade.Volume * trade.Price) / (Volume - trade.Volume);
             }
             else //нет сделки
                 return;
+            
 
-            Console.WriteLine($"TRADE Volume:\t{trade.Volume.ToString()}\t  Price:\t{trade.Price.ToString()}\tDirection:{trade.Direction.ToString()} ");
-            Console.WriteLine($"POSITION Vol:\t{Volume}\tAvPrice:\t{AvPrice}\n");
+            Console.WriteLine($"TRADE Volume:\t{trade.Volume.ToString()}\t  Price:\t{trade.Price.ToString()}\t Direction:\t{trade.Direction.ToString()} ");
+            PositionChanged.Invoke(Volume * AvPrice);
+            //Console.WriteLine($"POSITION Vol:\t{Volume}\tAvPrice:\t{AvPrice}\n");
 
         }
     }    
