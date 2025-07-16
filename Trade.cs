@@ -34,9 +34,6 @@ namespace ConsoleHome
         #endregion
         
         #region Methods  //------------------------------------------------------------------//
-        public Trade() {
-        
-        }
         #endregion
 
     }

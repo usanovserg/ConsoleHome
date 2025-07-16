@@ -33,13 +33,13 @@ namespace ConsoleHome
             {
                 trade.Direction = Direction.Long;
                 Volume += trade.Volume;
-                AvPrice = (AvPrice == 0) ? trade.Price : (Volume * AvPrice + trade.Volume * trade.Price) / (Volume + trade.Volume);
+                //AvPrice = (AvPrice == 0) ? trade.Price : (Volume * AvPrice + trade.Volume * trade.Price) / (Volume + trade.Volume);
             }
             else if (num < 0) //сделка в шорт
             {
                 trade.Direction = Direction.Short;
                 Volume -= trade.Volume;
-                AvPrice = (AvPrice == 0)? trade.Price : (Volume * AvPrice - trade.Volume * trade.Price) / (Volume - trade.Volume);
+                //AvPrice = (AvPrice == 0)? trade.Price : (Volume * AvPrice - trade.Volume * trade.Price) / (Volume - trade.Volume);
             }
             else //нет сделки
                 return;
