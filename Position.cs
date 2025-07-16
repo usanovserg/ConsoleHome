@@ -26,7 +26,7 @@ namespace ConsoleHome
         //-----------------
         public delegate void PositionChange();
         public event PositionChange posChangeEventHandler;
-        //public PositionChange PosChangeHandler { get; set; }
+        
 
         public decimal Volume1 = 0;
         public decimal Volume2 = 0;
@@ -35,8 +35,6 @@ namespace ConsoleHome
         Random random = new Random();
         private void NewTrade(object sender, ElapsedEventArgs e)
         {
-            //throw new NotImplementedException();
-
             Trade trade = new Trade();
 
 
@@ -66,11 +64,7 @@ namespace ConsoleHome
 
             if (Volume2 != Volume1)
             {
-                posChangeEventHandler.Invoke();
-
-               
-
-                //Volume2 = Volume1;
+                posChangeEventHandler.Invoke();                
             }
 
 
@@ -80,8 +74,6 @@ namespace ConsoleHome
         {
             if(Volume2 != Volume1)
             {
-                //posChangeEventHandler.Invoke();
-
                 Console.WriteLine("Позиция изменилась");
 
                 Volume2 = Volume1;
