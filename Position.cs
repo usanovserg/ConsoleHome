@@ -17,18 +17,31 @@ namespace ConsoleHome
 
             timer.Interval = 2000;
 
-            timer.Elapsed += NewTrade;
+            timer.Elapsed += NewTrade;            
 
-            timer.Start();
+            timer.Start();          
 
         }
+
+        //-----------------
+        public delegate void PositionChange();
+        public event PositionChange posChangeEventHandler;
+        //public PositionChange PosChangeHandler { get; set; }
+
+        public decimal Volume1 = 0;
+        public decimal Volume2 = 0;
+        //-----------------------------
 
         Random random = new Random();
         private void NewTrade(object sender, ElapsedEventArgs e)
         {
             //throw new NotImplementedException();
 
-            Trade trade = new Trade();          
+            Trade trade = new Trade();
+
+
+            posChangeEventHandler += PositionChangeMessage;
+
 
 
             string _dir = DefineDirection();
@@ -47,12 +60,34 @@ namespace ConsoleHome
 
             WriteLine(dateTimeOrder, trade.Volume.ToString(), trade._price.ToString(), _dir, trade._secCode, trade._classCode, totalVolume.ToString());
 
-            //int h = 9;
-            //int y = 54;
-            //int b = 45;
-            //int z = h * y / b;
 
-            //Console.WriteLine(z.ToString());
+
+            Volume1 = totalVolume;
+
+            if (Volume2 != Volume1)
+            {
+                posChangeEventHandler.Invoke();
+
+               
+
+                //Volume2 = Volume1;
+            }
+
+
+        }
+
+        public void PositionChangeMessage()
+        {
+            if(Volume2 != Volume1)
+            {
+                //posChangeEventHandler.Invoke();
+
+                Console.WriteLine("Позиция изменилась");
+
+                Volume2 = Volume1;
+            }
+            
+           
         }
 
         public string DefineDirection()
