@@ -46,6 +46,8 @@ namespace MyConsole
 
         static decimal stepLevel;
 
+        Trade trade = new Trade();
+
         #endregion
         //----------------------------------------------- Fields ----------------------------------------------------
 
@@ -111,4 +113,26 @@ namespace MyConsole
         #endregion
         //----------------------------------------------- Methods ---------------------------------------------------
     }
+
+    class Trade
+    {
+        //----------------------------------------------- Fields ---------------------------------------------------- 
+        #region Filds
+        decimal Price;
+
+        decimal Volume;
+
+        string SecCode;
+
+        string ClassCode;
+
+        DateTime DateTime;
+
+        string Portfolio;
+
+
+        #endregion
+        //----------------------------------------------- Fields ----------------------------------------------------
+    }
+
 }
