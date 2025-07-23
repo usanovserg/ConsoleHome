@@ -10,7 +10,7 @@ namespace ConsoleHome
     {
         public NewClass()
         {
-            Console.WriteLine("Команда разработчиков SsergioMsk!");
+            Console.WriteLine("Команда разработчиков SsergioMsk!!");
         }
     }
 }
