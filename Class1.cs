@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleHome
 {
-    public class NewClass
+    internal class Class1
     {
-        public NewClass()
-        {
-            Console.WriteLine("Команда разработчиков 2!");
-        }
     }
 }
