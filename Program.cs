@@ -142,10 +142,8 @@ namespace ConsoleHome
 
         static void Load()
         {
-            try
+            using (StreamReader reader = new StreamReader("params.txt"))
             {
-                StreamReader reader = new StreamReader("params.txt");
-
                 int index = 0;
 
                 while (true)
@@ -188,10 +186,6 @@ namespace ConsoleHome
                         break;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-
             }
         }
 
