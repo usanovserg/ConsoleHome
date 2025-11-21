@@ -1,0 +1,87 @@
+﻿<Window x:Class="OsEngine.Robots.TestRobot3.TestRobot3Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OsEngine.Robots.TestRobot3"
+        mc:Ignorable="d"
+        Title="TestRobot3Window" Height="450" Width="800"
+        Background="Black">
+
+    <Window.Resources>        
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontFamily" Value="Times New Roman"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="Orange"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Margin" Value="15,0"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontFamily" Value="Times New Roman"/>            
+            <Setter Property="Foreground" Value="Yellow"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Margin" Value="10,0,0,10"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Width" Value="100"/>            
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Hi! I am your first robot!"
+                   Grid.ColumnSpan="4"
+                   FontSize="24"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+        <TextBlock Text="{Binding LotName}"
+                   Grid.Row="1"
+                   Grid.Column="1"/>
+        <TextBlock Text="{Binding StopName}"
+                   Grid.Row="2"
+                   Grid.Column="1"/>
+        <TextBlock Text="{Binding TakeName}"
+                   Grid.Row="3"
+                   Grid.Column="1"/>
+        <TextBlock Text="{Binding ModeName}"
+                   Grid.Row="4"
+                   Grid.Column="1"/>
+
+        <TextBox Text="{Binding LotValue}"
+                 Grid.Row="1"
+                 Grid.Column="2"/>
+        <TextBox Text="{Binding StopValue}"
+                 Grid.Row="2"
+                 Grid.Column="2"/>
+        <TextBox Text="{Binding TakeValue}"
+                 Grid.Row="3"
+                 Grid.Column="2"/>
+        <ComboBox
+                 SelectedItem="{Binding ModeValue}"
+                 ItemsSource="{Binding ModeValues}"
+                 Grid.Row="4"
+                 Grid.Column="2"
+                 FontFamily="Times New Roman"
+                 Foreground="Yellow"
+                 Background="Black"
+                 FontSize="14"/>
+
+    </Grid>
+</Window>
