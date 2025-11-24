@@ -10,7 +10,7 @@ namespace MyConsole
     {
         static void Main(string[] args)
         {
-
+            
             levels = new List<decimal>();
 
             WriteLine();
