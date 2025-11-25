@@ -23,7 +23,7 @@ namespace MyConsole
 
             priceUp = decimal.Parse(str);
 
-            str = ReadLine("Введите шаг уровня: ");
+            str = ReadLine("Введите шаг уровня: "); //tests
 
             StepLevel = decimal.Parse(str);
 
