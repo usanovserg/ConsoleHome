@@ -93,7 +93,7 @@ namespace MyConsole
             {
                 Console.WriteLine(levels[i]);
             }
-            Console.ReadLine();
+            //Console.ReadLine();
             //1            
             //2
             //3
