@@ -27,7 +27,7 @@ namespace MyConsole
 
             StepLevel = decimal.Parse(str);
 
-            str = Console.ReadLine();
+            //str = Console.ReadLine();
 
             WriteLine();
 
