@@ -4,59 +4,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace MyConsole
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-
             levels = new List<decimal>();
-
             WriteLine();
 
-            string str = ReadLine("Введите количество уровней: ");
+            //string str = ReadLine("Введите количество уровней: ");
 
-            countLevels = Convert.ToInt32(str);
+            //contLevels = Convert.ToInt32(str);
 
-            str = ReadLine("Задайте верхнюю цену: ");
+            string str = ReadLine("Задайте верхнюю цену: ");
 
             priceUp = decimal.Parse(str);
 
+            str = ReadLine("Задайте нижнюю цену: ");
+
+            priceDown = decimal.Parse(str);
+
             str = ReadLine("Введите шаг уровня: ");
+
+
 
             StepLevel = decimal.Parse(str);
 
-            str = Console.ReadLine();
 
             WriteLine();
-
             Console.ReadLine();
-
         }
 
-        //----------------------------------------------- Fields ----------------------------------------------------
-        #region Filds
-
-        static int countLevels;
-
+        static List<decimal> levels;
         static decimal priceUp;
-
-        static decimal priceLevel = priceUp;
-
-        static decimal stepLevel;
-
-        #endregion
-        //----------------------------------------------- Fields ----------------------------------------------------
-
-        //----------------------------------------------- Properties ------------------------------------------------
-        #region Properties
-
-        public static decimal StepLevel
+        static decimal priceDown;
+        static int contLevels;
+        static decimal StepLevel
         {
             get
             {
-                return StepLevel;
+                return stepLevel;
             }
 
             set
@@ -64,27 +53,20 @@ namespace MyConsole
                 if (value <= 100)
                 {
                     stepLevel = value;
-
                     decimal priceLevel = priceUp;
+                    contLevels = Convert.ToInt32(decimal.Round((priceUp - priceDown) / stepLevel));
 
-                    for (int i = 0; i < countLevels; i++)
+                    for (int i = 0; i < contLevels; i++)
                     {
                         levels.Add(priceLevel);
-
                         priceLevel -= stepLevel;
+
                     }
                 }
-
             }
         }
 
-        #endregion
-        //----------------------------------------------- Properties ------------------------------------------------
-
-        static List<decimal> levels;
-
-        //----------------------------------------------- Methods ---------------------------------------------------
-        #region Methods
+        static decimal stepLevel;
 
         static void WriteLine()
         {
@@ -92,23 +74,17 @@ namespace MyConsole
             for (int i = 0; i < levels.Count; i++)
             {
                 Console.WriteLine(levels[i]);
+
             }
-            Console.ReadLine();
-            //1            
-            //2
-            //3
 
         }
 
         static string ReadLine(string message)
         {
             Console.WriteLine(message);
-
             return Console.ReadLine();
+
         }
 
-
-        #endregion
-        //----------------------------------------------- Methods ---------------------------------------------------
     }
 }
