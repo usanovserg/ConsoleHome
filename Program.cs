@@ -79,7 +79,6 @@ namespace MyConsole
         }
 
         #endregion
-        //----------------------------------------------- Properties ------------------------------------------------
 
         static List<decimal> levels;
 
