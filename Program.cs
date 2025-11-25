@@ -33,7 +33,7 @@ namespace MyConsole
 
             Console.ReadLine();
 
-        }
+        } // iofgijfpogj
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
         #region Filds
