@@ -35,6 +35,8 @@ namespace MyConsole
 
         } // iofgijfpogj
 
+        // comment Andrew Zavedeev
+
         //----------------------------------------------- Fields ---------------------------------------------------- 
         #region Filds
 
