@@ -10,105 +10,48 @@ namespace MyConsole
     {
         static void Main(string[] args)
         {
+            List<decimal> priceLevel = new List<decimal>();
+            int countLevel = 0;
 
-            levels = new List<decimal>();
+            Console.WriteLine("Введите нижний уровень цены = ");
+            decimal downLevel = decimal.Parse(Console.ReadLine());
+            Console.WriteLine("Введите верхний уровень цены = ");
+            decimal upLevel = decimal.Parse(Console.ReadLine());
+            Console.WriteLine("Введите шаг цены = ");
+            decimal stepPrice = decimal.Parse(Console.ReadLine());
 
-            WriteLine();
+            Console.WriteLine("Всего уровней цены = " + (countLevel = GetCountLevel(downLevel, upLevel, stepPrice)));
+            priceLevel = GetPriceLevel(downLevel, stepPrice, countLevel);
 
-            string str = ReadLine("Введите количество уровней: ");
-
-            countLevels = Convert.ToInt32(str);
-
-            str = ReadLine("Задайте верхнюю цену: ");
-
-            priceUp = decimal.Parse(str);
-
-            str = ReadLine("Введите шаг уровня: ");
-
-            StepLevel = decimal.Parse(str);
-
-            str = Console.ReadLine();
-
-            WriteLine();
-
-            Console.ReadLine();
-
-        } // iofgijfpogj
-
-        //----------------------------------------------- Fields ---------------------------------------------------- 
-        #region Filds
-
-        static int countLevels;
-
-        static decimal priceUp;
-
-        static decimal priceLevel = priceUp;
-
-        static decimal stepLevel;
-
-        #endregion
-        //----------------------------------------------- Fields ----------------------------------------------------
-
-        //----------------------------------------------- Properties ------------------------------------------------
-        #region Properties
-
-        public static decimal StepLevel
-        {
-            get
+            Console.WriteLine("Уровни цены = ");
+            for (int i = 0; i < countLevel; i++)
             {
-                return StepLevel;
+                Console.WriteLine(priceLevel[i]);
             }
 
-            set
+
+
+
+            static int GetCountLevel(decimal downLevel, decimal upLevel, decimal stepPrice)
             {
-                if (value <= 100)
+                int countLevel = Convert.ToInt32((upLevel - downLevel) / stepPrice);
+                return countLevel;
+            }
+
+            static List<decimal> GetPriceLevel(decimal downLevel, decimal stepPrice, int countLevel)
+            {
+                List<decimal> priceLevel = new List<decimal>();
+                decimal beginPrice = downLevel;
+                for (int i = 0; i <= countLevel; i++)
                 {
-                    stepLevel = value;
-
-                    decimal priceLevel = priceUp;
-
-                    for (int i = 0; i < countLevels; i++)
-                    {
-                        levels.Add(priceLevel);
-
-                        priceLevel -= stepLevel;
-                    }
+                    priceLevel.Add(beginPrice);
+                    beginPrice += stepPrice;
                 }
+                return priceLevel;
 
             }
-        }
 
-        #endregion
-        //----------------------------------------------- Properties ------------------------------------------------
-
-        static List<decimal> levels;
-
-        //----------------------------------------------- Methods ---------------------------------------------------
-        #region Methods
-
-        static void WriteLine()
-        {
-            Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());
-            for (int i = 0; i < levels.Count; i++)
-            {
-                Console.WriteLine(levels[i]);
-            }
-            Console.ReadLine();
-            //1            
-            //2
-            //3
 
         }
-
-        static string ReadLine(string message)
-        {
-            Console.WriteLine(message);
-
-            return Console.ReadLine();
-        }
-
-
-        #endregion
-        //----------------------------------------------- Methods ---------------------------------------------------
     }
 }
