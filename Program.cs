@@ -30,7 +30,7 @@ namespace MyConsole
             str = Console.ReadLine();
 
             WriteLine();
-
+            //f
             Console.ReadLine();
 
         } // iofgijfpogj
