@@ -1,114 +1,81 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MyConsole
+namespace Video_1._3
 {
     internal class Program
     {
+        static List<decimal> levels;
+        static decimal steplevel;
+        static decimal pricelow;
+        static decimal priceup;
+        static decimal countlevels;
+        static decimal pricelevel;
         static void Main(string[] args)
         {
-
             levels = new List<decimal>();
 
-            WriteLine();
+            Writеline();
+            //string str = Readline("Введите количество уровней");
+            //Console.WriteLine("Введите количество уровней");
+            //string str  = Console.ReadLine();
+            //countleverls=Convert.ToInt32(str);
 
-            string str = ReadLine("Введите количество уровней: ");
+            string str = Readline("Задайте верхнюю цену");
+            priceup = decimal.Parse(str);
 
-            countLevels = Convert.ToInt32(str);
+            str = Readline("Задайте нижнюю цену");
+            pricelow = Convert.ToDecimal(str);
+           
+            if (pricelow>=priceup)
+            {
+                Console.WriteLine("Нижняя цена должна быть меньше верхней. Введите значение заново:");
+                str = Console.ReadLine();
+                pricelow = Convert.ToDecimal(str);
+            }
 
-            str = ReadLine("Задайте верхнюю цену: ");
+            str = Readline("Введите шаг цены");
+            Steplevel = decimal.Parse(str);
 
-            priceUp = decimal.Parse(str);
-
-            str = ReadLine("Введите шаг уровня: ");
-
-            StepLevel = decimal.Parse(str);
-
-            str = Console.ReadLine();
-
-            WriteLine();
-
-            Console.ReadLine();
-
-        } // iofgijfpogj
-
-        //----------------------------------------------- Fields ---------------------------------------------------- 
-        #region Filds
-
-        static int countLevels;
-
-        static decimal priceUp;
-
-        static decimal priceLevel = priceUp;
-
-        static decimal stepLevel;
-
-        #endregion
-        //----------------------------------------------- Fields ----------------------------------------------------
-
-        //----------------------------------------------- Properties ------------------------------------------------
-        #region Properties
-
-        public static decimal StepLevel
+            //Считаем количество уровней и выводим их
+            pricelevel = priceup;
+            countlevels = ((priceup - pricelow) / steplevel) + 1;
+            Console.WriteLine($"Число уровней - {countlevels}");
+            for (int i = 0; i < countlevels; i++)
+            {
+                levels.Add(pricelevel);
+                pricelevel -= steplevel;
+            }
+            Writеline();
+        }
+        static decimal Steplevel
+        // Все последующее коротко: s..d.. Steplevel (get; set;)
+        //        
+        // По сути, поле get - свойство работает в режиме "чтения", а поле set - "запись"
         {
             get
             {
-                return StepLevel;
+                return steplevel;
             }
-
             set
+            // set используется, когда заносим значение в формате Steplevel=что-то там. Что-то там пишется в value
             {
-                if (value <= 100)
-                {
-                    stepLevel = value;
-
-                    decimal priceLevel = priceUp;
-
-                    for (int i = 0; i < countLevels; i++)
-                    {
-                        levels.Add(priceLevel);
-
-                        priceLevel -= stepLevel;
-                    }
-                }
-
+                steplevel = value;
             }
         }
-
-        #endregion
-        //----------------------------------------------- Properties ------------------------------------------------
-
-        static List<decimal> levels;
-
-        //----------------------------------------------- Methods ---------------------------------------------------
-        #region Methods
-
-        static void WriteLine()
+        static string Readline(string message)
         {
-            Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());
-            for (int i = 0; i < levels.Count; i++)
+            Console.WriteLine(message);
+            return Console.ReadLine();
+        }
+        static void Writеline()
+        {
+            Console.WriteLine("Количество элементов в списке: " + countlevels.ToString());
+            for (int i = 0; i < countlevels; i++)
             {
                 Console.WriteLine(levels[i]);
             }
-            Console.ReadLine();
-            //1            
-            //2
-            //3
-
         }
-
-        static string ReadLine(string message)
-        {
-            Console.WriteLine(message);
-
-            return Console.ReadLine();
-        }
-
-
-        #endregion
-        //----------------------------------------------- Methods ---------------------------------------------------
     }
+
 }
