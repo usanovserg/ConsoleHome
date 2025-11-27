@@ -1,114 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyConsole
 {
     internal class Program
     {
-        static void Main(string[] args)
-        {
-
-            levels = new List<decimal>();
-
-            WriteLine();
-
-            string str = ReadLine("Введите количество уровней: ");
-
-            countLevels = Convert.ToInt32(str);
-
-            str = ReadLine("Задайте верхнюю цену: ");
-
-            priceUp = decimal.Parse(str);
-
-            str = ReadLine("Введите шаг уровня: ");
-
-            StepLevel = decimal.Parse(str);
-
-            //str = Console.ReadLine();
-
-            WriteLine();
-
-            Console.ReadLine();
-
-        }
-
-        //----------------------------------------------- Fields ---------------------------------------------------- 
-        #region Filds
-
-        static int countLevels;
-
+        static List<decimal> levels;
         static decimal priceUp;
-
-        static decimal priceLevel = priceUp;
-
-        static decimal stepLevel;
-
-        #endregion
-        //----------------------------------------------- Fields ----------------------------------------------------
-
-        //----------------------------------------------- Properties ------------------------------------------------
-        #region Properties
-
-        public static decimal StepLevel
+        static decimal priceDown;
+        static decimal slevel;
+        static decimal StepLevel
         {
             get
             {
-                return StepLevel;
+                return slevel;
             }
-
             set
             {
-                if (value <= 100)
+                slevel = value;
+                levels = new List<decimal>();
+                for (decimal price = priceUp; price >= priceDown; price -= slevel)
                 {
-                    stepLevel = value;
-
-                    decimal priceLevel = priceUp;
-
-                    for (int i = 0; i < countLevels; i++)
-                    {
-                        levels.Add(priceLevel);
-
-                        priceLevel -= stepLevel;
-                    }
+                    levels.Add(price);
                 }
-
             }
         }
-
-        #endregion
-        //----------------------------------------------- Properties ------------------------------------------------
-
-        static List<decimal> levels;
-
-        //----------------------------------------------- Methods ---------------------------------------------------
-        #region Methods
-
-        static void WriteLine()
+        static void Main(string[] args)
         {
-            Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());
-            for (int i = 0; i < levels.Count; i++)
+            WriteResult();
+            priceDown = ReadLine("Введите нижний уровень цены:");
+            priceUp = ReadLine("Введите верхний уровень цены:", priceDown);
+            StepLevel = ReadLine("Введите шаг изменения цены:");
+            WriteResult();
+            Console.ReadLine();
+        }
+        static decimal ReadLine(string str, decimal value = 0)
+        {
+            decimal rez;
+            Console.WriteLine(str);
+            while (!decimal.TryParse(Console.ReadLine(), out rez) || (value >= rez))
             {
-                Console.WriteLine(levels[i]);
+                Console.WriteLine($"Ошибка ввода {rez}");
             }
-            //Console.ReadLine();
-            //1            
-            //2
-            //3
-
+            return rez;
         }
-
-        static string ReadLine(string message)
+        static void WriteResult()
         {
-            Console.WriteLine(message);
-
-            return Console.ReadLine();
+            for (int i = 0; i < levels?.Count; i++)
+            {
+                Console.WriteLine($"{i + 1} - {levels[i].ToString()}");
+            }
+            Console.WriteLine("\nЧисло уровней цены - " + levels?.Count.ToString());
         }
-
-
-        #endregion
-        //----------------------------------------------- Methods ---------------------------------------------------
     }
 }
