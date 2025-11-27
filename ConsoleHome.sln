@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.8.34219.65
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHome", "ConsoleHome.csproj", "{032F0BDB-5482-45FF-BB3B-45755ECF9637}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Video 1.3", "..\Video 1.3\Video 1.3.csproj", "{BD9DB550-3510-4CE5-980B-4A37AEEBFBA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{032F0BDB-5482-45FF-BB3B-45755ECF9637}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{032F0BDB-5482-45FF-BB3B-45755ECF9637}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{032F0BDB-5482-45FF-BB3B-45755ECF9637}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD9DB550-3510-4CE5-980B-4A37AEEBFBA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD9DB550-3510-4CE5-980B-4A37AEEBFBA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD9DB550-3510-4CE5-980B-4A37AEEBFBA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD9DB550-3510-4CE5-980B-4A37AEEBFBA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
