@@ -16,14 +16,10 @@ namespace Video_1._3
             levels = new List<decimal>();
 
             Writеline();
-            //string str = Readline("Введите количество уровней");
-            //Console.WriteLine("Введите количество уровней");
-            //string str  = Console.ReadLine();
-            //countleverls=Convert.ToInt32(str);
-
+          
             string str = Readline("Задайте верхнюю цену");
             priceup = decimal.Parse(str);
-
+            
             str = Readline("Задайте нижнюю цену");
             pricelow = Convert.ToDecimal(str);
            
