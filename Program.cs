@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyConsole
+namespace ConsoleHome
 {
     public class Program
     {
         static void Main(string[] args)
-        {            
-            levels = new List<decimal>();
+        {
+            levels = new List<Level>();
 
             WriteLine();
 
@@ -26,6 +26,10 @@ namespace MyConsole
 
             StepLevel = decimal.Parse(str);
 
+            str = ReadLine("Введите лот на уровень: ");
+
+            lotLevel = decimal.Parse(str);
+
             WriteLine();
 
             Console.ReadLine();
@@ -35,11 +39,21 @@ namespace MyConsole
 
         #region Fields
 
-        static List<decimal> levels;
+        static List<Level> levels;
 
         static decimal priceUp;
 
         static int countLevels;
+
+        static decimal lotLevel;
+
+        //-----------------------------------------------
+
+
+        static Trade trade = new Trade();
+
+        
+
 
         #endregion
 
@@ -59,14 +73,7 @@ namespace MyConsole
                 {
                     stepLevel = value;
 
-                    decimal priceLevel = priceUp;
-
-                    for (int i = 0; i < countLevels; i++)
-                    {
-                        levels.Add(priceLevel);
-
-                        priceLevel -= stepLevel;
-                    }
+                   levels = Level.CalculateLevels(priceUp, stepLevel, countLevels);
                 }
             }
         }
@@ -84,7 +91,7 @@ namespace MyConsole
 
             for (int i = 0; i < levels.Count; i++)
             {
-                Console.WriteLine(levels[i]);
+                Console.WriteLine(levels[i].PriceLevel);
             }
         }
 
@@ -95,8 +102,15 @@ namespace MyConsole
             return Console.ReadLine();
         }
 
+        static void Jddsdsy()
+        {
+
+        }
+
         #endregion
 
 
     }
+
+  
 }
