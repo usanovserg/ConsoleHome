@@ -14,7 +14,8 @@ namespace MyConsole
             Position position = new Position();
 
             Console.WriteLine("Таймер запущен. Нажмите Enter для выхода...");
-
+            Console.WriteLine();
+            Console.WriteLine("{0,-10} {1,-6} {2,-8} {3,-12} {4, -12} {5, -12} {6,-20} {7,-10} {8,-12}", "Ticker", "Type", "Volume", "Price", "StopLoss", "TakeProfit", "Date", "Day", "Indicator");
 
             Console.ReadLine();
             /*
@@ -127,19 +128,39 @@ namespace MyConsole
             public DateTime DateTime = DateTime.MinValue;
             public string Profit = "";
             public string TypeOrder = "";
+            public decimal StopLoss = 0;
+            public decimal TakeProfit = 0;
 
-
-            enum DayOfWeek : byte // чтобы меньше места исопльзовалось числа до 255
+        }
+        public class DayWeek
+        {
+            public enum MineDayOfWeek : byte // чтобы меньше места исопльзовалось числа до 255
             {
                 Monday = 1,
                 Tuesday,
                 Wednesday,
-                Thursday,   
-                Friday, 
-                Saturday,   
+                Thursday,
+                Friday,
+                Saturday,
                 Sunday
             }
         }
+        public class NameTicker
+        {
+            public enum Ticker : byte
+            {
+                SI = 1,
+                RTS,
+                SBER
+            }
+        }
+
+        //"StopLoss": 74800,
+        //"TakeProfit": 76000,
+        
+
+
+
         static Trade trade = new Trade();
 
 
