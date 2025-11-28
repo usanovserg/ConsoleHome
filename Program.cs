@@ -15,7 +15,7 @@ namespace MyConsole
             {
                 return slevel;
             }
-            set
+            set 
             {
                 slevel = value;
                 levels = new List<decimal>();
