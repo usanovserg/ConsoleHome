@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace MyConsole
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
-        {
-            
+        {            
             levels = new List<decimal>();
 
             WriteLine();
@@ -27,30 +26,24 @@ namespace MyConsole
 
             StepLevel = decimal.Parse(str);
 
-            str = Console.ReadLine();
-
             WriteLine();
 
             Console.ReadLine();
-
         }
 
-        //----------------------------------------------- Fields ---------------------------------------------------- 
+        //=================================== Fields =====================================
+
         #region Fields
-
-        static int countLevels;
-
-        static decimal priceUp;
-
-        static decimal priceLevel = priceUp;
-
-        static decimal stepLevel;
 
         static List<decimal> levels;
 
-        #endregion        
+        static decimal priceUp;
 
-        //----------------------------------------------- Properties ------------------------------------------------
+        static int countLevels;
+
+        #endregion
+
+        //=================================== Properties ==================================
         #region Properties
 
         public static decimal StepLevel
@@ -75,27 +68,24 @@ namespace MyConsole
                         priceLevel -= stepLevel;
                     }
                 }
-
             }
         }
+        static decimal stepLevel;
 
         #endregion
 
-        //----------------------------------------------- Methods ---------------------------------------------------
+
+        //=================================== Methods =====================================
         #region Methods
 
         static void WriteLine()
         {
             Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());
+
             for (int i = 0; i < levels.Count; i++)
             {
                 Console.WriteLine(levels[i]);
             }
-            Console.ReadLine();
-            //1            
-            //2
-            //3
-
         }
 
         static string ReadLine(string message)
@@ -105,8 +95,8 @@ namespace MyConsole
             return Console.ReadLine();
         }
 
-
         #endregion
-        
+
+
     }
 }
