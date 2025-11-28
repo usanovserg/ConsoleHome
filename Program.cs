@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,13 @@ namespace MyConsole
     {
         static void Main(string[] args)
         {
+            Position position = new Position();
 
+            Console.WriteLine("Таймер запущен. Нажмите Enter для выхода...");
+
+
+            Console.ReadLine();
+            /*
             levels = new List<decimal>();
 
             WriteLine();
@@ -32,6 +39,7 @@ namespace MyConsole
             WriteLine();
 
             Console.ReadLine();
+            */
 
         }
 
@@ -109,6 +117,36 @@ namespace MyConsole
 
 
         #endregion
+        public class Trade
+        {
+            #region Fields 
+            public decimal Price = 0;
+            public decimal Volume = 0;
+            public string SecCode = "";
+            public string ClassCode = "";
+            public DateTime DateTime = DateTime.MinValue;
+            public string Profit = "";
+            public string TypeOrder = "";
+
+
+            enum DayOfWeek : byte // чтобы меньше места исопльзовалось числа до 255
+            {
+                Monday = 1,
+                Tuesday,
+                Wednesday,
+                Thursday,   
+                Friday, 
+                Saturday,   
+                Sunday
+            }
+        }
+        static Trade trade = new Trade();
+
+
+            #  endregion
+
+    }
+
         //----------------------------------------------- Methods ---------------------------------------------------
     }
-}
+
