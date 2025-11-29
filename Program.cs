@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Transactions;
+
 
 using ConsoleHome;
 
@@ -12,35 +12,39 @@ namespace MyConsole
 {
     internal class Program
     {
+        
+
         static void Main(string[] args)
         {
-          
-            levels = new List<Level>();
 
-            WriteLine();
+            Position position = new Position();
+            /*
+              levels = new List<Level>();
 
-            string str = ReadLine("Введите количество уровней: ");
+              WriteLine();
 
-            countLevels = Convert.ToInt32(str);
+              string str = ReadLine("Введите количество уровней: ");
 
-            str = ReadLine("Задайте верхнюю цену: ");
+              countLevels = Convert.ToInt32(str);
 
-            priceUp = decimal.Parse(str);
+              str = ReadLine("Задайте верхнюю цену: ");
 
-            str = ReadLine("Введите шаг уровня: ");
+              priceUp = decimal.Parse(str);
 
-            StepLevel = decimal.Parse(str);
+              str = ReadLine("Введите шаг уровня: ");
 
-            str = ReadLine("Введите лот на уровень: ");
+              StepLevel = decimal.Parse(str);
 
-            lotLevel = decimal.Parse(str);
+              str = ReadLine("Введите лот на уровень: ");
 
-           // str = Console.ReadLine();
+              lotLevel = decimal.Parse(str);
 
-            WriteLine();
+             // str = Console.ReadLine();
+
+              WriteLine();   */
 
             Console.ReadLine();
-
+           
         }
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
@@ -89,6 +93,7 @@ namespace MyConsole
         #endregion
         //----------------------------------------------- End Properties ------------------------------------------------
 
+       
         
 
         //----------------------------------------------- Methods ---------------------------------------------------
@@ -120,7 +125,9 @@ namespace MyConsole
            //trade.Price = 2225;    
            //trade.Volume = 100;
        
-            Level level = new Level();
+           // Level level = new Level();
+
+            
         }      
 
 
