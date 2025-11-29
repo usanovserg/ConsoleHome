@@ -6,14 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
+using ConsoleHome;
+
 namespace MyConsole
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-
-            levels = new List<decimal>();
+          
+            levels = new List<Level>();
 
             WriteLine();
 
@@ -29,7 +31,11 @@ namespace MyConsole
 
             StepLevel = decimal.Parse(str);
 
-            str = Console.ReadLine();
+            str = ReadLine("Введите лот на уровень: ");
+
+            lotLevel = decimal.Parse(str);
+
+           // str = Console.ReadLine();
 
             WriteLine();
 
@@ -40,13 +46,13 @@ namespace MyConsole
         //----------------------------------------------- Fields ---------------------------------------------------- 
         #region Filds
 
-        static List<decimal> levels;
+        static List<Level> levels;
 
         static decimal priceUp;
 
         static int countLevels;
                 
-        static decimal priceLevel = priceUp;
+        static decimal lotLevel ;
 
         //  static decimal stepLevel;
         
@@ -54,7 +60,7 @@ namespace MyConsole
 
          static Trade trade = new Trade();
 
-        //----------------------------------------------- Fields ----------------------------------------------------
+        //----------------------------------------------- End Fields ----------------------------------------------------
 
         //----------------------------------------------- Properties ------------------------------------------------
         #region Properties
@@ -72,21 +78,16 @@ namespace MyConsole
                 {
                     stepLevel = value;
 
-                    decimal priceLevel = priceUp;
-
-                    for (int i = 0; i < countLevels; i++)
-                    {
-                        levels.Add(priceLevel);
-
-                        priceLevel -= stepLevel;
-                    }
+                   levels = Level.CalculateLevels(priceUp, stepLevel, countLevels);
                 }
 
             }
         }
+
         static decimal stepLevel;
+
         #endregion
-        //----------------------------------------------- Properties ------------------------------------------------
+        //----------------------------------------------- End Properties ------------------------------------------------
 
         
 
@@ -98,9 +99,9 @@ namespace MyConsole
             Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());
             for (int i = 0; i < levels.Count; i++)
             {
-                Console.WriteLine(levels[i]);
+                Console.WriteLine(levels[i].PriceLevel);
             }
-            Console.ReadLine();
+          //  Console.ReadLine();
             //1            
             //2
             //3
@@ -116,15 +117,16 @@ namespace MyConsole
 
         static void XXXXX()
         {
-           trade.Price = 2225;    
-           trade.Volume = 100;
+           //trade.Price = 2225;    
+           //trade.Volume = 100;
        
+            Level level = new Level();
         }      
 
 
 
         #endregion
-        //----------------------------------------------- Methods ---------------------------------------------------
+        //----------------------------------------------- End Methods ---------------------------------------------------
     }
 
     
