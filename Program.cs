@@ -5,17 +5,22 @@ namespace MyConsole
 {
     internal class Program
     {
+        //=================================== Fields ===============================================
+        #region Fields
         static List<decimal> levels;
         static decimal priceUp;
         static decimal priceDown;
-        static decimal slevel;
+        #endregion
+
+        //=================================== Properties ===============================================
+        #region Prperties
         static decimal StepLevel
         {
             get
             {
                 return slevel;
             }
-            set 
+            set
             {
                 slevel = value;
                 levels = new List<decimal>();
@@ -25,6 +30,8 @@ namespace MyConsole
                 }
             }
         }
+        static decimal slevel;
+        #endregion
         static void Main(string[] args)
         {
             WriteResult();
@@ -34,6 +41,8 @@ namespace MyConsole
             WriteResult();
             Console.ReadLine();
         }
+        //=================================== Methods ===============================================
+        #region Methods
         static decimal ReadLine(string str, decimal value = 0)
         {
             decimal rez;
@@ -52,5 +61,7 @@ namespace MyConsole
             }
             Console.WriteLine("\nЧисло уровней цены - " + levels?.Count.ToString());
         }
+        #endregion
     }
 }
+
