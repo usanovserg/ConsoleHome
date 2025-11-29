@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace MyConsole
 {
@@ -38,15 +40,20 @@ namespace MyConsole
         //----------------------------------------------- Fields ---------------------------------------------------- 
         #region Filds
 
-        static int countLevels;
+        static List<decimal> levels;
 
         static decimal priceUp;
 
+        static int countLevels;
+                
         static decimal priceLevel = priceUp;
 
-        static decimal stepLevel;
-
+        //  static decimal stepLevel;
+        
         #endregion
+
+         static Trade trade = new Trade();
+
         //----------------------------------------------- Fields ----------------------------------------------------
 
         //----------------------------------------------- Properties ------------------------------------------------
@@ -77,11 +84,11 @@ namespace MyConsole
 
             }
         }
-
+        static decimal stepLevel;
         #endregion
         //----------------------------------------------- Properties ------------------------------------------------
 
-        static List<decimal> levels;
+        
 
         //----------------------------------------------- Methods ---------------------------------------------------
         #region Methods
@@ -107,8 +114,18 @@ namespace MyConsole
             return Console.ReadLine();
         }
 
+        static void XXXXX()
+        {
+           trade.Price = 2225;    
+           trade.Volume = 100;
+       
+        }      
+
+
 
         #endregion
         //----------------------------------------------- Methods ---------------------------------------------------
     }
+
+    
 }
