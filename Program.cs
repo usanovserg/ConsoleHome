@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ConsoleHome
 {
@@ -10,9 +11,11 @@ namespace ConsoleHome
     {
         static void Main(string[] args)
         {
+            number = WriteLine;
+
             levels = new List<Level>();
 
-            WriteLine();
+            Load();
 
             string str = ReadLine("Введите количество уровней: ");
 
@@ -30,7 +33,9 @@ namespace ConsoleHome
 
             lotLevel = decimal.Parse(str);
 
-            WriteLine();
+            number();
+
+            Save();
 
             Console.ReadLine();
         }
@@ -102,13 +107,58 @@ namespace ConsoleHome
             return Console.ReadLine();
         }
 
-        static void Jddsdsy()
+        static void Save()
         {
+            using (StreamWriter writer = new StreamWriter("params.txt", false))
+            {
+                writer.WriteLine(priceUp.ToString());
 
+                writer.WriteLine(countLevels.ToString());
+
+                writer.WriteLine(stepLevel.ToString());
+            }
+
+        }
+
+        static void Load()
+        {
+            using(StreamReader reader = new StreamReader("params.txt"))
+            {
+                int index = 0;
+
+                while (true)
+                {
+                    string line = reader.ReadLine();
+
+                    index++;
+
+                    switch (index)
+                    {
+                        case 1:
+                            priceUp = decimal.Parse(line);
+                            break;
+
+                        case 2:
+                            countLevels = int.Parse(line);
+                            break;
+
+                        case 3:
+                            StepLevel = decimal.Parse(line);
+                            break;
+                    }
+
+                    if (line == null)
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         #endregion
 
+        delegate void Number();
+        static Number number;
 
     }
 
