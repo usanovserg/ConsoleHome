@@ -5,25 +5,35 @@ namespace ConsoleHome
 
     public class Trade
     {
-        public string Symbol { get; set; }
-        public decimal Price { get; set; }
-        public int Quantity { get; set; }
-        public DateTime TradeTime { get; set; }
-        public Direction Direction { get; set; }
 
-        public Trade(string symbol, decimal price, int quantity, Direction direction)
+        public decimal Price = 0;
+
+        public string SecCode = "";
+
+        public string ClassCode = "";
+
+        public DateTime DateTime = DateTime.MinValue;
+
+        public string Portfolio = "";
+
+        public Direction Direction;
+        public decimal Volume { get; set; }
+
+
+
+        public Trade(string symbol, decimal price, decimal volume, DateTime datetime, Direction direction)
         {
-            Symbol = symbol;
+            SecCode = symbol;
             Price = price;
-            Quantity = quantity;
+            Volume = volume;
             Direction = direction;
-            TradeTime = DateTime.Now;
+            DateTime = datetime;
         }
 
         public override string ToString()
         {
             string directionText = Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
-            return $"{Symbol} | {directionText} | Цена: {Price:C} | Количество: {Quantity} | Время: {TradeTime:HH:mm:ss}";
+            return $"{SecCode} | {directionText} | Цена: {Price:F2} | Количество: {Volume} | Время: {DateTime:HH:mm:ss}";
         }
     }
 
