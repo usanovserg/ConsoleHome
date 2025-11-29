@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ConsoleHome;
+using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace MyConsole
 {
@@ -7,9 +9,10 @@ namespace MyConsole
     {
         //=================================== Fields ===============================================
         #region Fields
-        static List<decimal> levels;
+        static List<Level> levels;
         static decimal priceUp;
         static decimal priceDown;
+        static decimal lotLevel;
         #endregion
 
         //=================================== Properties ===============================================
@@ -23,11 +26,8 @@ namespace MyConsole
             set
             {
                 slevel = value;
-                levels = new List<decimal>();
-                for (decimal price = priceUp; price >= priceDown; price -= slevel)
-                {
-                    levels.Add(price);
-                }
+                levels = Level.CalculateLevels(priceDown, priceUp, slevel);
+                Level.LotLevel = lotLevel;
             }
         }
         static decimal slevel;
@@ -37,6 +37,7 @@ namespace MyConsole
             WriteResult();
             priceDown = ReadLine("Введите нижний уровень цены:");
             priceUp = ReadLine("Введите верхний уровень цены:", priceDown);
+            lotLevel = ReadLine("Введите лот на уровень:");
             StepLevel = ReadLine("Введите шаг изменения цены:");
             WriteResult();
             Console.ReadLine();
@@ -57,11 +58,12 @@ namespace MyConsole
         {
             for (int i = 0; i < levels?.Count; i++)
             {
-                Console.WriteLine($"{i + 1} - {levels[i].ToString()}");
+                Console.WriteLine($"{i + 1} - {levels[i].PriceLavel.ToString()}");
             }
             Console.WriteLine("\nЧисло уровней цены - " + levels?.Count.ToString());
         }
         #endregion
     }
+
 }
 
