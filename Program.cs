@@ -14,17 +14,20 @@ namespace MyConsole
         static void Main(string[] args)
         {
             
-            // Выводим начальную позицию
+            // Работа с позицией
             Position position = new Position();
+            //Пописываемся на события
             position.ChangePositionEvent += EventToConsole;
             position.OpenPositionEvent += EventToConsole;
             position.ClosePositionEvent += EventToConsole;
 
+            //Создаем позицию
             Trade trade1 = new Trade("SBER", 275.50m, 200, DateTime.Now,Direction.Long);
             //Position position = Position.OpenPosition(trade1);
             position.Open(trade1);
             position.Print();
 
+            //Изменяем
             Trade trade2 = new Trade("SBER", 255.00m, 150, DateTime.Now, Direction.Long);
             position.Change(trade2);
             position.Print();
@@ -41,10 +44,12 @@ namespace MyConsole
             position.Change(trade5);
             position.Print();
 
+            //Закрываем позицию
             Trade trade6 = new Trade("SBER", 159.50m, 100, DateTime.Now, Direction.Long);
             position.Close(trade6);
             position.Print();
             
+
             number = WriteLine;
 
             levels = new List<Level>();
