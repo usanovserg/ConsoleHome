@@ -30,7 +30,7 @@ namespace ConsoleHome
             Trade trade= new Trade();
 
             int num = random.Next(-10, 10);
-            byte num_day = (byte)random.Next(1,8);
+            byte num_day = (byte)random.Next(1,6);
             byte num_ticker = (byte)random.Next(1, 4);
 
             
@@ -77,14 +77,14 @@ namespace ConsoleHome
               
                 Console.WriteLine("{0,-10} {1,-6} {2,-8} {3,-12} {4, -12} {5, -12} {6,-20} {7,-10} {8,-12}",
                     //"Ticker", "Type", "Volume", "Price", "StopLoss","TakeProfit", "Date", "Day" ,"Indicator"
-                    ((MyConsole.Program.NameTicker.Ticker)num_ticker).ToString(),
+                    ((NameTicker.Ticker)num_ticker).ToString(),
                     trade.TypeOrder, 
                     trade.Volume, 
                     trade.Price,
                     trade.StopLoss.ToString(),
                     trade.TakeProfit.ToString(),
                     randomDateTimeStr,
-                    ((MyConsole.Program.DayWeek.MineDayOfWeek)num_day).ToString(),
+                    ((DayWeek.MineDayOfWeek)num_day).ToString(),
                     "RSI(" + random.Next(1, 14) + ")"
 
 
