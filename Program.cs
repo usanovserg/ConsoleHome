@@ -1,16 +1,19 @@
-﻿using ConsoleHome;  // подключен класс
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using ConsoleHome;  // подключен namespace ConsoleHome
 
-namespace MyConsole
+namespace ConsoleHome
 {
     internal class Program
     {
         static void Main(string[] args)
-        {            
+        {
+            Position position = new Position();
+
+            /*
             levels = new List<Level>();
 
             WriteLine();
@@ -33,7 +36,7 @@ namespace MyConsole
                         
             WriteLine();
 
-            //Console.ReadLine(); 
+            */
 
         }
 
