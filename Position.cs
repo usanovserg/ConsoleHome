@@ -15,53 +15,68 @@ namespace MyConsole
         {
             Timer timer = new Timer();
 
-            timer.Interval = 1000;
+            timer.Interval = 5000;
 
             timer.Elapsed += NewTrade;
 
-            timer.Start();
+            timer.Start();                                 
 
         }
 
-        Random random = new Random();  
+        public decimal AveragePrice = 0;
 
-        private void NewTrade(object? sender, System.Timers.ElapsedEventArgs e)
+        public decimal FirstLevel = 0;
+
+        public decimal HelperLevel = 0;
+
+        public void NewTrade(object? sender, System.Timers.ElapsedEventArgs e)
         {
+         
             Trade trade = new Trade();
 
-            trade.DateTime = DateTime.Now; 
+            trade.DateTime = DateTime.Now;  
 
-            int num = random.Next(-10, 10);
+            int num =  ForTests.RandomHelper.random.Next(-30, 30);   //Генерируем объем сделки и направление сделки
 
-            if (num > 0)
+            trade.DirectionOfTrade = ForTests.GetDirection();
+
+            trade.Volume = Math.Abs(num); //Получаем объем.
+          
+            trade.Price = ForTests.RandomHelper.random.Next(200, 1000); // Генерируем цену инструмента.
+                       
+            trade.Commission = trade.GetCommission(ForTests.CalcCommission());
+
+
+
+            if (FirstLevel == 0)
             {
-                trade.DirectionOfTrade = Trade.directionOfTrade.Long ;         
+                FirstLevel = trade.Price; // Сохраняем первый уровень
+
+                HelperLevel = FirstLevel;
+
+                AveragePrice = HelperLevel / 2 ;
             }
+
 
             else
             {
-                trade.DirectionOfTrade = Trade.directionOfTrade.Short;
+                HelperLevel = trade.Price;
+
+                if (HelperLevel > AveragePrice)
+                {
+                    AveragePrice = (HelperLevel + AveragePrice) / 2;  // Если цена вверх, то средний растет
+                }
+                else
+                {
+                    AveragePrice = (AveragePrice + HelperLevel) / 2; // Если цена вниз то падает
+                }
+
+                trade.AveragePrice = AveragePrice;
+
+
+                ForTests.PrintResults(trade);
+
             }
-
-            trade.Volume = Math.Abs(num);
-          
-            trade.Price = random.Next(70000, 80000);
-
-            trade.Commission = trade.GetCommission(Trade.typeOfComission.Limit.ToString());
-
-            
-
-            decimal averagePrice = 0;
-
-
-
-            string str =  "Время = " + trade.DateTime.ToString() +
-                          " Volume = " + trade.Volume.ToString() + " / Price = " + trade.Price.ToString() + 
-                          " Средняя цена = " + averagePrice.ToString() +
-                          " / Direction = " + trade.DirectionOfTrade.ToString() + 
-                          " / Commission = " + trade.Commission.ToString(); 
-            
-            Console.WriteLine(str);
         }
     } 
 }

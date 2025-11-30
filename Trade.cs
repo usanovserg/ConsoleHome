@@ -41,13 +41,15 @@ namespace MyConsole
         /// <summary>
         /// Направление торговли
         /// </summary>
-       // public directionOfTrade DirectionOfTrade;
-        public directionOfTrade DirectionOfTrade;
+        public string DirectionOfTrade = "";
+      //  public directionOfTrade DirectionOfTrade;
 
         /// <summary>
         /// Комиссия за сделку
         /// </summary>
-        public   decimal Commission = 0;
+        public decimal Commission = 0;
+
+        public decimal AveragePrice = 0;
 
         #endregion
         //----------------------------------------------- End Fields ---------------------------------------------------- 

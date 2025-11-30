@@ -13,7 +13,6 @@ namespace MyConsole
     internal class Program
     {
         
-
         static void Main(string[] args)
         {
 
@@ -107,10 +106,7 @@ namespace MyConsole
                 Console.WriteLine(levels[i].PriceLevel);
             }
           //  Console.ReadLine();
-            //1            
-            //2
-            //3
-
+          
         }
 
         static string ReadLine(string message)
