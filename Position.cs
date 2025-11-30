@@ -5,7 +5,8 @@ namespace ConsoleHome
 {
     public class Position
     {
-        // Свойства позиции
+        //----------------------------------------------- Fields ---------------------------------------------------- 
+        #region Fields
         public string SecCode = "";
 
         public string ClassCode = "";
@@ -17,15 +18,16 @@ namespace ConsoleHome
         public Direction Direction;
         public decimal Lots = 0;
         public DateTime OpenTime = DateTime.MinValue;
-        public decimal OpenPrice= 0;
+        public decimal OpenPrice = 0;
         public DateTime CloseTime = DateTime.MinValue;
         public decimal ClosePrice = 0;
-        public decimal AveragePrice= 0;
-        public DateTime LastUpdateTime= DateTime.MinValue;
+        public decimal AveragePrice = 0;
+        public DateTime LastUpdateTime = DateTime.MinValue;
 
         public decimal TotalCost = 0;
         public bool IsLong => Lots > 0;
         public bool IsShort => Lots < 0;
+        #endregion
 
         public delegate void PositionHandler(string message);
         public event PositionHandler? ChangePositionEvent;
@@ -38,11 +40,14 @@ namespace ConsoleHome
 
         }
 
+        //----------------------------------------------- Methods ---------------------------------------------------
+        #region Methods
+
         /// <summary>
         /// Открытие новой позициии 
         /// </summary>
         public void Open(Trade trade)
-        { 
+        {
             this.SecCode = trade.SecCode;
             this.Status = "Open";
             this.Direction = trade.Direction;
@@ -53,7 +58,7 @@ namespace ConsoleHome
             this.TotalCost = trade.Price * trade.Volume;
             this.OpenTime = trade.DateTime;
             this.LastUpdateTime = this.OpenTime;
-            
+
             string directionText = Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
 
             OpenPositionEvent?.Invoke($"Позиция открыта: {directionText} по инструменту {SecCode} открыта по цене {OpenPrice} кол-во лотов {Lots} ");
@@ -69,7 +74,7 @@ namespace ConsoleHome
                 Console.WriteLine($"Ошибка: символ сделки ({trade.SecCode}) не соответствует символу позиции ({SecCode})");
                 return;
             }
-            
+
             string directionText = Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
             ChangePositionEvent?.Invoke($"Позиция изменена: {directionText} по инструменту {trade.SecCode} по цене {trade.Price} кол-во лотов {trade.Volume} ");
 
@@ -85,7 +90,8 @@ namespace ConsoleHome
         public void Close(Trade trade)
         {
             var tradeLots = trade.Direction == Direction.Long ? trade.Volume : -trade.Volume;
-            if (Lots * tradeLots < 0 && Math.Abs(Lots) == Math.Abs(tradeLots)) {
+            if (Lots * tradeLots < 0 && Math.Abs(Lots) == Math.Abs(tradeLots))
+            {
                 Status = "Close";
 
             }
@@ -114,7 +120,7 @@ namespace ConsoleHome
                     {
                         Lots = Lots + tradeLots;
                     }
-                    else 
+                    else
                     {
                         Lots = tradeLots + Lots;
                         AveragePrice = tradePrice;
@@ -124,7 +130,7 @@ namespace ConsoleHome
 
                 }
             }
-            else if(IsShort)
+            else if (IsShort)
             {
                 if (tradeLots < 0)
                 {
@@ -181,14 +187,15 @@ namespace ConsoleHome
             Console.WriteLine("---");
         }
 
-    public static Position OpenPosition(Trade trade) { 
-       
-        Position position = new Position();
-        position.Open(trade);
-        
-        return position;
-    }
-    
+        public static Position OpenPosition(Trade trade)
+        {
+
+            Position position = new Position();
+            position.Open(trade);
+
+            return position;
+        }
+        #endregion
     }
 
 

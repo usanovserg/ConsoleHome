@@ -5,7 +5,9 @@ namespace ConsoleHome
 
     public class Trade
     {
+        //----------------------------------------------- Fields ---------------------------------------------------- 
 
+        #region Fields
         public decimal Price = 0;
 
         public string SecCode = "";
@@ -17,9 +19,14 @@ namespace ConsoleHome
         public string Portfolio = "";
 
         public Direction Direction;
+        #endregion
+        //----------------------------------------------- Properties ------------------------------------------------
+        #region Properties
         public decimal Volume { get; set; }
+        #endregion
+        //----------------------------------------------- Methods ---------------------------------------------------
 
-
+        #region Methods
 
         public Trade(string symbol, decimal price, decimal volume, DateTime datetime, Direction direction)
         {
@@ -37,6 +44,7 @@ namespace ConsoleHome
             string directionText = Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
             return $"{SecCode} | {directionText} | Цена: {Price:F2} | Количество: {Volume} | Время: {DateTime:HH:mm:ss}";
         }
+        #endregion
     }
 
 
