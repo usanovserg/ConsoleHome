@@ -30,6 +30,8 @@ namespace ConsoleHome
             DateTime = datetime;
         }
 
+        public Trade() { }
+
         public override string ToString()
         {
             string directionText = Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";

@@ -25,6 +25,11 @@ namespace ConsoleHome
         public bool IsLong => Lots > 0;
         public bool IsShort => Lots < 0;
 
+        public delegate void PositionHandler(string message);
+        public event PositionHandler? ChangePositionEvent;
+        public event PositionHandler? OpenPositionEvent;
+        public event PositionHandler? ClosePositionEvent;
+
         // Конструктор
         public Position()
         {
@@ -46,6 +51,10 @@ namespace ConsoleHome
             this.TotalCost = trade.Price * trade.Volume;
             this.OpenTime = trade.DateTime;
             this.LastUpdateTime = this.OpenTime;
+            
+            string directionText = Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
+
+            OpenPositionEvent?.Invoke($"Позиция открыта: {directionText} по инструменту {SecCode} открыта по цене {OpenPrice} кол-во лотов {Lots} ");
         }
 
         /// <summary>
@@ -58,10 +67,10 @@ namespace ConsoleHome
                 Console.WriteLine($"Ошибка: символ сделки ({trade.SecCode}) не соответствует символу позиции ({SecCode})");
                 return;
             }
+            
+            string directionText = Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
+            ChangePositionEvent?.Invoke($"Позиция изменена: {directionText} по инструменту {trade.SecCode} по цене {trade.Price} кол-во лотов {trade.Volume} ");
 
-            Console.WriteLine($"\n--- Обработка новой сделки ---");
-            Console.WriteLine(trade.ToString());
-            Console.WriteLine($"Позиция ДО: Лотов = {Lots}, Средняя цена = {AveragePrice:F2}");
 
             // Определяем знак количества лотов в зависимости от направления
             var tradeLots = trade.Direction == Direction.Long ? trade.Volume : -trade.Volume;
@@ -81,6 +90,7 @@ namespace ConsoleHome
 
             // Пересчет позиции
             Change(trade);
+            ClosePositionEvent?.Invoke($"Позиция закрыта");
 
         }
         /// <summary>
@@ -157,6 +167,17 @@ namespace ConsoleHome
             Console.WriteLine("---");
         }
 
-
+    public static Position OpenPosition(Trade trade) { 
+       
+        Position position = new Position();
+        position.Open(trade);
+        
+        return position;
     }
+    
+    }
+
+
+
+
 }

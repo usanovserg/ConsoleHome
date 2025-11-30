@@ -25,6 +25,30 @@ namespace ConsoleHome
 
         #endregion
 
+        //----------------------------------------------- Methods ---------------------------------------------------
+
+        #region Methods
+
+        public static List<Level> CalculateLevels(decimal PriceUp, decimal step, int count) 
+        { 
+            List<Level> levels = new List<Level>();        
+            
+            decimal priceLevel = PriceUp;
+
+            for (int i=0; i<count;i++) { 
+                Level level = new Level() { PriceLevel = priceLevel };
+                levels.Add(level);
+                priceLevel-=step;
+            
+            }
+
+
+            return levels;
+        }
+
+
+
+        #endregion
 
     }
 }
