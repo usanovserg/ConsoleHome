@@ -21,7 +21,8 @@ namespace ConsoleHome
         #region Methods
         public static List<Level> CalculateLevels(decimal priceDown, decimal priceUp, decimal step)
         {
-            List<Level> levels = new List<Level>();
+            //  List<Level> levels = new List<Level>();
+            List<Level> levels = [];
             for (decimal price = priceUp; price >= priceDown; price -= step)
             {
                 levels.Add(new Level() { PriceLavel = price });

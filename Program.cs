@@ -9,7 +9,7 @@ namespace MyConsole
     {
         //=================================== Fields ===============================================
         #region Fields
-        static List<Level> levels;
+        static List<Level>? levels;
         static decimal priceUp;
         static decimal priceDown;
         static decimal lotLevel;
@@ -58,9 +58,9 @@ namespace MyConsole
         {
             for (int i = 0; i < levels?.Count; i++)
             {
-                Console.WriteLine($"{i + 1} - {levels[i].PriceLavel.ToString()}");
+                Console.WriteLine($"{i + 1} - {levels[i].PriceLavel}");
             }
-            Console.WriteLine("\nЧисло уровней цены - " + levels?.Count.ToString());
+            Console.WriteLine("\nЧисло уровней цены - " + levels?.Count);
         }
         #endregion
     }

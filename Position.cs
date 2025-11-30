@@ -21,8 +21,18 @@ namespace ConsoleHome
         Random random = new Random();
         private void Timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
-           Trade trade = new Trade();
-           int num = random.Next(-10,10);
+            Trade trade = new Trade();
+            int num = random.Next(-10,10);
+            if (num > 0)
+            {
+            }
+            else if (num < 0)
+            {
+
+            }
+            trade.Volume = Math.Abs(num);
+            trade.Price = random.Next(70000, 80000);
+            Console.WriteLine($"Volume = {trade.Volume.ToString()} / Price = {trade.Price.ToString()}");
         }
     }
 }
