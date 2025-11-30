@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome;  // подключен класс
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,8 @@ namespace MyConsole
     internal class Program
     {
         static void Main(string[] args)
-        {
-
-            levels = new List<decimal>();
+        {            
+            levels = new List<Level>();
 
             WriteLine();
 
@@ -27,27 +27,32 @@ namespace MyConsole
 
             StepLevel = decimal.Parse(str);
 
-            str = Console.ReadLine();
+            str = ReadLine("Введите лот на уровнь: ");
 
+            lotLevel = decimal.Parse(str);
+                        
             WriteLine();
 
-            Console.ReadLine(); 
+            //Console.ReadLine(); 
 
         }
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
-        #region Filds
+        #region Fields
 
-        static int countLevels;
+        static List<Level> levels;      // список 
+        static decimal priceUp;         // верхняя цена
+        static int countLevels;         // кол-во уровней
+        static decimal lotLevel;        // лот на уровень                                
 
-        static decimal priceUp;
+        #endregion // Fields 
 
-        static decimal priceLevel = priceUp;
 
-        static decimal stepLevel;
+        static Trade trade = new Trade();
 
-        #endregion
-        //----------------------------------------------- Fields ----------------------------------------------------
+        static Level level = new Level();
+
+
 
         //----------------------------------------------- Properties ------------------------------------------------
         #region Properties
@@ -65,23 +70,15 @@ namespace MyConsole
                 {
                     stepLevel = value;
 
-                    decimal priceLevel = priceUp;
-
-                    for (int i = 0; i < countLevels; i++)
-                    {
-                        levels.Add(priceLevel);
-
-                        priceLevel -= stepLevel;
-                    }
+                    levels = Level.CalculateLevels(priceUp, stepLevel, countLevels);
                 }
-
             }
         }
+        static decimal stepLevel;
 
-        #endregion
-        //----------------------------------------------- Properties ------------------------------------------------
+        #endregion //Properties 
 
-        static List<decimal> levels;
+
 
         //----------------------------------------------- Methods ---------------------------------------------------
         #region Methods
@@ -91,9 +88,9 @@ namespace MyConsole
             Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());
             for (int i = 0; i < levels.Count; i++)
             {
-                Console.WriteLine(levels[i]);
+                Console.WriteLine(levels[i].PriceLevel);
             }
-            Console.ReadLine();
+            //Console.ReadLine();
             //1            
             //2
             //3
@@ -108,7 +105,13 @@ namespace MyConsole
         }
 
 
-        #endregion
-        //----------------------------------------------- Methods ---------------------------------------------------
+        static void NoSence()
+        {
+            
+        }
+
+
+        #endregion // Methods 
+
     }
 }
