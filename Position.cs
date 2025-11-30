@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics;
+
 namespace ConsoleHome
 {
     public class Position
@@ -98,44 +100,56 @@ namespace ConsoleHome
         /// </summary>
         private void Update(decimal tradeLots, decimal tradePrice)
         {
-            //decimal prevCost = TotalCost;
-            decimal prevLots = Lots;
-
-            // Если закрываем или разворачиваем позицию
-            if (prevLots * tradeLots < 0) // Разные знаки
+            if (IsLong)
             {
-                var absPrevious = Math.Abs(prevLots);
-                var absTrade = Math.Abs(tradeLots);
-                var minLots = Math.Min(absPrevious, absTrade);
-
-                // Закрываем часть позиции
-                TotalCost -= minLots * Math.Sign(prevLots) * AveragePrice;
-                Lots -= minLots * Math.Sign(prevLots);
-
-                // Если остались лоты для открытия в другом направлении
-                if (absTrade > minLots)
+                if (tradeLots > 0)
                 {
-                    var remainingLots = (absTrade - minLots) * Math.Sign(tradeLots);
-                    TotalCost += remainingLots * tradePrice;
-                    Lots += remainingLots;
+                    var newLots = tradeLots + Lots;
+                    AveragePrice = (AveragePrice * Lots + tradePrice * tradeLots) / (newLots);
+                    Lots = newLots;
+                }
+                else if (tradeLots < 0)
+                {
+                    if (Math.Abs(tradeLots) <= Math.Abs(Lots))
+                    {
+                        Lots = Lots + tradeLots;
+                    }
+                    else 
+                    {
+                        Lots = tradeLots + Lots;
+                        AveragePrice = tradePrice;
+
+
+                    }
+
                 }
             }
-            else // Увеличиваем позицию в том же направлении
+            else if(IsShort)
             {
-                TotalCost += tradeLots * tradePrice;
-                Lots += tradeLots;
+                if (tradeLots < 0)
+                {
+                    var newLots = tradeLots + Lots;
+                    AveragePrice = (AveragePrice * Lots + tradePrice * tradeLots) / (newLots);
+                    Lots = newLots;
+                }
+                else if (tradeLots > 0)
+                {
+                    if (Math.Abs(tradeLots) <= Math.Abs(Lots))
+                    {
+                        Lots = Lots + tradeLots;
+                    }
+                    else
+                    {
+                        Lots = tradeLots + Lots;
+                        AveragePrice = tradePrice;
+
+
+                    }
+
+                }
+
             }
 
-            // Расчет средней цены
-            if (Lots != 0)
-            {
-                AveragePrice = Math.Abs(TotalCost / Lots);
-            }
-            else
-            {
-                AveragePrice = 0;
-                TotalCost = 0;
-            }
         }
 
         /// <summary>
