@@ -48,7 +48,11 @@ namespace MyConsole
             Trade trade6 = new Trade("SBER", 159.50m, 100, DateTime.Now, Direction.Long);
             position.Close(trade6);
             position.Print();
-            
+            Console.WriteLine($"Сумма комиссии: { position.TotalCost:F2}");
+            Console.WriteLine($"Общий результат: { position.TotalResult:F2}");
+            Console.WriteLine($"Общий чистый результат:{ (position.TotalResult- position.TotalCost):F2}");
+
+
 
             number = WriteLine;
 

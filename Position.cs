@@ -25,6 +25,8 @@ namespace ConsoleHome
         public DateTime LastUpdateTime = DateTime.MinValue;
 
         public decimal TotalCost = 0;
+        public decimal TotalResult = 0;
+        public decimal comission = 0.05m/100m;
         public bool IsLong => Lots > 0;
         public bool IsShort => Lots < 0;
         #endregion
@@ -55,7 +57,7 @@ namespace ConsoleHome
             this.OpenPrice = trade.Price;
             this.OpenTime = trade.DateTime;
             this.AveragePrice = trade.Price;
-            this.TotalCost = trade.Price * trade.Volume;
+            this.TotalCost = trade.Price * Math.Abs(trade.Volume)*comission;
             this.OpenTime = trade.DateTime;
             this.LastUpdateTime = this.OpenTime;
 
@@ -110,6 +112,7 @@ namespace ConsoleHome
             {
                 if (tradeLots > 0)
                 {
+                    TotalCost += Math.Abs(tradeLots) * tradePrice*comission;
                     var newLots = tradeLots + Lots;
                     AveragePrice = (AveragePrice * Lots + tradePrice * tradeLots) / (newLots);
                     Lots = newLots;
@@ -118,10 +121,16 @@ namespace ConsoleHome
                 {
                     if (Math.Abs(tradeLots) <= Math.Abs(Lots))
                     {
+                        TotalCost += Math.Abs(tradeLots) * tradePrice* comission;
+                        TotalResult += (tradePrice - AveragePrice) * Math.Abs(tradeLots);
                         Lots = Lots + tradeLots;
+
+
                     }
                     else
                     {
+                        TotalCost += Math.Abs(tradeLots) * tradePrice* comission;
+                        TotalResult += (tradePrice - AveragePrice) * Math.Abs(tradeLots);
                         Lots = tradeLots + Lots;
                         AveragePrice = tradePrice;
 
@@ -134,22 +143,28 @@ namespace ConsoleHome
             {
                 if (tradeLots < 0)
                 {
+                    TotalCost += Math.Abs(tradeLots) * tradePrice* comission;
                     var newLots = tradeLots + Lots;
                     AveragePrice = (AveragePrice * Lots + tradePrice * tradeLots) / (newLots);
                     Lots = newLots;
+
                 }
                 else if (tradeLots > 0)
                 {
                     if (Math.Abs(tradeLots) <= Math.Abs(Lots))
                     {
+                        TotalCost += Math.Abs(tradeLots) * tradePrice * comission;
+                        TotalResult += (AveragePrice-tradePrice) * Math.Abs(tradeLots);
                         Lots = Lots + tradeLots;
+
                     }
                     else
                     {
-                        Lots = tradeLots + Lots;
+                        
+                        TotalCost += Math.Abs(tradeLots) * tradePrice * comission;
+                        TotalResult += (tradePrice - AveragePrice) * Math.Abs(tradeLots);
                         AveragePrice = tradePrice;
-
-
+                        Lots = tradeLots + Lots;
                     }
 
                 }
@@ -174,7 +189,9 @@ namespace ConsoleHome
                 Console.WriteLine($"Статус позиции: {Status}");
 
                 Console.WriteLine($"Средняя цена: {AveragePrice:F2}");
-                Console.WriteLine($"Общая стоимость: {TotalCost:F2}");
+                Console.WriteLine($"Общая комиссия: {TotalCost:F2}");
+                Console.WriteLine($"Общий результат: {TotalResult:F2}");
+
                 Console.WriteLine($"Время открытия: {OpenTime:HH:mm:ss}");
             }
             else
