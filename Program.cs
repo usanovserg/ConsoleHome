@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleHome;
 
 namespace MyConsole
 {
@@ -11,7 +12,7 @@ namespace MyConsole
         static void Main(string[] args)
         {
 
-            levels = new List<decimal>();
+            levels = new List<Level>();
 
             //WriteLine();
 
@@ -27,7 +28,11 @@ namespace MyConsole
 
             StepLevel = decimal.Parse(str);
 
-            str = Console.ReadLine();
+            str = ReadLine("Введите лот на уровень: ");
+
+            lotLevel = decimal.Parse(str);
+
+            //str = Console.ReadLine();
 
             WriteLine();
 
@@ -38,7 +43,7 @@ namespace MyConsole
         //----------------------------------------------- Fields ---------------------------------------------------- 
         #region Filds
 
-        static List<decimal> levels;
+        static List<Level> levels;
 
         static int countLevels;
 
@@ -46,7 +51,11 @@ namespace MyConsole
 
         static decimal stepLevel;
 
-        static Trade trade = new Trade(); //Создаем новый класс типа Trade
+        static decimal lotLevel;
+
+        static Trade trade = new Trade(); //Создаем новый класс типа Trade, также мы вызываем конструктор, и можем задать установки по умолчанию
+
+        static Level level = new Level(); //Создали переменную level типа Level
         #endregion
 
         //----------------------------------------------- Properties ------------------------------------------------
@@ -56,7 +65,7 @@ namespace MyConsole
         {
             get
             {
-                return StepLevel;
+                return stepLevel;
             }
 
             set
@@ -65,14 +74,8 @@ namespace MyConsole
                 {
                     stepLevel = value;
 
-                    decimal priceLevel = priceUp;
-
-                    for (int i = 0; i < countLevels; i++)
-                    {
-                        levels.Add(priceLevel);
-
-                        priceLevel -= stepLevel;
-                    }
+                    levels = Level.CalculateLevels(priceUp, stepLevel, countLevels);
+              
                 }
 
             }
@@ -89,7 +92,7 @@ namespace MyConsole
             Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());
             for (int i = 0; i < levels.Count; i++)
             {
-                Console.WriteLine(levels[i]);
+                Console.WriteLine(levels[i].priceLevel);
             }
             Console.ReadLine();
         }
@@ -100,55 +103,7 @@ namespace MyConsole
 
             return Console.ReadLine();
         }
-
-        static void Prosto()
-        {
-            trade.Price = 225;
-            trade.Volume = 100; 
-        }
         #endregion
         //----------------------------------------------- Methods ---------------------------------------------------
-    }
-
-    //==============================================Trade==============================
-    class Trade
-    {
-        //===========================================Fields (поля)
-        #region Fields
-        public decimal Price = 0;
-
-
-        public  string SecCode = "";
-
-        public string ClassCode = "";
-
-        public DateTime DateTime  = DateTime.MinValue;
-
-        string Portfolio = "";
-
-        #endregion
-
-        //=============================================Properties (свойства)
-        #region Properties 
-        public decimal Volume
-        {
-            get
-            {
-                return _volume; 
-            }
-            set
-            {
-                _volume = value; 
-            }
-            
-        }
-        //Внутренние поля рекомендуется начинать с нижнего подчеркивания и с маленькой буквы!
-        //Это приватные поля
-        //Публичные поля рекомендуется писать с большой буквы
-        decimal _volume = 0;
-
-        #endregion
-
-
     }
 }
