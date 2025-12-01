@@ -15,16 +15,20 @@ namespace MyConsole
         {
 
             string str = "Время = " + trade.DateTime.ToString() +
-                          " Volume = " + trade.Volume.ToString() + 
+                          " Volume = " + trade.Volume.ToString() +
                           " / Price = " + trade.Price.ToString() +
                           " Средняя цена = " + trade.AveragePrice.ToString() +
                           " / Direction = " + trade.DirectionOfTrade.ToString() +
-                          " / Commission = " + trade.Commission.ToString();
+                          " / Commission = " + trade.Commission.ToString();                     
+
 
             Console.WriteLine(str);
 
-        }        
-        
+        }
+        /// <summary>
+        /// Выдает направление сделки случайным образом
+        /// </summary>
+        /// <returns></returns>
         public static string GetDirection()
         {
           //  Random random = new Random();
@@ -35,15 +39,16 @@ namespace MyConsole
             {
                 return Trade.directionOfTrade.Long.ToString();
             }
-
-            else
-            
+            else            
             {
                 return Trade.directionOfTrade.Short.ToString();
             }
         }
     
-
+        /// <summary>
+        /// Определяет тип комиссии. Основывается на случайном значении направления сделки.  
+        /// </summary>
+        /// <returns></returns>
         public static string CalcCommission()
         {
             if ( GetDirection() == Trade.directionOfTrade.Short.ToString())

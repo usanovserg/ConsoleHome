@@ -93,6 +93,13 @@ namespace MyConsole
             Market
         }
         //----------------------------------------------- Methods ------------------------------------------------------
+       
+        /// <summary>
+        /// Выдает значение комиссии по наименованию
+        /// </summary>
+        /// <param name="typeOfCommission"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public decimal GetCommission(string typeOfCommission)
         {
             var Commission = new Dictionary<string, decimal>()
@@ -110,7 +117,7 @@ namespace MyConsole
                 throw new ArgumentException("Комиссия не известна!!! Требуется проверить!!!!!");
             }
 
-        }
+        } 
         //----------------------------------------------- End Methods ---------------------------------------------------- 
     }
 

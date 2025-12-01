@@ -15,7 +15,7 @@ namespace MyConsole
         {
             Timer timer = new Timer();
 
-            timer.Interval = 5000;
+            timer.Interval = 1000;
 
             timer.Elapsed += NewTrade;
 
@@ -23,12 +23,91 @@ namespace MyConsole
 
         }
 
+        //----------------------------------------------- Fields ---------------------------------------------------- 
+        #region Fields
+
+        /// <summary>
+        /// Цена инструмента
+        /// </summary>
+        public decimal Price = 0;
+
+        /// <summary>
+        /// Цена открытия позиции
+        /// </summary>
+        public decimal PriceOpen = 0;
+
+        /// <summary>
+        /// Цена закрытия инструмента по SL
+        /// </summary>
+        public decimal PriceSL = 0;
+
+        /// <summary>
+        /// Цена закрытия инструмента по TP
+        /// </summary>
+        public decimal PriceTP = 0;
+
+
+        /// <summary>
+        /// Шаг трейлинг стопа
+        /// </summary>
+        public decimal StepTS = 0;
+
+        /// <summary>
+        /// Наименование инструмента
+        /// </summary>
+        public string SecCode = "";
+
+        /// <summary>
+        /// Классификация
+        /// </summary>
+        public string ClassCode = "";
+
+        /// <summary>
+        /// Время
+        /// </summary>
+        public DateTime DateTime = DateTime.MinValue;
+
+        /// <summary>
+        /// Портфель (номер счета)
+        /// </summary>
+        public string Portfolio = "";
+
+        /// <summary>
+        /// Направление торговли
+        /// </summary>
+        public string DirectionOfTrade = "";
+        //  public directionOfTrade DirectionOfTrade;
+
+        /// <summary>
+        /// Комиссия за сделку
+        /// </summary>
+        public decimal Commission = 0;
+
+
+
+
+
+
+
+
         public decimal AveragePrice = 0;
 
-        public decimal FirstLevel = 0;
+
+      //  public decimal AveragePrice = 0;
+
+        public bool IsFirstPrice = true;
 
         public decimal HelperLevel = 0;
 
+        
+        
+        #endregion Fields
+        //----------------------------------------------- End Fields ------------------------------------------------
+
+
+        //----------------------------------------------- Methods ---------------------------------------------------- 
+
+        #region Methods
         public void NewTrade(object? sender, System.Timers.ElapsedEventArgs e)
         {
          
@@ -44,39 +123,31 @@ namespace MyConsole
           
             trade.Price = ForTests.RandomHelper.random.Next(200, 1000); // Генерируем цену инструмента.
                        
-            trade.Commission = trade.GetCommission(ForTests.CalcCommission());
+            trade.Commission = trade.GetCommission(ForTests.CalcCommission());            
 
 
-
-            if (FirstLevel == 0)
+            if (IsFirstPrice)
             {
-                FirstLevel = trade.Price; // Сохраняем первый уровень
+                AveragePrice = trade.Price; // Сохраняем первый уровень
 
-                HelperLevel = FirstLevel;
+                HelperLevel = AveragePrice;
 
-                AveragePrice = HelperLevel / 2 ;
+                IsFirstPrice = false;
             }
-
 
             else
             {
-                HelperLevel = trade.Price;
+                 HelperLevel = trade.Price;
 
-                if (HelperLevel > AveragePrice)
-                {
-                    AveragePrice = (HelperLevel + AveragePrice) / 2;  // Если цена вверх, то средний растет
-                }
-                else
-                {
-                    AveragePrice = (AveragePrice + HelperLevel) / 2; // Если цена вниз то падает
-                }
-
-                trade.AveragePrice = AveragePrice;
-
-
-                ForTests.PrintResults(trade);
-
+                AveragePrice = (AveragePrice + HelperLevel) / 2;
+                
             }
+
+            trade.AveragePrice = AveragePrice;
+            ForTests.PrintResults(trade);
         }
-    } 
+
+        #endregion
+        //----------------------------------------------- End Methods ------------------------------------------------ 
+    }
 }

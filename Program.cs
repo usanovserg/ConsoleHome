@@ -17,8 +17,10 @@ namespace MyConsole
         {
 
             Position position = new Position();
+            //----------------------------------------------- Comment---------------------------------------------------- 
+            #region Comment   
             /*
-              levels = new List<Level>();
+            levels = new List<Level>();
 
               WriteLine();
 
@@ -41,7 +43,8 @@ namespace MyConsole
              // str = Console.ReadLine();
 
               WriteLine();   */
-
+            #endregion
+            //----------------------------------------------- End Comment-------------------------------------------------
             Console.ReadLine();
            
         }
