@@ -6,20 +6,18 @@ using System.Threading.Tasks;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
+
 namespace ConsoleHome
 {
     public class Position
     {
         public Position()
         {
-            Timer timer = new Timer();      // создаем объект таймер
-
-            timer.Interval = 5000;          // задаём свойство: интервал 1000 мсек = 1 сек
-
-            timer.Elapsed += NewTrade;      // наш таймер раз в 1 сек будет вызывать метод Timer_Elapsed
-
-            timer.Start();                  // запускаем таймер. Он в параллельном потоке: private void Timer_Elapsed(* * *) начинает раз в секунду вызывать Timer_Elapsed
-
+            Timer timer = new System.Timers.Timer(1000);
+            timer.Elapsed += NewTrade;
+            timer.Start();
+            Console.ReadKey();
+            timer.Stop();
         }
 
         Random random = new Random();
