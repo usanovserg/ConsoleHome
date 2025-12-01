@@ -13,7 +13,7 @@ namespace MyConsole
 
             levels = new List<decimal>();
 
-            WriteLine();
+            //WriteLine();
 
             string str = ReadLine("Введите количество уровней: ");
 
@@ -38,16 +38,16 @@ namespace MyConsole
         //----------------------------------------------- Fields ---------------------------------------------------- 
         #region Filds
 
+        static List<decimal> levels;
+
         static int countLevels;
 
         static decimal priceUp;
 
-        static decimal priceLevel = priceUp;
-
         static decimal stepLevel;
 
+        static Trade trade = new Trade(); //Создаем новый класс типа Trade
         #endregion
-        //----------------------------------------------- Fields ----------------------------------------------------
 
         //----------------------------------------------- Properties ------------------------------------------------
         #region Properties
@@ -80,7 +80,6 @@ namespace MyConsole
 
         #endregion
 
-        static List<decimal> levels;
 
         //----------------------------------------------- Methods ---------------------------------------------------
         #region Methods
@@ -93,10 +92,6 @@ namespace MyConsole
                 Console.WriteLine(levels[i]);
             }
             Console.ReadLine();
-            //1            
-            //2
-            //3
-
         }
 
         static string ReadLine(string message)
@@ -106,8 +101,54 @@ namespace MyConsole
             return Console.ReadLine();
         }
 
-
+        static void Prosto()
+        {
+            trade.Price = 225;
+            trade.Volume = 100; 
+        }
         #endregion
         //----------------------------------------------- Methods ---------------------------------------------------
+    }
+
+    //==============================================Trade==============================
+    class Trade
+    {
+        //===========================================Fields (поля)
+        #region Fields
+        public decimal Price = 0;
+
+
+        public  string SecCode = "";
+
+        public string ClassCode = "";
+
+        public DateTime DateTime  = DateTime.MinValue;
+
+        string Portfolio = "";
+
+        #endregion
+
+        //=============================================Properties (свойства)
+        #region Properties 
+        public decimal Volume
+        {
+            get
+            {
+                return _volume; 
+            }
+            set
+            {
+                _volume = value; 
+            }
+            
+        }
+        //Внутренние поля рекомендуется начинать с нижнего подчеркивания и с маленькой буквы!
+        //Это приватные поля
+        //Публичные поля рекомендуется писать с большой буквы
+        decimal _volume = 0;
+
+        #endregion
+
+
     }
 }
