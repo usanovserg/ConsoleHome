@@ -33,10 +33,12 @@ namespace MyConsole
 
             Console.ReadLine();
 
-        } // iofgijfpogj
+        }
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
-        #region Filds
+        #region Fields
+
+
 
         static int countLevels;
 
@@ -45,6 +47,9 @@ namespace MyConsole
         static decimal priceLevel = priceUp;
 
         static decimal stepLevel;
+        //=============================
+
+        static Trade trade = new Trade();
 
         #endregion
         //----------------------------------------------- Fields ----------------------------------------------------
@@ -107,8 +112,19 @@ namespace MyConsole
             return Console.ReadLine();
         }
 
+        static void Test()
+        {
+            trade.Price = 2225;
+            trade.Volume = 45654656;
+            string str = priceUp.ToString();
+        }
 
         #endregion
         //----------------------------------------------- Methods ---------------------------------------------------
+
+        //Создан класс Trade в котором есть несколько полей
+        
+       
     }
+
 }
