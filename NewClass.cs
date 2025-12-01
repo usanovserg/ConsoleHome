@@ -10,7 +10,7 @@ namespace ConsoleHome
     {
         public NewClass()
         {
-            Console.WriteLine("Команда разработчиков 2!"); //New branch dev2 added
+            Console.WriteLine("Команда разработчиков 2!"); //The branch is fixed after the merge
         }
     }
 }
