@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace MyConsole
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
+            Position position = new Position();
 
+            /*
             levels = new List<decimal>();
 
             WriteLine();
@@ -27,12 +29,16 @@ namespace MyConsole
 
             StepLevel = decimal.Parse(str);
 
+            str = ReadLine("Введите лот на уровень: ");
+
+            lotLevel = decimal.Parse(str);
+            
             str = Console.ReadLine();
 
             WriteLine();
 
             Console.ReadLine();
-
+            */
         }
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
@@ -46,8 +52,12 @@ namespace MyConsole
 
         static decimal stepLevel;
 
+
+
         #endregion
-        //----------------------------------------------- Fields ----------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------
+
+        static Trade trade = new Trade();  
 
         //----------------------------------------------- Properties ------------------------------------------------
         #region Properties
@@ -65,21 +75,14 @@ namespace MyConsole
                 {
                     stepLevel = value;
 
-                    decimal priceLevel = priceUp;
-
-                    for (int i = 0; i < countLevels; i++)
-                    {
-                        levels.Add(priceLevel);
-
-                        priceLevel -= stepLevel;
-                    }
+                   // levels = Levels.CalculateLevels(priceUp, stepLevel, countLevels);
                 }
 
             }
         }
 
         #endregion
-        //----------------------------------------------- Properties ------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------
 
         static List<decimal> levels;
 
@@ -107,8 +110,24 @@ namespace MyConsole
             return Console.ReadLine();
         }
 
+        static void SomeMethode() 
+        {
+            Levels level = new Levels();
+
+
+
+
+
+        }
+
 
         #endregion
-        //----------------------------------------------- Methods ---------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------
     }
+   
+
+
+
+ 
+
 }
