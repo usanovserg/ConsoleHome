@@ -38,7 +38,7 @@ namespace ConsoleHome
         Random random = new Random();
 
         // Конструктор
-        public Position()
+        public Position(string str)
         {
             System.Timers.Timer timer = new System.Timers.Timer();
 
@@ -50,6 +50,10 @@ namespace ConsoleHome
 
         }
 
+        public Position()
+        {
+
+        }
         private void NewTrade(object? sender, ElapsedEventArgs e)
         {
             if (this.Status == "Close") 
@@ -218,7 +222,7 @@ namespace ConsoleHome
                     else
                     {
                         TotalCost += Math.Abs(tradeLots) * tradePrice* comission;
-                        TotalResult += (tradePrice - AveragePrice) * Math.Abs(tradeLots);
+                        TotalResult += (tradePrice - AveragePrice) * Math.Abs(Lots);
                         Lots = tradeLots + Lots;
                         AveragePrice = tradePrice;
 
@@ -250,7 +254,7 @@ namespace ConsoleHome
                     {
                         
                         TotalCost += Math.Abs(tradeLots) * tradePrice * comission;
-                        TotalResult += (tradePrice - AveragePrice) * Math.Abs(tradeLots);
+                        TotalResult += (tradePrice - AveragePrice) * Math.Abs(Lots);
                         AveragePrice = tradePrice;
                         Lots = tradeLots + Lots;
                     }
