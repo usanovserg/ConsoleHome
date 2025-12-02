@@ -12,49 +12,39 @@ namespace ConsoleHome
         static void Main(string[] args)
         {
             Position position = new Position();
-
             /*
             levels = new List<Level>();
 
             WriteLine();
 
             string str = ReadLine("Введите количество уровней: ");
-
             countLevels = Convert.ToInt32(str);
 
             str = ReadLine("Задайте верхнюю цену: ");
-
             priceUp = decimal.Parse(str);
 
             str = ReadLine("Введите шаг уровня: ");
-
             StepLevel = decimal.Parse(str);
 
             str = ReadLine("Введите лот на уровнь: ");
-
             lotLevel = decimal.Parse(str);
                         
             WriteLine();
-
             */
-
         }
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
         #region Fields
 
-        static List<Level> levels;      // список 
+        static List<Level> levels;      // список уровней (список объектов класса Level)
         static decimal priceUp;         // верхняя цена
         static int countLevels;         // кол-во уровней
         static decimal lotLevel;        // лот на уровень                                
 
         #endregion // Fields 
 
-
         static Trade trade = new Trade();
-
         static Level level = new Level();
-
 
 
         //----------------------------------------------- Properties ------------------------------------------------
@@ -66,13 +56,11 @@ namespace ConsoleHome
             {
                 return StepLevel;
             }
-
             set
             {
                 if (value <= 100)
                 {
                     stepLevel = value;
-
                     levels = Level.CalculateLevels(priceUp, stepLevel, countLevels);
                 }
             }
@@ -103,16 +91,8 @@ namespace ConsoleHome
         static string ReadLine(string message)
         {
             Console.WriteLine(message);
-
             return Console.ReadLine();
         }
-
-
-        static void NoSence()
-        {
-            
-        }
-
 
         #endregion // Methods 
 

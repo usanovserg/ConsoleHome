@@ -14,7 +14,7 @@ namespace ConsoleHome
         public Position()
         {
             Timer timer = new System.Timers.Timer(1000);
-            timer.Elapsed += NewTrade;
+            timer.Elapsed += NewTrade;              // + автоматом создался метод private void NewTrade(object? sender, ElapsedEventArgs e) 
             timer.Start();
             Console.ReadKey();
             timer.Stop();
@@ -22,10 +22,9 @@ namespace ConsoleHome
 
         Random random = new Random();
 
-        private void NewTrade(object? sender, ElapsedEventArgs e)      // это само создалось при заполнении timer.Elapsed += Timer_Elapsed;
+        private void NewTrade(object? sender, ElapsedEventArgs e)      // это само создалось при заполнении timer.Elapsed += Timer_Elapsed; Название можно своё выбрать
         {
             Trade trade = new Trade();
-
             int num = random.Next(-10, 10);
 
             if (num > 0)
@@ -37,12 +36,10 @@ namespace ConsoleHome
                 // сделка в шорт
             }
 
-            trade.Volume = Math.Abs(num);
-
-            trade.Price = random.Next(70000, 80000);
-
-            string str = "Volume = " + trade.Volume.ToString() + "\tPrice = " + trade.Price.ToString();
-            Console.WriteLine(str);
+            trade.Volume = Math.Abs(num);               // объём сделки
+            trade.Price = random.Next(70000, 80000);    // цена сделки
+            //string str = "Volume = " + trade.Volume.ToString() + "\tPrice = " + trade.Price.ToString();
+            Console.WriteLine($"Volume = {trade.Volume}\tPrice = {trade.Price}");
 
         }
     }

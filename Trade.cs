@@ -6,17 +6,24 @@ using System.Threading.Tasks;
 
 namespace ConsoleHome
 {
+    /// <summary>
+    /// Класс, описывающий сделку
+    /// </summary>
     public class Trade
     {
         #region Fields
-        /// <summary>
-        /// Цена инструмента
-        /// </summary>
-        public decimal Price = 0;
-        public string SecCode = "";
-        public string ClassCode = "";
-        public DateTime DateTime = DateTime.MinValue;
-        public string Portfolio = "";
+
+        public DateTime DateTime    = DateTime.MinValue;
+        public string   ClassCode   = "";
+        public string   SecCode     = "";
+        public string   SecName     = "";
+        public string   BuySell     = "";
+        public decimal  Price       = 0;
+        public decimal  Qty         = 0;        
+        public long     TransNumber = 0;
+        public decimal  ComisRate   = 0;
+        public string   Portfolio   = "";   // ?
+
         #endregion  //Fields
 
 
@@ -25,6 +32,7 @@ namespace ConsoleHome
         /// <summary>
         /// Объём сделки
         /// </summary>
+        private decimal _volume = 0;
         public decimal Volume
         {
             get
@@ -35,16 +43,21 @@ namespace ConsoleHome
             {
                 _volume = value;
             }
-        }
-        private decimal _volume = 0;
-
+        }    
         #endregion  // Properties
 
+        enum LongShort : byte
+        {
+            Long,
+            Short
+        }
 
-        #region Methods
+        private int BuySelldfg()
+        {
+            return 0;
+        }
+    #region Methods
+    #endregion  // Methods
 
-
-        #endregion  // Methods
-
-    }
+}
 }
