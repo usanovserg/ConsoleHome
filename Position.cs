@@ -38,7 +38,7 @@ namespace ConsoleHome
         Random random = new Random();
 
         // Конструктор
-        public Position(string str)
+        public Position()
         {
             System.Timers.Timer timer = new System.Timers.Timer();
 
@@ -50,7 +50,7 @@ namespace ConsoleHome
 
         }
 
-        public Position()
+        public Position(string str)
         {
 
         }
