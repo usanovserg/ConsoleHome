@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleHome
+namespace ConsoleHome_1_5
 {
     public class NewClass
     {

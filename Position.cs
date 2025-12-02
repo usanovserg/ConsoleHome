@@ -5,9 +5,9 @@ using System.Linq;
 //using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static MyConsole.Program;
+using static MyConsole_1_5.Program;
 using System.Timers;
-namespace ConsoleHome
+namespace ConsoleHome_1_5
 {
     internal class Position
     {
