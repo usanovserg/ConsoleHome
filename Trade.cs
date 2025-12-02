@@ -9,44 +9,56 @@ namespace MyConsole
 {
         public class Trade
         {
-            //===========================================Fields (поля)
-            #region Fields
-            public decimal Price = 0;
+        //============================================ Enum (Перечисление)
+        #region Enum
+        /// <summary>
+        /// Перечисление направлений сделки
+        /// </summary>
+        public enum DirectionOfTransaction
+        {
+            Long,
+            Short,
+        }
+        #endregion
 
-            public string SecCode = "";
+        //===========================================Fields (поля)
+        #region Fields
+        public decimal Price = 0;
 
-            public string ClassCode = "";
+        public string SecCode = "";
 
-            public DateTime DateTime = DateTime.MinValue;
+        public string ClassCode = "";
 
-            string Portfolio = "";
+        public DateTime DateTime = DateTime.MinValue;
 
-            #endregion
+        string Portfolio = "";
 
-            //=============================================Properties (свойства)
-            #region Properties 
-            /// <summary>
-            /// Объем сделки
-            /// </summary>
-            public decimal Volume
+        #endregion
+
+        //=============================================Properties (свойства)
+        #region Properties 
+        /// <summary>
+        /// Объем сделки
+        /// </summary>
+        public decimal Volume
+        {
+            get
             {
-                get
-                {
-                    return _volume;
-                }
-                set
-                {
-                    _volume = value;
-                }
-
+                return _volume;
             }
-            //Внутренние поля рекомендуется начинать с нижнего подчеркивания и с маленькой буквы!
-            //Это приватные поля
-            //Публичные поля рекомендуется писать с большой буквы
-            decimal _volume = 0;
-
-            #endregion
-
+            set
+            {
+                _volume = value;
+            }
 
         }
+        //Внутренние поля рекомендуется начинать с нижнего подчеркивания и с маленькой буквы!
+        //Это приватные поля
+        //Публичные поля рекомендуется писать с большой буквы
+        decimal _volume = 0;
+
+        #endregion
+
+
+    }
 }
