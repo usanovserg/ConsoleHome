@@ -1,5 +1,4 @@
-﻿
-using System.Diagnostics;
+﻿using System.Timers;
 
 namespace ConsoleHome
 {
@@ -36,9 +35,74 @@ namespace ConsoleHome
         public event PositionHandler? OpenPositionEvent;
         public event PositionHandler? ClosePositionEvent;
 
+        Random random = new Random();
+
         // Конструктор
         public Position()
         {
+            System.Timers.Timer timer = new System.Timers.Timer();
+
+            timer.Interval = 5000;
+
+            timer.Elapsed += NewTrade;
+
+            timer.Start();
+
+        }
+
+        private void NewTrade(object? sender, ElapsedEventArgs e)
+        {
+            if (this.Status == "Close") 
+            {
+                Console.WriteLine("Сделка уже закрыта!");
+                return;
+            }
+            
+            Trade trade = new Trade();
+
+            trade.SecCode = "Si";
+
+            int num = random.Next(-10, 10);
+
+            if (num > 0)
+            {
+                trade.Direction = Direction.Long;
+            
+            }
+            else if (num < 0)
+            {
+                trade.Direction = Direction.Short;
+
+            }
+
+            trade.Volume = Math.Abs(num);
+
+            trade.Price = random.Next(70000, 80000);
+
+            trade.DateTime = DateTime.Now;
+
+            Console.WriteLine(trade.ToString());
+
+            if (this.Status != "Open") {
+                this.Open(trade);
+            }
+            else if (this.Status == "Open" && trade.Direction != this.Direction && Math.Abs(trade.Volume) == Math.Abs(this.Lots))
+            {
+                this.Close(trade);
+
+            }
+            else if (this.Status == "Open" )
+            {
+                this.Change(trade);
+
+            }
+
+            Console.WriteLine();
+            this.Print();
+            Console.WriteLine($"Сумма комиссии: {this.TotalCost:F2}");
+            Console.WriteLine($"Общий результат: {this.TotalResult:F2}");
+            Console.WriteLine($"Общая чистая прибыль:{(this.TotalResult - this.TotalCost):F2}");
+            Console.WriteLine();
 
         }
 
@@ -68,7 +132,7 @@ namespace ConsoleHome
             this.OpenTime = trade.DateTime;
             this.LastUpdateTime = this.OpenTime;
 
-            string directionText = Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
+            string directionText = trade.Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
 
             OpenPositionEvent?.Invoke($"Позиция открыта: {directionText} по инструменту {SecCode} открыта по цене {OpenPrice} кол-во лотов {Lots} ");
         }
@@ -91,7 +155,7 @@ namespace ConsoleHome
                 return;
             }
 
-            string directionText = Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
+            string directionText = trade.Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
             ChangePositionEvent?.Invoke($"Позиция изменена: {directionText} по инструменту {trade.SecCode} по цене {trade.Price} кол-во лотов {trade.Volume} ");
 
 

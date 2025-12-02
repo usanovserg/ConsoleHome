@@ -16,11 +16,14 @@ namespace MyConsole
             
             // Работа с позицией
             Position position = new Position();
+
+            
             //Пописываемся на события
             position.ChangePositionEvent += EventToConsole;
             position.OpenPositionEvent += EventToConsole;
             position.ClosePositionEvent += EventToConsole;
 
+            /*
             //Создаем позицию
             Trade trade1 = new Trade("SBER", 275.50m, 200, DateTime.Now,Direction.Long);
             //Position position = Position.OpenPosition(trade1);
@@ -52,7 +55,7 @@ namespace MyConsole
             Console.WriteLine($"Общий результат: { position.TotalResult:F2}");
             Console.WriteLine($"Общий чистый результат:{ (position.TotalResult- position.TotalCost):F2}");
 
-
+            */
 
             number = WriteLine;
 
