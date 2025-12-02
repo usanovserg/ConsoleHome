@@ -50,6 +50,13 @@ namespace ConsoleHome
         /// </summary>
         public void Open(Trade trade)
         {
+            if (Status == "Close")
+            {
+                Console.WriteLine($"Ошибка: сделка уже закрыта!");
+                return;
+
+            }
+
             this.SecCode = trade.SecCode;
             this.Status = "Open";
             this.Direction = trade.Direction;
@@ -71,6 +78,13 @@ namespace ConsoleHome
         /// </summary>
         public void Change(Trade trade)
         {
+            if (Status == "Close") 
+            {
+                Console.WriteLine($"Ошибка: сделка уже закрыта!");
+                return;
+
+            }
+
             if (trade.SecCode != this.SecCode)
             {
                 Console.WriteLine($"Ошибка: символ сделки ({trade.SecCode}) не соответствует символу позиции ({SecCode})");
@@ -91,23 +105,30 @@ namespace ConsoleHome
         }
         public void Close(Trade trade)
         {
+            if (this.Status == "Close") return;
+
             var tradeLots = trade.Direction == Direction.Long ? trade.Volume : -trade.Volume;
             if (Lots * tradeLots < 0 && Math.Abs(Lots) == Math.Abs(tradeLots))
             {
+                // Пересчет позиции
+                Change(trade);
                 Status = "Close";
-
+                ClosePositionEvent?.Invoke($"Позиция закрыта");
             }
-
-            // Пересчет позиции
-            Change(trade);
-            ClosePositionEvent?.Invoke($"Позиция закрыта");
-
         }
         /// <summary>
         /// Пересчет позиции на основе новой сделки
         /// </summary>
         private void Update(decimal tradeLots, decimal tradePrice)
         {
+
+            if (Status == "Close")
+            {
+                Console.WriteLine($"Ошибка: сделка уже закрыта!");
+                return;
+
+            }
+
             if (IsLong)
             {
                 if (tradeLots > 0)
