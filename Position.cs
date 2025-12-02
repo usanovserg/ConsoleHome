@@ -1,4 +1,5 @@
 ﻿using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace ConsoleHome
 {
@@ -40,7 +41,7 @@ namespace ConsoleHome
         // Конструктор
         public Position()
         {
-            System.Timers.Timer timer = new System.Timers.Timer();
+            Timer timer = new Timer();
 
             timer.Interval = 5000;
 
@@ -255,7 +256,7 @@ namespace ConsoleHome
                     {
 
                         TotalCost += Math.Abs(tradeLots) * tradePrice * comission;
-                        TotalResult += (tradePrice - AveragePrice) * Math.Abs(Lots);
+                        TotalResult += (AveragePrice - tradePrice) * Math.Abs(Lots);
                         AveragePrice = tradePrice;
                         Lots = tradeLots + Lots;
                     }
