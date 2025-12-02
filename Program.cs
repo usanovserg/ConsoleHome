@@ -23,7 +23,7 @@ namespace MyConsole
             position.OpenPositionEvent += EventToConsole;
             position.ClosePositionEvent += EventToConsole;
 
-            
+            /*
             //Создаем позицию
             Trade trade1 = new Trade("SBER", 275.50m, 200, DateTime.Now,Direction.Long);
             //Position position = Position.OpenPosition(trade1);
