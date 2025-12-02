@@ -16,9 +16,8 @@ namespace MyConsole
             
             // Выводим начальную позицию
             Position position = new Position();
-            position.ChangePositionEvent += EventToConsole;
-            position.OpenPositionEvent += EventToConsole;
-            position.ClosePositionEvent += EventToConsole;
+
+            /*
 
             Trade trade1 = new Trade("SBER", 275.50m, 200, DateTime.Now,Direction.Long);
             //Position position = Position.OpenPosition(trade1);
@@ -44,7 +43,8 @@ namespace MyConsole
             Trade trade6 = new Trade("SBER", 159.50m, 100, DateTime.Now, Direction.Long);
             position.Close(trade6);
             position.Print();
-            
+            */
+
             number = WriteLine;
 
             levels = new List<Level>();
