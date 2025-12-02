@@ -34,16 +34,25 @@ namespace MyConsole
         #endregion
         static void Main(string[] args)
         {
+            Position position = new();
+            position.PositionChanged += OnPositionChanged;
+          //  position.PositionChanged(); если убрать event в объявлении делегата, то можно вызывать из вне
+            /*
             WriteResult();
             priceDown = ReadLine("Введите нижний уровень цены:");
             priceUp = ReadLine("Введите верхний уровень цены:", priceDown);
             lotLevel = ReadLine("Введите лот на уровень:");
             StepLevel = ReadLine("Введите шаг изменения цены:");
             WriteResult();
+            */
             Console.ReadLine();
         }
         //=================================== Methods ===============================================
         #region Methods
+        static void OnPositionChanged()
+        {
+            Console.WriteLine("Позиция изменилась");
+        }
         static decimal ReadLine(string str, decimal value = 0)
         {
             decimal rez;
