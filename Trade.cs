@@ -1,22 +1,23 @@
 ﻿namespace MyConsole
 {
-    public class Trade
+    public class Trade //Создан класс Trade в котором есть несколько полей и одной свойство
     {
         #region Fields
+
         /// <summary>
         /// Цена инструмента
         /// </summary>
         public decimal Price = 0;
 
-        //public decimal Volume = 0;
+        //public decimal Volume = 0; Позже из этого поля было создано свойство
 
-        public string SecCode = "";
+        public string SecCode = ""; //Строковое название инструмента
 
-        public string ClassCode = "";
+        string ClassCode = ""; // Код класса
 
-        public DateTime DateTime = DateTime.MinValue;
+        public DateTime DataTime = DateTime.MinValue;
 
-        public string Portfolio = "";
+        public string Portfolio = ""; // Нащвание портфеля
 
         #endregion
 
@@ -24,7 +25,7 @@
         /// <summary>
         /// Объем сделки
         /// </summary>
-        public decimal Volume //Мы создали свойство. Его имя с большой буквы для красоты кода
+        public decimal Volume //Создано свойство
         {
             get
             {
@@ -35,8 +36,7 @@
                 _volume = value;
             }
         }
-        decimal _volume = 0; // внутренние (приватные) поля с маленькой буквы и нижнего подчеркивания
+        decimal _volume = 0; // создали поле
         #endregion
-
     }
 }

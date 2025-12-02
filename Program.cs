@@ -11,7 +11,7 @@ namespace MyConsole
         static void Main(string[] args)
         {
 
-            levels = new List<decimal>();
+            levels = new List<decimal>();//Так как сейчас мы пишем "Сеточник", то List будет сложнее, чем decimal
 
             WriteLine();
 
@@ -27,32 +27,26 @@ namespace MyConsole
 
             StepLevel = decimal.Parse(str);
 
-            str = Console.ReadLine();
-
             WriteLine();
 
             Console.ReadLine();
-
         }
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
         #region Fields
 
-
-
-        static int countLevels;
+        static List<decimal> levels;
 
         static decimal priceUp;
 
-        static decimal priceLevel = priceUp;
+        static int countLevels;
+        //=========================
 
-        static decimal stepLevel;
-        //=============================
 
-        static Trade trade = new Trade();
+        static Trade trade = new Trade(); 
+
 
         #endregion
-        //----------------------------------------------- Fields ----------------------------------------------------
 
         //----------------------------------------------- Properties ------------------------------------------------
         #region Properties
@@ -82,11 +76,9 @@ namespace MyConsole
 
             }
         }
-
+        static decimal stepLevel;
         #endregion
-        //----------------------------------------------- Properties ------------------------------------------------
 
-        static List<decimal> levels;
 
         //----------------------------------------------- Methods ---------------------------------------------------
         #region Methods
@@ -99,10 +91,6 @@ namespace MyConsole
                 Console.WriteLine(levels[i]);
             }
             Console.ReadLine();
-            //1            
-            //2
-            //3
-
         }
 
         static string ReadLine(string message)
@@ -112,19 +100,20 @@ namespace MyConsole
             return Console.ReadLine();
         }
 
-        static void Test()
+        static void AsdfSst()
         {
-            trade.Price = 2225;
-            trade.Volume = 45654656;
+            trade.Price = 2555; //Наводим и видим "поле" ("кирпичик")
+
+            trade.Volume = 34142134; //Наводим и видим "свойство" (гаечный ключ)
+
             string str = priceUp.ToString();
         }
 
         #endregion
-        //----------------------------------------------- Methods ---------------------------------------------------
 
-        //Создан класс Trade в котором есть несколько полей
-        
        
     }
+
+    
 
 }
