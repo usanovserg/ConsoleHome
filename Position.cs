@@ -64,6 +64,9 @@ namespace ConsoleHome
 
             int num = random.Next(-10, 10);
 
+            //Console.WriteLine("Введите кол-во лотов:");
+            //int num = int.Parse(Console.ReadLine());
+
             if (num > 0)
             {
                 trade.Direction = Direction.Long;
@@ -81,6 +84,8 @@ namespace ConsoleHome
 
             trade.DateTime = DateTime.Now;
 
+            this.Direction = (this.IsLong) ? Direction.Long: Direction.Short;
+
             Console.WriteLine(trade.ToString());
 
             if (this.Status != "Open") {
@@ -89,7 +94,7 @@ namespace ConsoleHome
             else if (this.Status == "Open" && trade.Direction != this.Direction && Math.Abs(trade.Volume) == Math.Abs(this.Lots))
             {
                 this.Close(trade);
-
+                
             }
             else if (this.Status == "Open" )
             {
@@ -155,10 +160,6 @@ namespace ConsoleHome
                 return;
             }
 
-            string directionText = trade.Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
-            ChangePositionEvent?.Invoke($"Позиция изменена: {directionText} по инструменту {trade.SecCode} по цене {trade.Price} кол-во лотов {trade.Volume} ");
-
-
             // Определяем знак количества лотов в зависимости от направления
             var tradeLots = trade.Direction == Direction.Long ? trade.Volume : -trade.Volume;
 
@@ -166,19 +167,21 @@ namespace ConsoleHome
             Update(tradeLots, trade.Price);
             LastUpdateTime = trade.DateTime;
 
+            string directionText = trade.Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
+            ChangePositionEvent?.Invoke($"Позиция изменена: {directionText} по инструменту {trade.SecCode} по цене {trade.Price} кол-во лотов {trade.Volume} ");
+
         }
         public void Close(Trade trade)
         {
-            if (this.Status == "Close") return;
-
-            var tradeLots = trade.Direction == Direction.Long ? trade.Volume : -trade.Volume;
-            if (Lots * tradeLots < 0 && Math.Abs(Lots) == Math.Abs(tradeLots))
+            if (this.Status == "Close")
             {
-                // Пересчет позиции
-                Change(trade);
-                Status = "Close";
-                ClosePositionEvent?.Invoke($"Позиция закрыта");
+                Console.WriteLine("Сделка уже закрыта!");
+                return;
             }
+            //var tradeLots = trade.Direction == Direction.Long ? trade.Volume : -trade.Volume;
+            Change(trade);
+            this.Status = "Close";
+            ClosePositionEvent?.Invoke($"Позиция закрыта");
         }
         /// <summary>
         /// Пересчет позиции на основе новой сделки

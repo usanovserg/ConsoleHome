@@ -56,7 +56,7 @@ namespace MyConsole
             Console.WriteLine($"Общий чистый результат:{ (position.TotalResult- position.TotalCost):F2}");
 
             */
-
+            /*
             number = WriteLine;
 
             levels = new List<Level>();
@@ -85,9 +85,13 @@ namespace MyConsole
             number();
 
             Save();
-
+            
             Console.ReadLine();
-
+            */
+            while (true) 
+            { 
+                Thread.Sleep(1000);
+            }
         }
 
 
