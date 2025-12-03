@@ -1,22 +1,25 @@
-﻿using System;
+﻿using ConsoleHome;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-
-using ConsoleHome;
+using static MyConsole.Position;
 
 namespace MyConsole
 {
-    internal class Program
+    public class Program
     {
-        
-        static void Main(string[] args)
+        public static void MessageOfChange(decimal price)
         {
+            Console.WriteLine("СОБЫТИЕ !  Цена изменилась ! " + price);
+        }
+            static void Main(string[] args)
+        {
+                     
 
-            Position position = new Position();
+           Position position = new Position();
             //----------------------------------------------- Comment---------------------------------------------------- 
             #region Comment   
             /*
@@ -45,8 +48,10 @@ namespace MyConsole
               WriteLine();   */
             #endregion
             //----------------------------------------------- End Comment-------------------------------------------------
-            Console.ReadLine();
-           
+         
+            Console.ReadLine();                      
+        
+          
         }
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
@@ -73,6 +78,7 @@ namespace MyConsole
 
         public static decimal StepLevel
         {
+            
             get
             {
                 return StepLevel;
@@ -95,12 +101,12 @@ namespace MyConsole
         #endregion
         //----------------------------------------------- End Properties ------------------------------------------------
 
-       
-        
+
+
 
         //----------------------------------------------- Methods ---------------------------------------------------
         #region Methods
-
+       
         static void WriteLine()
         {
             Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());
