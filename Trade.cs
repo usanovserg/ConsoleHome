@@ -28,6 +28,11 @@ namespace ConsoleHome
 
         public string Portfolio = "";
 
+        /// <summary>
+        /// Направление сделок (Long; Short)
+        /// </summary>
+        public string TapeDeal = "";
+
         #endregion
         //----------------------------------------------- Fields ------------------------------
 
@@ -53,6 +58,21 @@ namespace ConsoleHome
 
         #endregion
         //----------------------------------------------- Properties ------------------------------
+
+        //----------------------------------------------- MyTransaction ------------------------------
+        #region MyTransaction
+
+        /// <summary>
+        /// Направление сделки: Bay (1) ; Sell (-1)
+        /// </summary>
+        public enum MyTransaction
+        {
+            Bay = 1,
+            Sell = -1
+        }
+        
+        #endregion
+        //----------------------------------------------- MyTransaction ------------------------------
     }
 
 }

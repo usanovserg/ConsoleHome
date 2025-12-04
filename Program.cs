@@ -12,8 +12,9 @@ namespace MyConsole
     {
         static void Main(string[] args)
         {
+            Position position = new Position();
 
-
+            /*
             levels = new List<Level>();
 
             WriteLine();
@@ -37,6 +38,7 @@ namespace MyConsole
             str = Console.ReadLine();
 
             WriteLine();
+            */
 
             Console.ReadLine();
 
