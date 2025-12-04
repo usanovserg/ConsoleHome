@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Threading;
+using Timer = System.Timers.Timer;
 using System.Transactions;
 using static ConsoleHome.Trade;
 
@@ -11,10 +13,9 @@ namespace ConsoleHome
 {
     public class Position
     {
-
-            public Position() 
+                    public Position() 
         {
-            System.Timers.Timer timer = new System.Timers.Timer();
+            Timer timer = new Timer();
 
             timer.Interval = 5000;
 
@@ -35,7 +36,7 @@ namespace ConsoleHome
         public decimal AveregePositionPrice = 0;
 
         /// <summary> Направление общей позиции (Long; Short) </summary>
-        public string TapePosition = "";
+        public TypeTrade TypePosition = TypeTrade.None;
 
         #endregion
         //----------------------------------------------- Fields ------------------------------
@@ -47,7 +48,9 @@ namespace ConsoleHome
         {
             Trade trade = new Trade();
 
-            decimal longAndShort;
+            decimal _longAndShort;
+
+            //string typeTrade = "";
 
             string tapeDeal = "";
 
@@ -56,7 +59,7 @@ namespace ConsoleHome
             int num = random.Next(-10, 10);
 
 
-
+            // Расчет средней цены позиции;
             if ((VolumeLots >= 0 && num > 0) || (VolumeLots <= 0 && num < 0))
             {
                 // Вычисление средней цены для ранее открытой позиции с увеличением лотов в такой позиции (без изменения направления позиции);
@@ -68,37 +71,54 @@ namespace ConsoleHome
 
             // После добавления к объему текущей позиции (VolumeLots) нового объема сделки (num), позиция закрыта "в ноль" (нет средней цены позиции);
             else if ( (VolumeLots + num) == 0 ) { AveregePositionPrice = 0; }
-            // Для иных случаев средняя цена не меняется;
+            // Для иных случаев средняя цена позиции не меняется;
             
-
+            // Вычисление общего объема позиции;
             if (num > 0)
-            {                
+            {
                 // Сделка в лонг;
+                trade.Side = TypeTrade.Long;
                 tapeDeal = "Deal Bay >>> ";
 
-                longAndShort = VolumeLots + num;
+                _longAndShort = VolumeLots + num;
             }
             else if (num < 0)
             {
-                // Сделка в шорт;                
+                // Сделка в шорт;
+                trade.Side = TypeTrade.Short;
                 tapeDeal = "Deal Sell <<< ";
 
-                longAndShort = VolumeLots + num;
+                _longAndShort = VolumeLots + num;
             }
             else
             {
                 tapeDeal = "Deal Not ------ ";
-                longAndShort = VolumeLots;
+                // trade.Side = TypeTrade.None;
+                _longAndShort = VolumeLots;
             }
 
             trade.Volume = Math.Abs(num);
 
-            VolumeLots = longAndShort;
-            
+            VolumeLots = _longAndShort;
+
+
+            if (VolumeLots > 0)
+            {
+                trade.Side = TypeTrade.Long;
+            }
+            else if (VolumeLots < 0)
+            {
+                trade.Side = TypeTrade.Short;
+            }
+            else { trade.Side = TypeTrade.None; }
+
+
+            //string str1 = typeTrade.ToString() + "Volume = " + trade.Volume.ToString() + " / Price = " + trade.Price.ToString();
+
 
             string str1 = tapeDeal + "Volume = " + trade.Volume.ToString() + " / Price = " + trade.Price.ToString();
 
-            string str2 = "Current position (lot) = " + VolumeLots;
+            string str2 = "Current position (lot) = " + VolumeLots + " Trade Side = " + trade.Side;
 
             string str3 = "Averege price position (all lots) " + Math.Round(AveregePositionPrice, 2);
 

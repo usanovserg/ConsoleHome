@@ -29,9 +29,16 @@ namespace ConsoleHome
         public string Portfolio = "";
 
         /// <summary>
-        /// Направление сделок (Long; Short)
+        /// Направление сделок (Long; None; Short)
         /// </summary>
-        public string TapeDeal = "";
+        public enum TypeTrade 
+        {
+            Short =-1,
+            None = 0,
+            Long = 1
+        }
+
+        public TypeTrade Side = TypeTrade.None;
 
         #endregion
         //----------------------------------------------- Fields ------------------------------
@@ -67,8 +74,8 @@ namespace ConsoleHome
         /// </summary>
         public enum MyTransaction
         {
-            Bay = 1,
-            Sell = -1
+            Sell = -1,
+            Bay = 1            
         }
         
         #endregion
