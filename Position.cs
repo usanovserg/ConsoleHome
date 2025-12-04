@@ -100,7 +100,7 @@ namespace ConsoleHome
 
             string str2 = "Current position (lot) = " + VolumeLots;
 
-            string str3 = "Averege price position (all lots) " + AveregePositionPrice;
+            string str3 = "Averege price position (all lots) " + Math.Round(AveregePositionPrice, 2);
 
 
             Console.WriteLine(str1);
