@@ -58,7 +58,9 @@ namespace ConsoleHome
         /// <summary>
         /// Шорт (продажа)
         /// </summary>
-        Short
+        Short,
+
+        None
     }
 
 

@@ -13,10 +13,10 @@ namespace ConsoleHome
         public string ClassCode = "";
 
         public string Portfolio = "";
-        public string Status = "";
+        //public string Status = "";
 
 
-        public Direction Direction;
+        public Direction Direction = Direction.None;
         public decimal Lots = 0;
         public DateTime OpenTime = DateTime.MinValue;
         public decimal OpenPrice = 0;
@@ -25,6 +25,7 @@ namespace ConsoleHome
         public decimal AveragePrice = 0;
         public DateTime LastUpdateTime = DateTime.MinValue;
 
+        public SidePosition SidePosition = SidePosition.None;
         public decimal TotalCost = 0;
         public decimal TotalResult = 0;
         public decimal comission = 0.05m/100m;
@@ -58,7 +59,7 @@ namespace ConsoleHome
         }
         private void NewTrade(object? sender, ElapsedEventArgs e)
         {
-            if (this.Status == "Close") 
+            if (this.SidePosition == SidePosition.Close) 
             {
                 Console.WriteLine("Сделка уже закрыта!");
                 return;
@@ -90,19 +91,17 @@ namespace ConsoleHome
 
             trade.DateTime = DateTime.Now;
 
-            this.Direction = trade.Direction;
-
             Console.WriteLine(trade.ToString());
 
-            if (this.Status != "Open") {
+            if (this.SidePosition != SidePosition.Open) {
                 this.Open(trade);
             }
-            else if (this.Status == "Open" && trade.Direction != this.Direction && Math.Abs(trade.Volume) == Math.Abs(this.Lots))
+            else if (this.SidePosition == SidePosition.Open && trade.Direction != this.Direction && Math.Abs(trade.Volume) == Math.Abs(this.Lots))
             {
                 this.Close(trade);
                 
             }
-            else if (this.Status == "Open" )
+            else if (this.SidePosition == SidePosition.Open)
             {
                 this.Change(trade);
 
@@ -125,7 +124,7 @@ namespace ConsoleHome
         /// </summary>
         public void Open(Trade trade)
         {
-            if (Status == "Close")
+            if (this.SidePosition == SidePosition.Close)
             {
                 Console.WriteLine($"Ошибка: сделка уже закрыта!");
                 return;
@@ -133,7 +132,8 @@ namespace ConsoleHome
             }
 
             this.SecCode = trade.SecCode;
-            this.Status = "Open";
+            //this.Status = "Open";
+            this.SidePosition = SidePosition.Open;
             this.Direction = trade.Direction;
             this.Lots = trade.Direction == Direction.Long ? trade.Volume : -trade.Volume;
             this.OpenPrice = trade.Price;
@@ -154,7 +154,7 @@ namespace ConsoleHome
         /// </summary>
         public void Change(Trade trade)
         {
-            if (Status == "Close") 
+            if (this.SidePosition == SidePosition.Close) 
             {
                 Console.WriteLine($"Ошибка: сделка уже закрыта!");
                 return;
@@ -180,14 +180,14 @@ namespace ConsoleHome
         }
         public void Close(Trade trade)
         {
-            if (this.Status == "Close")
+            if (this.SidePosition == SidePosition.Close)
             {
                 Console.WriteLine("Сделка уже закрыта!");
                 return;
             }
             //var tradeLots = trade.Direction == Direction.Long ? trade.Volume : -trade.Volume;
             Change(trade);
-            this.Status = "Close";
+            this.SidePosition = SidePosition.Close;
             ClosePositionEvent?.Invoke($"Позиция закрыта");
         }
         /// <summary>
@@ -196,7 +196,7 @@ namespace ConsoleHome
         private void Update(decimal tradeLots, decimal tradePrice)
         {
 
-            if (Status == "Close")
+            if (this.SidePosition == SidePosition.Close)
             {
                 Console.WriteLine($"Ошибка: сделка уже закрыта!");
                 return;
@@ -278,11 +278,11 @@ namespace ConsoleHome
             Console.WriteLine($"Инструмент: {SecCode}");
             Console.WriteLine($"Количество лотов: {Lots}");
 
-            if (Status == "Open")
+            if (this.SidePosition == SidePosition.Open)
             {
                 string positionType = Direction==Direction.Long ? "ЛОНГ" : "ШОРТ";
                 Console.WriteLine($"Тип позиции: {positionType}");
-                Console.WriteLine($"Статус позиции: {Status}");
+                Console.WriteLine($"Статус позиции: {SidePosition}");
 
                 Console.WriteLine($"Средняя цена: {AveragePrice:F2}");
                 Console.WriteLine($"Общая комиссия: {TotalCost:F2}");
@@ -290,9 +290,9 @@ namespace ConsoleHome
 
                 Console.WriteLine($"Время открытия: {OpenTime:HH:mm:ss}");
             }
-            else if (Status == "Close")
+            else if (this.SidePosition == SidePosition.Close)
             {
-                Console.WriteLine($"Статус позиции: {Status}");
+                Console.WriteLine($"Статус позиции: {SidePosition}");
                 Console.WriteLine($"Позиция: (нет открытых позиций)");
             }
 
@@ -312,6 +312,20 @@ namespace ConsoleHome
     }
 
 
+    public enum SidePosition
+    {
+        /// <summary>
+        /// Лонг (покупка)
+        /// </summary>
+        Open,
 
+        /// <summary>
+        /// Шорт (продажа)
+        /// </summary>
+        Close,
+
+        None
+    }
 
 }
+
