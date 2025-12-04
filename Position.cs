@@ -20,10 +20,12 @@ namespace ConsoleHome
           //  timer.Enabled = true;
             timer.Start();
         }
+        public delegate void PositionChangedHandler(Position position); // сигнатура делегата
+        public event PositionChangedHandler? PositionChanged; // делегат для события
         //=================================== Fields ===============================================
         #region Fields
         /// <summary>
-        /// Цена сделки
+        /// Цена позиции
         /// </summary>
         public decimal Price = 0;
         /// <summary>
@@ -36,6 +38,8 @@ namespace ConsoleHome
             Short ,
             No
         }
+
+
         #endregion
         //=================================== Properties ===============================================
         #region Properties
@@ -54,14 +58,21 @@ namespace ConsoleHome
                 if (value < 0) DirectionPosition = DPositon.Short;
                 else if (value > 0) DirectionPosition = DPositon.Long;
                 else DirectionPosition = DPositon.No;
-                PositionChanged?.Invoke(); // вызываем событие при изменении позиции
+                PositionChanged?.Invoke(this); // вызываем событие при изменении позиции
             }
         }
         decimal _volume = 0;
         #endregion
-        Random random = new Random();
         //=================================== Methods ===============================================
         #region methods
+        public string Symbol { get; set; }           // Инструмент:
+        public decimal CurrentPrice { get; set; }        // Текущая рыночная цена
+        public decimal StopLoss { get; set; }           // Цена стоп-лосса
+        public decimal TakeProfit { get; set; }         // Цена тейк-профита
+        public DateTime OpenTime { get; set; }          // Когда открыли позицию
+        public decimal Leverage { get; set; }           // Кредитное плечо
+        public decimal Margin { get; set; }             // Залог под позицию
+        public decimal LiquidationPrice { get; set; }   // Цена ликвидации
         /// <summary>
         /// обработкак нового трейда
         /// </summary>
@@ -71,13 +82,12 @@ namespace ConsoleHome
         {
             Trade trade = new();
             // параметры для случайного трейда
-            RandomData data = new() { MaxPrice=2, MinPrice=1, MaxVolume=4, MinVolume=1, PrecisionPrice=0, PrecisionVolume=0 };
+            RandomData data = new() { MaxPrice=10, MinPrice=1, MaxVolume=5, MinVolume=1, PrecisionPrice=0, PrecisionVolume=0 };
             // создаем случайный трейд
             trade.RandomTrade(data);
-            CalculateNewPosition(trade.Price, trade.Volume * (sbyte)trade.DirectionTrade);
             Console.WriteLine($"Сделка {trade.DirectionTrade} : Volume = {trade.Volume.ToString()} / Price = {trade.Price.ToString()}");
-
-            Console.WriteLine($"Позиция {DirectionPosition}  : Volume = {Volume.ToString()} / Price = {Price.ToString()}");
+            // вычисляем новую позицию
+            CalculateNewPosition(trade.Price, trade.Volume * (sbyte)trade.DirectionTrade);
             Console.WriteLine();
         }
         /// <summary>
@@ -86,28 +96,31 @@ namespace ConsoleHome
         private void CalculateNewPosition(decimal TradePrice, decimal TradeVolume)
         {
             decimal SumValume = Volume * Price + TradeVolume * TradePrice;
+            decimal tPrice = 0;
+            decimal tVolume = 0;
+
             if ((SumValume != 0) && (TradeVolume+ Volume != 0))
             {
-                Volume += TradeVolume;
-                Price = SumValume / Volume;
-                if (Price < 0)
+                tPrice = SumValume / (Volume + TradeVolume);
+                tVolume = Volume + TradeVolume;
+                if (tPrice < 0)
                 {
-                    Volume *= -1;
-                    Price *= -1;
+                    tPrice *= -1;
+                    tVolume *= -1;
                 }
             }
             else if (SumValume == 0)
             {
-                Volume = Price = 0;
+                tVolume = tPrice = 0;
             }
             else
             {
-                Volume = Math.Sign(SumValume);
-                Price = Math.Abs(SumValume);
+                tPrice = Math.Abs(SumValume);
+                tVolume = Math.Sign(SumValume);
             }
+            Price = tPrice;
+            Volume = tVolume;
         }
         #endregion
-        public delegate void PositionChangedHandler();
-        public event PositionChangedHandler PositionChanged;
     }
 }

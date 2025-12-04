@@ -19,6 +19,10 @@ namespace ConsoleHome
         public string ClassCode = "";
         public DateTime DateTime = DateTime.MinValue;
         public string Portfolio = "";
+        public decimal Volume;
+        /// <summary>
+        /// Структура входных данных для генерации случайного тейда. Максимальные и минимальный цены и лоты, количество знаков после запятой.
+        /// </summary>
         public struct RandomData
         {
             public decimal MaxPrice;
@@ -28,32 +32,18 @@ namespace ConsoleHome
             public decimal MinVolume;
             public byte PrecisionVolume;
         }
-        public DTrade DirectionTrade = DTrade.Buy;
         public enum DTrade : sbyte
         {
             Buy = 1,
             Sell = -1
         }
+        public DTrade DirectionTrade = DTrade.Buy;
         #endregion
         //=================================== Properties ===============================================
         #region Properties
-        /// <summary>
-        /// Объем сделки
-        /// </summary>
-        public decimal Volume
-        {
-            get
-            {
-                return _volume;
-            }
-            set
-            {
-                _volume = value;
-            }
-        }
-        decimal _volume = 0;
         #endregion
         //=================================== Methods ===============================================
+        #region methods
         public void RandomTrade(RandomData data)
         {
             Random random = new Random();
@@ -61,8 +51,6 @@ namespace ConsoleHome
             Volume = Math.Round(data.MinVolume + (decimal)random.NextDouble() * (data.MaxVolume - data.MinVolume), data.PrecisionVolume);
             DirectionTrade = (DTrade)(random.Next(0, 2)*2-1);
         }
-        #region methods
-
         #endregion
     }
 }
