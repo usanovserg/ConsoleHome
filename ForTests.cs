@@ -11,20 +11,20 @@ namespace MyConsole
     {
         public static decimal CountAverage = 0;
 
-        public static void PrintResults(Trade trade)
-        {
+        //public static void PrintPosition(Trade trade)
+        //{
 
-            string str = "Время = " + trade.DateTime.ToString() +
-                          " Volume = " + trade.Volume.ToString() +
-                          " / Price = " + trade.Price.ToString() +
-                          " Средняя цена = " + trade.AveragePrice.ToString() +
-                          " / Direction = " + trade.DirectionOfTrade.ToString() +
-                          " / Commission = " + trade.Commission.ToString();                     
+        //    string str = "Время = " + trade.DateTime.ToString() +
+        //                  " Volume = " + trade.Volume.ToString() +
+        //                  " / Price = " + trade.Price.ToString() +
+        //                  " Средняя цена = " + trade.AveragePrice.ToString() +
+        //                  " / Direction = " + trade.DirectionOfTrade.ToString() +
+        //                  " / Commission = " + trade.Commission.ToString();                     
 
 
-            Console.WriteLine(str);
+        //    Console.WriteLine(str);
 
-        }
+        //}
         /// <summary>
         /// Выдает направление сделки случайным образом
         /// </summary>

@@ -20,39 +20,46 @@ namespace MyConsole
                      
 
            Position position = new Position();
-            //----------------------------------------------- Comment---------------------------------------------------- 
-            #region Comment   
-            /*
-            levels = new List<Level>();
-
-              WriteLine();
-
-              string str = ReadLine("Введите количество уровней: ");
-
-              countLevels = Convert.ToInt32(str);
-
-              str = ReadLine("Задайте верхнюю цену: ");
-
-              priceUp = decimal.Parse(str);
-
-              str = ReadLine("Введите шаг уровня: ");
-
-              StepLevel = decimal.Parse(str);
-
-              str = ReadLine("Введите лот на уровень: ");
-
-              lotLevel = decimal.Parse(str);
-
-             // str = Console.ReadLine();
-
-              WriteLine();   */
-            #endregion
-            //----------------------------------------------- End Comment-------------------------------------------------
-         
-            Console.ReadLine();                      
+            
+        //
         
+
+        //----------------------------------------------- Comment---------------------------------------------------- 
+        #region Comment   
+        /*
+        levels = new List<Level>();
+
+          WriteLine();
+
+          string str = ReadLine("Введите количество уровней: ");
+
+          countLevels = Convert.ToInt32(str);
+
+          str = ReadLine("Задайте верхнюю цену: ");
+
+          priceUp = decimal.Parse(str);
+
+          str = ReadLine("Введите шаг уровня: ");
+
+          StepLevel = decimal.Parse(str);
+
+          str = ReadLine("Введите лот на уровень: ");
+
+          lotLevel = decimal.Parse(str);
+
+         // str = Console.ReadLine();
+
+          WriteLine();   */
+        #endregion
+        //----------------------------------------------- End Comment-------------------------------------------------
+      
+             Console.ReadLine();
+
+             
           
         }
+        
+       
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
         #region Filds

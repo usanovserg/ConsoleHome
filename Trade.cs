@@ -42,8 +42,7 @@ namespace MyConsole
         /// Направление торговли
         /// </summary>
         public string DirectionOfTrade = "";
-      //  public directionOfTrade DirectionOfTrade;
-
+      
         /// <summary>
         /// Комиссия за сделку
         /// </summary>

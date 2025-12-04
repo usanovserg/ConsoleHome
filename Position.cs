@@ -5,6 +5,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static MyConsole.ForTests;
+using static MyConsole.Trade;
+
 //using static MyConsole.Connector;
 //using static MyConsole.Position;
 using Timer = System.Timers.Timer;
@@ -22,14 +25,15 @@ namespace MyConsole
 
             Timer timer = new Timer();                //Настраиваем таймер
 
-            timer.Interval = 1000;
+            timer.Interval = 5000;
 
             timer.Elapsed += NewTrade;
-           
-            timer.Start();                                 
+          
+           timer.Start();                                 
 
         }
 
+               
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
         #region Fields
@@ -44,9 +48,10 @@ namespace MyConsole
         /// </summary>
         public static event newTradeEvent NewTradeEvent;
 
+                
 
         /// <summary>
-        /// Цена инструмента
+        /// Текущая цена инструмента
         /// </summary>
         public decimal Price = 0;
 
@@ -56,15 +61,36 @@ namespace MyConsole
         public decimal PriceOpen = 0;
 
         /// <summary>
+        /// Объем сделки
+        /// </summary>
+        public decimal Volume
+        {
+            get
+            {
+                return _volume;
+            }
+
+            set
+            {
+                _volume = value;
+            }
+
+        }
+        decimal _volume = 0;
+
+        /// <summary>
         /// Цена закрытия инструмента по SL
         /// </summary>
-        public decimal PriceSL = 0;
+        public decimal PercentSL = 0.03m;
 
         /// <summary>
         /// Цена закрытия инструмента по TP
         /// </summary>
-        public decimal PriceTP = 0;
+        public decimal PercentTP = 1;
 
+        public decimal PriceSL = 0;
+
+        public decimal PriceTP = 0;
 
         /// <summary>
         /// Шаг трейлинг стопа
@@ -104,12 +130,14 @@ namespace MyConsole
 
         public decimal AveragePrice = 0;
 
+        public decimal OldPrice = 1;
+
       //  public decimal AveragePrice = 0;
 
         public bool IsFirstPrice = true;
 
         public decimal HelperLevel = 0;
-    
+        
              
 
         #endregion Fields
@@ -122,26 +150,42 @@ namespace MyConsole
         #region Methods
 
         public void NewTrade(object? sender, System.Timers.ElapsedEventArgs e)
-        {          
+        {
+            Random random = new Random();
+
             Trade trade = new Trade();
-          
-            trade.DateTime = DateTime.Now;                     
-            
 
-            int num =  ForTests.RandomHelper.random.Next(-30, 30);   //Генерируем объем сделки и направление сделки
+            DateTime = DateTime.Now;
 
-            trade.DirectionOfTrade = ForTests.GetDirection();
+            Price = random.Next(200, 1000); // Генерируем цену инструмента.
 
-            trade.Volume = Math.Abs(num); //Получаем объем.
-          
-            trade.Price = ForTests.RandomHelper.random.Next(200, 1000); // Генерируем цену инструмента.
-                       
-            trade.Commission = trade.GetCommission(ForTests.CalcCommission());            
+            DirectionOfTrade = GetDirection(); //Генерируем направление сделки
+
+            int num =  random.Next(-30, 30);   //Генерируем объем сделки             
+
+            Volume = Math.Abs(num); //Получаем объем.
+
+            SecCode = "BTCMMM";
+
+            if (DirectionOfTrade == directionOfTrade.Long.ToString())
+            {
+                PriceTP = Math.Round(Price * (1 + PercentTP / 100), 2);
+                PriceSL = Math.Round(Price * (1 - PercentSL / 100), 2);
+            }
+            else 
+            {
+                PriceTP = Math.Round(Price * (1 - PercentTP / 100), 2);
+                PriceSL = Math.Round(Price * (1 + PercentSL / 100), 2);
+            }
+
+
+
+            Commission = trade.GetCommission(ForTests.CalcCommission());            
 
 
             if (IsFirstPrice)
             {
-                AveragePrice = trade.Price; // Сохраняем первый уровень
+                AveragePrice = Price; // Сохраняем первый уровень
 
                 HelperLevel = AveragePrice;
 
@@ -150,34 +194,70 @@ namespace MyConsole
 
             else
             {
-                 HelperLevel = trade.Price;
+                 HelperLevel = Price;
 
-                AveragePrice = (AveragePrice + HelperLevel) / 2;
+                AveragePrice =Math.Round( (AveragePrice + HelperLevel) / 2 , 2);
                 
             }
 
-            trade.AveragePrice = AveragePrice;
+          //  trade.AveragePrice = AveragePrice;
 
-            NewTradeEvent(trade.Price);
+            NewTradeEvent(Price);  // Вызов события
 
-            ForTests.PrintResults(trade);
-    }
+            PrintPosition();
+        }
+
+        public string GetDirection()
+        {
+
+            if (Price > OldPrice)
+            {
+                OldPrice = Price;
+                return Trade.directionOfTrade.Long.ToString();
+            }
+            else
+            {
+                OldPrice = Price;
+                return Trade.directionOfTrade.Short.ToString();
+            }
+
+        }
 
 
-    #endregion
-    //----------------------------------------------- End Methods ------------------------------------------------ 
+        public void PrintPosition()
+        {
 
-    delegate void MessageOfChange(decimal price);
-      //  MessageOfChange ChangedPrice;
+            string str = "Время = " + DateTime.ToString() +
+                          " / Инструмент " + SecCode.ToString() +
+                          " / Volume = " + Volume.ToString() +
+                          " / Price = " + Price.ToString() +
+                          " / PriceTP = " + PriceTP.ToString() +
+                          " / PriceSL = " + PriceSL.ToString() +
+                          " / Средняя цена = " + AveragePrice.ToString() +
+                          " / Direction = " + DirectionOfTrade.ToString() +
+                          " / Commission = " + Commission.ToString();
+
+
+            Console.WriteLine(str);
+
+
+        }
+
+        #endregion
+        //----------------------------------------------- End Methods ------------------------------------------------ 
+
+        delegate void MessageOfChange(decimal price);
+
         
     }
+    
 
     //public class Connector
     //{
     //    //  public newTradeEvent NewTradeEvent;
 
     //    public delegate void newTradeEvent();
-     
+
     //    public static event newTradeEvent NewTradeEvent;
 
     //    public List<Trade> Trades = new List<Trade>();
@@ -188,7 +268,7 @@ namespace MyConsole
 
     //        NewTradeEvent();
     //    }
-          
+
     //    public void Connect()
     //    {
     //        Console.WriteLine("Connect is Exchange");
