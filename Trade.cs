@@ -18,7 +18,7 @@ namespace ConsoleHome
 
         public string Portfolio = "";
 
-        public Direction Direction;
+        public Direction Direction = Direction.None;
         #endregion
         //----------------------------------------------- Properties ------------------------------------------------
         #region Properties

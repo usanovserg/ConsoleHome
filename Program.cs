@@ -15,9 +15,9 @@ namespace MyConsole
         {
             
             // Работа с позицией
-            Position position = new Position();
+            Position position = new Position("ghghg");
 
-            /*
+            
             //Пописываемся на события
             position.ChangePositionEvent += EventToConsole;
             position.OpenPositionEvent += EventToConsole;

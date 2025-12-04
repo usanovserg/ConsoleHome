@@ -13,8 +13,6 @@ namespace ConsoleHome
         public string ClassCode = "";
 
         public string Portfolio = "";
-        //public string Status = "";
-
 
         public Direction Direction = Direction.None;
         public decimal Lots = 0;
