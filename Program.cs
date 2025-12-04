@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace MyConsole
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
+            AsdfSst();
 
             levels = new List<decimal>();//Так как сейчас мы пишем "Сеточник", то List будет сложнее, чем decimal
 
@@ -45,6 +47,7 @@ namespace MyConsole
 
         static Trade trade = new Trade(); 
 
+     
 
         #endregion
 
@@ -102,6 +105,8 @@ namespace MyConsole
 
         static void AsdfSst()
         {
+            Level level = new Level(9000);
+
             trade.Price = 2555; //Наводим и видим "поле" ("кирпичик")
 
             trade.Volume = 34142134; //Наводим и видим "свойство" (гаечный ключ)
