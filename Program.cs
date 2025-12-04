@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,9 @@ namespace MyConsole
         static void Main(string[] args)
         {
 
-            levels = new List<decimal>();
+            Position position = new Position();
+            /*
+            levels = new List<Level>();
 
             WriteLine();
 
@@ -30,8 +33,9 @@ namespace MyConsole
             str = Console.ReadLine();
 
             WriteLine();
-            //f
+            */
             Console.ReadLine();
+            
 
         } // iofgijfpogj
 
@@ -45,6 +49,8 @@ namespace MyConsole
         static decimal priceLevel = priceUp;
 
         static decimal stepLevel;
+
+        
 
         #endregion
         //----------------------------------------------- Fields ----------------------------------------------------
@@ -65,14 +71,7 @@ namespace MyConsole
                 {
                     stepLevel = value;
 
-                    decimal priceLevel = priceUp;
-
-                    for (int i = 0; i < countLevels; i++)
-                    {
-                        levels.Add(priceLevel);
-
-                        priceLevel -= stepLevel;
-                    }
+                  levels=  Level.CalculateLevels(priceUp, stepLevel, countLevels);
                 }
 
             }
@@ -81,7 +80,7 @@ namespace MyConsole
         #endregion
         //----------------------------------------------- Properties ------------------------------------------------
 
-        static List<decimal> levels;
+        static List<Level> levels;
 
         //----------------------------------------------- Methods ---------------------------------------------------
         #region Methods
@@ -91,9 +90,9 @@ namespace MyConsole
             Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());
             for (int i = 0; i < levels.Count; i++)
             {
-                Console.WriteLine(levels[i]);
+                Console.WriteLine(levels[i].PriceLevel);
             }
-            Console.ReadLine();
+            //Console.ReadLine();
             //1            
             //2
             //3
