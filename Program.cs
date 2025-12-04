@@ -5,12 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+
 namespace ConsoleHome
 {
     public class Program
     {
+        
         static void Main(string[] args)
         {
+            Console.WriteLine("Введите тикер инструмента :");
+          
+
+            Position position = new Position();
+            /*
             number = WriteLine;
 
             levels = new List<Level>();
@@ -36,7 +43,7 @@ namespace ConsoleHome
             number();
 
             Save();
-
+            */
             Console.ReadLine();
         }
 
