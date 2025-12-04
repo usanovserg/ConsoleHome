@@ -34,11 +34,6 @@ namespace ConsoleHome
         /// <summary> Средняя цена открытия всей позиции </summary>
         public decimal AveregePositionPrice = 0;
 
-
-        public DateTime dateTime = DateTime.MinValue;
-
-        public string Portfolio = "";
-
         /// <summary> Направление общей позиции (Long; Short) </summary>
         public string TapePosition = "";
 
