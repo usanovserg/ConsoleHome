@@ -1,4 +1,5 @@
-﻿using System.Timers;
+﻿using System.Diagnostics;
+using System.Timers;
 using Timer = System.Timers.Timer;
 
 namespace ConsoleHome
@@ -27,8 +28,8 @@ namespace ConsoleHome
         public decimal TotalCost = 0;
         public decimal TotalResult = 0;
         public decimal comission = 0.05m / 100m;
-        public bool IsLong => Lots > 0;
-        public bool IsShort => Lots < 0;
+        //public bool IsLong => Lots > 0;
+        //public bool IsShort => Lots < 0;
         #endregion
 
         public delegate void PositionHandler(string message);
@@ -89,7 +90,7 @@ namespace ConsoleHome
 
             trade.DateTime = DateTime.Now;
 
-            this.Direction = (this.IsLong) ? Direction.Long : Direction.Short;
+            this.Direction = trade.Direction;
 
             Console.WriteLine(trade.ToString());
 
@@ -142,6 +143,7 @@ namespace ConsoleHome
             this.TotalCost = trade.Price * Math.Abs(trade.Volume) * comission;
             this.OpenTime = trade.DateTime;
             this.LastUpdateTime = this.OpenTime;
+            this.Direction = trade.Direction;
 
             string directionText = trade.Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
 
@@ -202,7 +204,7 @@ namespace ConsoleHome
 
             }
 
-            if (IsLong)
+            if (this.Direction == Direction.Long)
             {
                 if (tradeLots > 0)
                 {
@@ -233,7 +235,7 @@ namespace ConsoleHome
 
                 }
             }
-            else if (IsShort)
+            else if (this.Direction == Direction.Short)
             {
                 if (tradeLots < 0)
                 {
@@ -264,6 +266,7 @@ namespace ConsoleHome
                 }
 
             }
+            this.Direction = Lots > 0 ? Direction.Long : Direction.Short;
 
         }
 
@@ -276,9 +279,9 @@ namespace ConsoleHome
             Console.WriteLine($"Инструмент: {SecCode}");
             Console.WriteLine($"Количество лотов: {Lots}");
 
-            if (Lots != 0)
+            if (Status == "Open")
             {
-                string positionType = IsLong ? "ЛОНГ" : "ШОРТ";
+                string positionType = Direction == Direction.Long ? "ЛОНГ" : "ШОРТ";
                 Console.WriteLine($"Тип позиции: {positionType}");
                 Console.WriteLine($"Статус позиции: {Status}");
 
@@ -288,7 +291,7 @@ namespace ConsoleHome
 
                 Console.WriteLine($"Время открытия: {OpenTime:HH:mm:ss}");
             }
-            else
+            else if (Status == "Close")
             {
                 Console.WriteLine($"Статус позиции: {Status}");
                 Console.WriteLine($"Позиция: (нет открытых позиций)");
