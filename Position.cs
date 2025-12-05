@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using MyConsole;
+using static MyConsole.Trade;
 using Timer = System.Timers.Timer;
 
 namespace ConsoleHome
@@ -34,6 +36,14 @@ namespace ConsoleHome
         /// Количество лотов висит в сделке на текущий момент
         /// </summary>
         public decimal LotOfDeal = 0;
+
+        /// <summary>
+        /// Средняя цена входа в сделку
+        /// </summary>
+        public decimal SumPriceOfTransaction= 0;
+
+        public decimal SumAverageSize= 0;
+
         #endregion
 
         //====================================================================Methods
@@ -42,7 +52,7 @@ namespace ConsoleHome
         {
             Timer timer = new Timer();
 
-            timer.Interval = 5000;
+            timer.Interval = 1000;
 
             timer.Elapsed += Timer_Elapsed;
 
@@ -61,22 +71,31 @@ namespace ConsoleHome
 
             trade.Price = random.Next(70000, 80000);
 
+
             if (num > 0 )
             {
                 //совершаем сделку в лонг
                 Console.WriteLine();
 
-                Console.WriteLine(" Сделка ↑ : "+NameTicker+" Объем: "+ trade.Volume.ToString()+" Точка входа: "+trade.Price.ToString());
+                Console.WriteLine(num+" Сделка ↑ : "+NameTicker+" Объем: "+ trade.Volume.ToString()+" Точка входа: "+trade.Price.ToString());
 
-                //Опишем общее состояние позиции после совершенной сделки
+                LotOfTransaction += trade.Volume; //Общее количество лотов после совершенной сделки
 
             }
             else if (num < 0)
             {
                 //совершаем сделку в шорт
                 Console.WriteLine();
-                Console.WriteLine(" Сделка ↓ : " + NameTicker + " Объем: " + trade.Volume.ToString() + " Точка входа: " + trade.Price.ToString());
+                Console.WriteLine("Значение Rundom: "+num+" Сделка ↓ : " + NameTicker + " Объем: " + trade.Volume.ToString() + " Точка входа: " + trade.Price.ToString());
+
+                LotOfTransaction -= trade.Volume;
             }
+
+            //Опишем общее состояние позиции после совершенной сделки
+            //SumAverageSize += (LotOfTransaction * trade.Price) / LotOfTransaction;
+
+            //SumPriceOfTransaction = ;
+            Console.WriteLine(" Общее количество лотов в сделке: " + LotOfTransaction.ToString());// +" средняя сумма "+SumAverageSize);
             #endregion
         }
     }

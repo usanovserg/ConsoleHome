@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ConsoleHome;
+using static MyConsole.Program;
+using static MyConsole.Program.Connector;
 
 namespace MyConsole
 {
@@ -11,7 +14,51 @@ namespace MyConsole
     {
         static void Main(string[] args)
         {
-            Position position = new Position(); //Создаем экземпляр класса Position
+            //Position position = new Position(); //Создаем экземпляр класса Position
+
+            string price = "100.1";
+            try
+            {
+                int num = int.Parse(price);
+                Console.WriteLine(num);
+            }
+            catch(Exception ex)
+            { 
+                Console.WriteLine(ex.Message);
+            }
+
+            
+
+            
+
+
+            Сonnector.Connect();
+
+            Сonnector.NewTradeEvent += ProstoWrite; //создали событие котороое вызывает метод ProstoWrite
+
+            number = ProstoWrite;
+
+            number += ProstoRead;
+
+            number();
+
+            /*
+            //Запускаем отдельный поток, который ждет новую сделку и потом исполняется
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    if (Сonnector.Trades.Count > 0 && Сonnector.Trades.Count > _lastCount)
+                    {
+                        //Значит появились новые сделки
+                        Console.WriteLine("Запустили бесконечный цикл");
+                    }
+                }
+
+                //Установим задерку в 100 млсек
+                Thread.Sleep(100);
+            });
+            */
 
             /*
             levels = new List<Level>();
@@ -59,6 +106,10 @@ namespace MyConsole
         static Trade trade = new Trade(); //Создаем новый класс типа Trade, также мы вызываем конструктор, и можем задать установки по умолчанию
 
         static Level level = new Level(); //Создали переменную level типа Level
+
+        static Connector Сonnector = new Connector();
+
+        static int _lastCount = 0;
         #endregion
 
         //----------------------------------------------- Properties ------------------------------------------------
@@ -100,12 +151,44 @@ namespace MyConsole
             Console.ReadLine();
         }
 
+        static void ProstoWrite() => Console.WriteLine("ProstoWrite");
+
+        static void ProstoRead() => Console.WriteLine("ProstoRead");
+
         static string ReadLine(string message)
         {
             Console.WriteLine(message);
 
             return Console.ReadLine();
         }
+
+        delegate void Number();
+
+        static Number number;
+
+        public class Connector
+        {
+            public delegate void newTradeEvent(); //Объявили делегат
+
+            public event newTradeEvent NewTradeEvent; //Объявляем событие
+
+
+            public List<Trade> Trades = new List<Trade>();
+
+            private void NewTrade( Trade trade)
+            {
+                Trades.Add(trade);
+
+                //NewTradeEvent();
+            }
+
+            public void Connect()
+            {
+                Console.WriteLine("Connect is ExChange");
+            }
+
+        }
+
         #endregion
         //----------------------------------------------- Methods ---------------------------------------------------
     }
