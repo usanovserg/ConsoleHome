@@ -26,7 +26,8 @@ namespace MyConsole
         public enum DealDirection
         { 
             Long,
-            Short
+            Short,
+            None
         }
 
         public enum DealType
