@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,8 +17,7 @@ using Timer = System.Timers.Timer;
 namespace MyConsole
 {
         
-   public class Position
-    {            
+   public class Position    {            
        
         public Position() 
         {               
@@ -25,14 +25,13 @@ namespace MyConsole
 
             Timer timer = new Timer();                //Настраиваем таймер
 
-            timer.Interval = 5000;
+            timer.Interval = 1000;
 
             timer.Elapsed += NewTrade;
           
            timer.Start();                                 
 
         }
-
                
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
@@ -47,7 +46,6 @@ namespace MyConsole
         /// Создаем событие
         /// </summary>
         public static event newTradeEvent NewTradeEvent;
-
                 
 
         /// <summary>
@@ -76,17 +74,22 @@ namespace MyConsole
             }
 
         }
+
+        public decimal OldVolume =0;
+
+        public decimal PnL = 0;
+
         decimal _volume = 0;
 
         /// <summary>
         /// Цена закрытия инструмента по SL
         /// </summary>
-        public decimal PercentSL = 0.03m;
+        public decimal PercentSL = 0.3m;
 
         /// <summary>
         /// Цена закрытия инструмента по TP
         /// </summary>
-        public decimal PercentTP = 1;
+        public decimal PercentTP = 1.5m;
 
         public decimal PriceSL = 0;
 
@@ -121,7 +124,8 @@ namespace MyConsole
         /// Направление торговли
         /// </summary>
         public string DirectionOfTrade = "";
-        //  public directionOfTrade DirectionOfTrade;
+
+        public string OldDirectionOfTrade = "";
 
         /// <summary>
         /// Комиссия за сделку
@@ -129,15 +133,13 @@ namespace MyConsole
         public decimal Commission = 0;
 
         public decimal AveragePrice = 0;
+        public decimal OldAveragePrice = 0;
 
         public decimal OldPrice = 1;
 
-      //  public decimal AveragePrice = 0;
-
         public bool IsFirstPrice = true;
 
-        public decimal HelperLevel = 0;
-        
+              
              
 
         #endregion Fields
@@ -157,96 +159,184 @@ namespace MyConsole
 
             DateTime = DateTime.Now;
 
-            Price = random.Next(200, 1000); // Генерируем цену инструмента.
-
-            DirectionOfTrade = GetDirection(); //Генерируем направление сделки
-
-            int num =  random.Next(-30, 30);   //Генерируем объем сделки             
+            Price = random.Next(100, 300); // Генерируем цену инструмента.
+                                           // 
+            int num =  random.Next(-200, 200);   //Генерируем объем сделки
+                        
+          //  Get_TP_SL(); //Вычисляеи TP SL
 
             Volume = Math.Abs(num); //Получаем объем.
+                       
+            DirectionOfTrade = GetDirection(num); //Генерируем направление сделки
 
-            SecCode = "BTCMMM";
+            SecCode = "BTCMMM"; //Задаем инструмент
+                        
 
+          //  Commission = trade.GetCommission(CalcCommission());   //Определяем комиссию         
+
+            // Тут определяем первый проход
+            if (IsFirstPrice)
+            {
+                //AveragePrice = Price;
+                OldAveragePrice = Price; // Сохраняем первый уровень
+                OldDirectionOfTrade = DirectionOfTrade;
+                OldVolume = Volume;
+             //   OldPrice = Price;
+
+                IsFirstPrice = false;
+            }
+            // Последующие проходы
+            else 
+            {       //Если направление сделки НЕ поменялось
+                if (OldDirectionOfTrade == DirectionOfTrade)
+                {
+                    AveragePrice = (OldAveragePrice * OldVolume + Price * Volume) / (Volume + OldVolume);
+
+                    OldAveragePrice = AveragePrice;
+                    OldVolume += Volume;
+                }
+
+                //Если направление сделки поменялось
+                else
+                {
+                    if (OldVolume > Volume)
+                    {
+                        if (OldDirectionOfTrade == "Long")
+                        {
+                            PnL = (Price - OldPrice) * Volume;
+                            //Price = 1;
+                            //Price = 2;
+                            //Price = 3;
+
+                        }
+                        else
+                        {
+                            PnL = - (Price - OldPrice) * Volume;
+                        }
+
+                        OldVolume -= Volume;
+                        //Тут поставим метку что новая сделка закрыта
+
+                   }
+                    else
+                    {
+                        if (OldDirectionOfTrade == "Long")
+                        {
+                            PnL = (Price - OldPrice) * OldVolume;
+
+                            OldDirectionOfTrade = "Short";
+                        }
+                        else
+                        {
+                            PnL = - (Price - OldPrice) * OldVolume;
+
+                            OldDirectionOfTrade = "Long";
+                        }
+
+                        if (OldVolume < Volume) 
+                        {
+                            OldVolume = Volume - OldVolume;
+
+                            //Тут поставим метку что старая сделка закрыта
+                        }
+                        else  // Сюда попадем если объемы противоположных сделок одинаковы
+                        {
+                            if (OldDirectionOfTrade == "Long") //тут знаки наоборот! Потому что направление уже поменено
+                            {
+                                PnL = - (Price - OldPrice) * OldVolume;                                                               
+                            }
+                            else
+                            {
+                                PnL = (Price - OldPrice) * OldVolume;                                                               
+                            }
+
+                            IsFirstPrice = true;
+                            Price = 0;
+                            AveragePrice = 0;
+                            OldPrice = 0;
+                            Volume = 0;
+                            OldVolume = 0;
+                            DirectionOfTrade = "";
+                            OldDirectionOfTrade = "";
+
+                            //Тут поставим метку что обе сделки закрыты
+                        }
+                    }
+
+                }                       
+
+            }
+            //  NewTradeEvent(Price);  // Вызов события
+
+            PrintPosition();
+        }
+
+        public void Get_TP_SL()
+        {
             if (DirectionOfTrade == directionOfTrade.Long.ToString())
             {
                 PriceTP = Math.Round(Price * (1 + PercentTP / 100), 2);
                 PriceSL = Math.Round(Price * (1 - PercentSL / 100), 2);
             }
-            else 
+            else
             {
                 PriceTP = Math.Round(Price * (1 - PercentTP / 100), 2);
                 PriceSL = Math.Round(Price * (1 + PercentSL / 100), 2);
             }
 
-
-
-            Commission = trade.GetCommission(ForTests.CalcCommission());            
-
-
-            if (IsFirstPrice)
-            {
-                AveragePrice = Price; // Сохраняем первый уровень
-
-                HelperLevel = AveragePrice;
-
-                IsFirstPrice = false;
-            }
-
-            else
-            {
-                 HelperLevel = Price;
-
-                AveragePrice =Math.Round( (AveragePrice + HelperLevel) / 2 , 2);
-                
-            }
-
-          //  trade.AveragePrice = AveragePrice;
-
-            NewTradeEvent(Price);  // Вызов события
-
-            PrintPosition();
         }
-
-        public string GetDirection()
+        public string GetDirection(int num)
         {
-
-            if (Price > OldPrice)
+            if (num > 0)
             {
-                OldPrice = Price;
-                return Trade.directionOfTrade.Long.ToString();
+               // OldPrice = Price;
+                return directionOfTrade.Long.ToString();
+                 
             }
             else
             {
-                OldPrice = Price;
-                return Trade.directionOfTrade.Short.ToString();
+               // OldPrice = Price;
+                return directionOfTrade.Short.ToString();
             }
-
         }
-
+        public string CalcCommission()
+        {  Random random = new Random();
+          
+            if (random.Next(-100, 100) >= 0)
+            {
+                return Trade.typeOfComission.Limit.ToString();
+            }
+            else
+            {
+                return Trade.typeOfComission.Market.ToString();
+            }
+          
+        }
 
         public void PrintPosition()
         {
 
-            string str = "Время = " + DateTime.ToString() +
-                          " / Инструмент " + SecCode.ToString() +
+            string str = //"Время = " + DateTime.ToString() +
+                          //" / Инструмент " + SecCode.ToString() +
                           " / Volume = " + Volume.ToString() +
                           " / Price = " + Price.ToString() +
-                          " / PriceTP = " + PriceTP.ToString() +
-                          " / PriceSL = " + PriceSL.ToString() +
-                          " / Средняя цена = " + AveragePrice.ToString() +
+                          //     " / PriceTP = " + PriceTP.ToString() +
+                          //     " / PriceSL = " + PriceSL.ToString() +
+                          " / Средняя цена = " + Math.Round(OldAveragePrice, 2).ToString() +
                           " / Direction = " + DirectionOfTrade.ToString() +
-                          " / Commission = " + Commission.ToString();
+                           " / PnL = " + Math.Round(PnL, 2).ToString(); 
 
+                     //     " / Commission = " + Commission.ToString();
+                    
 
             Console.WriteLine(str);
-
 
         }
 
         #endregion
         //----------------------------------------------- End Methods ------------------------------------------------ 
 
-        delegate void MessageOfChange(decimal price);
+       // delegate void MessageOfChange(decimal price);
 
         
     }

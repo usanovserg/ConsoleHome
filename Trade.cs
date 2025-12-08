@@ -76,15 +76,7 @@ namespace MyConsole
 
         #endregion
         //----------------------------------------------- End Properties ---------------------------------------------------- 
-
-        /// <summary>
-        /// Направление торговли (лонг, шорт)
-        /// </summary>
-       public enum directionOfTrade
-        {
-            Long,
-            Short
-        }
+               
 
         public enum typeOfComission
         {
