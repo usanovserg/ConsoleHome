@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static ConsoleHome.Trade;
 using Timer = System.Timers.Timer;
-
 
 namespace ConsoleHome
 {
@@ -14,32 +14,27 @@ namespace ConsoleHome
         public Position()
         {
             Timer timer = new Timer();
-            timer.Interval = 1000;
+            timer.Interval = 500;
             timer.Elapsed += NewTrade;
-           // timer.AutoReset = true;
-          //  timer.Enabled = true;
             timer.Start();
         }
         public delegate void PositionChangedHandler(Position position); // сигнатура делегата
-        public event PositionChangedHandler? PositionChanged; // делегат для события
+        public event PositionChangedHandler? PositionChanged; // делегат для события изменения позиции
+        public event PositionChangedHandler ProfitChanged; // делегат для события изменения профита
         //=================================== Fields ===============================================
         #region Fields
-        /// <summary>
-        /// Цена позиции
-        /// </summary>
         public decimal Price = 0;
+        public decimal TotalProfit = 0;
         /// <summary>
         /// направление позиции
         /// </summary>
-        public DPositon DirectionPosition = DPositon.No;
-        public enum DPositon 
+        public DPositon DirectionPosition = DPositon.None;
+        public enum DPositon : sbyte
         {
-            Long ,
-            Short ,
-            No
+            Long = 1 ,
+            Short = -1,
+            None = 0
         }
-
-
         #endregion
         //=================================== Properties ===============================================
         #region Properties
@@ -55,13 +50,23 @@ namespace ConsoleHome
             set
             {
                 _volume = value;
-                if (value < 0) DirectionPosition = DPositon.Short;
-                else if (value > 0) DirectionPosition = DPositon.Long;
-                else DirectionPosition = DPositon.No;
                 PositionChanged?.Invoke(this); // вызываем событие при изменении позиции
             }
         }
         decimal _volume = 0;
+        public decimal Profit
+        {
+            get
+            {
+                return _profit;
+            }
+            set
+            {
+                _profit = value;
+                ProfitChanged?.Invoke(this); // вызываем событие при изменении прибыли
+            }
+        }
+        decimal _profit = 0;
         #endregion
         //=================================== Methods ===============================================
         #region methods
@@ -95,31 +100,43 @@ namespace ConsoleHome
         /// </summary>
         private void CalculateNewPosition(decimal TradePrice, decimal TradeVolume)
         {
-            decimal SumValume = Volume * Price + TradeVolume * TradePrice;
             decimal tPrice = 0;
             decimal tVolume = 0;
-
-            if ((SumValume != 0) && (TradeVolume+ Volume != 0))
+            decimal tProfit = 0;
+            if (DirectionPosition == DPositon.None) // если позиции не было, нужно ей присвоить направление при открытии
+                DirectionPosition= TradeVolume >= 0? DPositon.Long : DPositon.Short;
+            if ((sbyte)DirectionPosition * TradeVolume >= 0) //позиция на продолжение или вновь открытая , добавляем лоты и считаем среднюю цену
             {
-                tPrice = SumValume / (Volume + TradeVolume);
-                tVolume = Volume + TradeVolume;
-                if (tPrice < 0)
+                tVolume = Volume + Math.Abs(TradeVolume);
+                tPrice = (Volume * Price + Math.Abs(TradeVolume) * TradePrice) / tVolume;
+            }
+            else //позиция сокращается, (может измениться направление позиции)
+            {
+                tVolume = Volume - Math.Abs(TradeVolume);
+                if (tVolume == 0) // если прозиция закрывается
                 {
-                    tPrice *= -1;
-                    tVolume *= -1;
+                    tPrice = 0;
+                    tProfit = (sbyte)DirectionPosition * Volume * (TradePrice - Price);
+                    DirectionPosition = DPositon.None;
+                }    
+                else if (tVolume < 0) // если позиция перевенулась в другую сторону
+                {
+                    tPrice = TradePrice;
+                    tVolume = -tVolume;
+                    tProfit = (sbyte)DirectionPosition * Volume * (TradePrice - Price);
+                    DirectionPosition = (DPositon)(-1*(sbyte)DirectionPosition);
                 }
-            }
-            else if (SumValume == 0)
-            {
-                tVolume = tPrice = 0;
-            }
-            else
-            {
-                tPrice = Math.Abs(SumValume);
-                tVolume = Math.Sign(SumValume);
+                else   // направление не поменялось
+                {
+                    tProfit = (sbyte)DirectionPosition * Math.Abs(TradeVolume) * (TradePrice - Price);
+                    tPrice = Price;
+                }
+                TotalProfit += tProfit;
+                Profit = tProfit;
             }
             Price = tPrice;
             Volume = tVolume;
+          //  Profit= tProfit;
         }
         #endregion
     }

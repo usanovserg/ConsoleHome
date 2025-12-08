@@ -12,7 +12,6 @@ namespace MyConsole
         //=================================== Fields ===============================================
         #region Fields
         #endregion
-
         //=================================== Properties ===============================================
         #region Prperties
         #endregion
@@ -21,7 +20,7 @@ namespace MyConsole
             Position position = new();
             position.PositionChanged += OnPositionChanged;
             position.PositionChanged += Message;
-            //  position.PositionChanged(); если убрать event в объявлении делегата, то можно вызывать из вне
+            position.ProfitChanged += OnProfitChanged;
             Console.ReadLine();
         }
         //=================================== Methods ===============================================
@@ -29,18 +28,26 @@ namespace MyConsole
         /// <summary>
         /// Обработчик события . Изменение позиции
         /// </summary>
-        /// <param name="position"></param>
         static void OnPositionChanged(Position position)
         {
             Console.ForegroundColor = position.DirectionPosition == DPositon.Short ? ConsoleColor.Red :
                                       position.DirectionPosition == DPositon.Long ? ConsoleColor.Green:
                                       ConsoleColor.White;
-            Console.WriteLine($"Позиция изменилась: {position.DirectionPosition}  : Volume = {Math.Abs(position.Volume).ToString()} / Price = {position.Price.ToString("F2")}");
+            Console.WriteLine($"Позиция изменилась: {position.DirectionPosition}  : Volume = {Math.Abs(position.Volume)} / Price = {position.Price:F2}");
             Console.ForegroundColor = ConsoleColor.White;
         }
         static void Message(Position position)
         {
             Console.WriteLine("Ждем следующий трейд...");
+        }
+        /// <summary>
+        /// Обработка события изменения профита
+        /// </summary>
+        /// <param name="position"></param>
+        static void OnProfitChanged(Position position)
+        {
+            Console.WriteLine($"ПРИБЫЛЬ по трейду = {position.Profit:F2}");
+            Console.WriteLine($"Суммарная ПРИБЫЛЬ  = {position.TotalProfit:F2}");
         }
         #endregion
     }
