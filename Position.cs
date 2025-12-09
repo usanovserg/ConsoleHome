@@ -126,7 +126,7 @@ namespace ConsoleHome
                     positionStatus = PositionStatuses.Closed;
 
                     trade.Volume = trade.Volume - positionLots;
-                    PnL = Math.Round((trade.Price - avgPrice) * positionLots, 0) * PositionSign();
+                    PnL = Math.Round((trade.Price - avgPrice) * positionLots, 0) * (int) this.positionDirection;
                     positionLots = 0;
 
                     LastChangeTime = DateTime.Now;
