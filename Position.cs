@@ -177,18 +177,20 @@ namespace MyConsole
 
             // Тут определяем первый проход
             if (IsFirstPrice)
-            {
-                //AveragePrice = Price;
+            {               
                 OldAveragePrice = Price; // Сохраняем первый уровень
                 OldDirectionOfTrade = DirectionOfTrade;
-                OldVolume = Volume;
-             //   OldPrice = Price;
+                OldVolume = Volume;             
 
                 IsFirstPrice = false;
             }
-            // Последующие проходы
-            else 
-            {       //Если направление сделки НЕ поменялось
+           
+            // Последующие проходы                        
+            else
+            {
+                PnL = 0;
+
+                //Если направление сделки НЕ поменялось
                 if (OldDirectionOfTrade == DirectionOfTrade)
                 {
                     AveragePrice = (OldAveragePrice * OldVolume + Price * Volume) / (Volume + OldVolume);
@@ -211,27 +213,22 @@ namespace MyConsole
                             PnL = (Price - OldAveragePrice) * Volume;
                         }
 
-                        OldVolume -= Volume;
-
-
-                       // AveragePrice = (OldAveragePrice * OldVolume + Price * Volume) / (Volume + OldVolume);
+                        OldVolume -= Volume;                                          
 
                         OldAveragePrice = AveragePrice;
                         //Тут поставим метку что новая сделка закрыта
-
-
                     }
                     else //Накопленного объема не хватает на закрытие сделки
                     {
                         if (OldDirectionOfTrade == "Long")
                         {
-                            PnL = (Price - OldPrice) * OldVolume;
+                            PnL = (Price - OldAveragePrice) * OldVolume;
 
                             OldDirectionOfTrade = "Short";
                         }
                         else
                         {
-                            PnL = - (Price - OldPrice) * OldVolume;
+                            PnL = - (Price - OldAveragePrice) * OldVolume;
 
                             OldDirectionOfTrade = "Long";
                         }
@@ -242,7 +239,7 @@ namespace MyConsole
 
                           //  AveragePrice = (OldAveragePrice * OldVolume + Price * Volume) / (Volume + OldVolume);
 
-                           OldAveragePrice = AveragePrice;
+                          // OldAveragePrice = AveragePrice;
 
                             //Тут поставим метку что старая сделка закрыта
                         }
