@@ -139,6 +139,7 @@ namespace MyConsole
 
         public bool IsFirstPrice = true;
 
+        public decimal AllVolume = 0;
               
              
 
@@ -199,26 +200,28 @@ namespace MyConsole
                 //Если направление сделки поменялось
                 else
                 {
-                    if (OldVolume > Volume)
+                    if (OldVolume > Volume) //Накопленного объема хватает для закрытия сделки
                     {
                         if (OldDirectionOfTrade == "Long")
                         {
-                            PnL = (Price - OldPrice) * Volume;
-                            //Price = 1;
-                            //Price = 2;
-                            //Price = 3;
-
+                            PnL =  - (Price - OldAveragePrice) * Volume;                           
                         }
                         else
                         {
-                            PnL = - (Price - OldPrice) * Volume;
+                            PnL = (Price - OldAveragePrice) * Volume;
                         }
 
                         OldVolume -= Volume;
+
+
+                       // AveragePrice = (OldAveragePrice * OldVolume + Price * Volume) / (Volume + OldVolume);
+
+                        OldAveragePrice = AveragePrice;
                         //Тут поставим метку что новая сделка закрыта
 
-                   }
-                    else
+
+                    }
+                    else //Накопленного объема не хватает на закрытие сделки
                     {
                         if (OldDirectionOfTrade == "Long")
                         {
@@ -237,8 +240,13 @@ namespace MyConsole
                         {
                             OldVolume = Volume - OldVolume;
 
+                          //  AveragePrice = (OldAveragePrice * OldVolume + Price * Volume) / (Volume + OldVolume);
+
+                           OldAveragePrice = AveragePrice;
+
                             //Тут поставим метку что старая сделка закрыта
                         }
+
                         else  // Сюда попадем если объемы противоположных сделок одинаковы
                         {
                             if (OldDirectionOfTrade == "Long") //тут знаки наоборот! Потому что направление уже поменено
@@ -319,6 +327,7 @@ namespace MyConsole
             string str = //"Время = " + DateTime.ToString() +
                           //" / Инструмент " + SecCode.ToString() +
                           " / Volume = " + Volume.ToString() +
+                          " / OldVolume = " + OldVolume.ToString() +
                           " / Price = " + Price.ToString() +
                           //     " / PriceTP = " + PriceTP.ToString() +
                           //     " / PriceSL = " + PriceSL.ToString() +
