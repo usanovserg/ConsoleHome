@@ -6,7 +6,8 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using System.Timers;    
+using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace ConsoleHome
 {
