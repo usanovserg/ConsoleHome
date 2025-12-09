@@ -18,7 +18,7 @@ namespace MyConsole
         {
             //Position position = new Position(); //Создаем экземпляр класса Position
 
-            //Сonnector.Connect();
+            Сonnector.Connect();
 
             //Сonnector.NewTradeEvent += ProstoWrite; //создали событие котороое вызывает метод ProstoWrite
 
@@ -88,7 +88,7 @@ namespace MyConsole
 
         static Connector Сonnector = new Connector();
 
-        static int _lastCount = 0;
+       //static int _lastCount = 0;
         #endregion
 
         //----------------------------------------------- Properties ------------------------------------------------
@@ -178,7 +178,6 @@ namespace MyConsole
                 }
             }
         }
-        
 
         static string ReadLine(string message)
         {

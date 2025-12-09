@@ -8,6 +8,7 @@ namespace MyConsole
 {
         public class Trade
         {
+        /*
         //============================================ Enum (Перечисление)
         #region Enum
         /// <summary>
@@ -19,6 +20,7 @@ namespace MyConsole
             Short,
         }
         #endregion
+        */
 
         //===========================================Fields (поля)
         #region Fields

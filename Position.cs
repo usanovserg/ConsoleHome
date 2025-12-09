@@ -13,6 +13,8 @@ using Timer = System.Timers.Timer;
 
 namespace ConsoleHome
 {
+    
+
     public class Position
     {
         //================================================================ Fields
@@ -40,14 +42,21 @@ namespace ConsoleHome
         /// <summary>
         /// Средняя цена входа в сделку
         /// </summary>
-        public decimal SumPriceOfTransaction= 0;
+        public decimal SumPriceOfTransaction = 0;
 
-        public decimal SumAverageSize= 0;
+        public decimal SumAverageSize = 0;
 
         #endregion
 
         //====================================================================Methods
         #region Methods
+        /// <summary>
+        /// Событие об изменении позиции 
+        /// </summary>
+        public void ChangeThePosition()
+        {
+
+        }
         public Position()
         {
             Timer timer = new Timer();
@@ -56,12 +65,14 @@ namespace ConsoleHome
 
             timer.Elapsed += Timer_Elapsed;
 
-            timer.Start();  
+            timer.Start();
         }
 
         Random random = new Random();
+
         private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
+
             Trade trade = new Trade(); //Создадим экземпляр класса Trade
 
             int num = random.Next(-10, 10);
@@ -70,12 +81,12 @@ namespace ConsoleHome
 
             trade.Price = random.Next(70000, 80000);
 
-            if (num > 0 )
+            if (num > 0)
             {
                 //совершаем сделку в лонг
                 Console.WriteLine();
 
-                Console.WriteLine(num+" Сделка ↑ : "+NameTicker+" Объем: "+ trade.Volume.ToString()+" Точка входа: "+trade.Price.ToString());
+                Console.WriteLine(num + " Сделка ↑ : " + NameTicker + " Объем: " + trade.Volume.ToString() + " Точка входа: " + trade.Price.ToString());
 
                 LotOfTransaction += trade.Volume; //Общее количество лотов после совершенной сделки
 
@@ -84,7 +95,7 @@ namespace ConsoleHome
             {
                 //совершаем сделку в шорт
                 Console.WriteLine();
-                Console.WriteLine("Значение Rundom: "+num+" Сделка ↓ : " + NameTicker + " Объем: " + trade.Volume.ToString() + " Точка входа: " + trade.Price.ToString());
+                Console.WriteLine("Значение Rundom: " + num + " Сделка ↓ : " + NameTicker + " Объем: " + trade.Volume.ToString() + " Точка входа: " + trade.Price.ToString());
 
                 LotOfTransaction -= trade.Volume;
             }
@@ -96,5 +107,16 @@ namespace ConsoleHome
             Console.WriteLine(" Общее количество лотов в сделке: " + LotOfTransaction.ToString());// +" средняя сумма "+SumAverageSize);
             #endregion
         }
+
+        static void WriteLine() => Console.WriteLine("Просто вывод строки!");
+
+        //===============================================================Delegate 
+
+        /// <summary>
+        /// Изменение позиции
+        /// </summary>
+        delegate void Number(); //Объявили делегат
+        Number? chPosition; //Создали переменную типа делегат
+        
     }
 }
