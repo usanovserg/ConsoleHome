@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MyConsole
-
 {
         public class Trade
         {
@@ -32,7 +31,6 @@ namespace MyConsole
         public DateTime DateTime = DateTime.MinValue;
 
         string Portfolio = "";
-
         #endregion
 
         //=============================================Properties (свойства)
@@ -50,15 +48,11 @@ namespace MyConsole
             {
                 _volume = value;
             }
-
         }
         //Внутренние поля рекомендуется начинать с нижнего подчеркивания и с маленькой буквы!
         //Это приватные поля
         //Публичные поля рекомендуется писать с большой буквы
         decimal _volume = 0;
-
         #endregion
-
-
     }
 }

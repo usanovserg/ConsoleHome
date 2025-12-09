@@ -57,7 +57,6 @@ namespace ConsoleHome
             timer.Elapsed += Timer_Elapsed;
 
             timer.Start();  
-
         }
 
         Random random = new Random();
@@ -70,7 +69,6 @@ namespace ConsoleHome
             trade.Volume = Math.Abs(num); // число num берем по модулю, чтобы оно всегда было положительным
 
             trade.Price = random.Next(70000, 80000);
-
 
             if (num > 0 )
             {

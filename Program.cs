@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,31 +18,11 @@ namespace MyConsole
         {
             //Position position = new Position(); //Создаем экземпляр класса Position
 
-            string price = "100.1";
-            try
-            {
-                int num = int.Parse(price);
-                Console.WriteLine(num);
-            }
-            catch(Exception ex)
-            { 
-                Console.WriteLine(ex.Message);
-            }
+            //Сonnector.Connect();
 
-            
+            //Сonnector.NewTradeEvent += ProstoWrite; //создали событие котороое вызывает метод ProstoWrite
 
-            
-
-
-            Сonnector.Connect();
-
-            Сonnector.NewTradeEvent += ProstoWrite; //создали событие котороое вызывает метод ProstoWrite
-
-            number = ProstoWrite;
-
-            number += ProstoRead;
-
-            number();
+            number = WriteLine; 
 
             /*
             //Запускаем отдельный поток, который ждет новую сделку и потом исполняется
@@ -60,10 +42,11 @@ namespace MyConsole
             });
             */
 
-            /*
             levels = new List<Level>();
 
-            //WriteLine();
+            Load();
+
+            number();
 
             string str = ReadLine("Введите количество уровней: ");
 
@@ -81,13 +64,9 @@ namespace MyConsole
 
             lotLevel = decimal.Parse(str);
 
-            //str = Console.ReadLine();
+            number();
 
-            WriteLine();
-            */
-            Console.ReadLine();
-            
-
+            Save();
         }
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
@@ -129,21 +108,18 @@ namespace MyConsole
                     stepLevel = value;
 
                     levels = Level.CalculateLevels(priceUp, stepLevel, countLevels);
-              
                 }
 
             }
         }
-
         #endregion
-
 
         //----------------------------------------------- Methods ---------------------------------------------------
         #region Methods
 
         static void WriteLine()
         {
-            Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());
+            Console.WriteLine("Кол-во элементов в списке: " + countLevels.ToString());
             for (int i = 0; i < levels.Count; i++)
             {
                 Console.WriteLine(levels[i].priceLevel);
@@ -151,9 +127,58 @@ namespace MyConsole
             Console.ReadLine();
         }
 
-        static void ProstoWrite() => Console.WriteLine("ProstoWrite");
+        /// <summary>
+        /// Запись информации в текстовый файл
+        /// </summary>
+        static void Save() 
+        {
+            //почитать что такое using!!!! Создали внутри себя конструкцию и исполняет
 
-        static void ProstoRead() => Console.WriteLine("ProstoRead");
+            using (StreamWriter writer = new StreamWriter("params.txt", false)) //пытаемся прочитать файл, если нет то создадим заново
+                                                    {
+                writer.WriteLine(priceUp.ToString());
+
+                writer.WriteLine(countLevels.ToString());
+
+                writer.WriteLine(stepLevel.ToString());
+            }
+            
+        }
+
+        /// <summary>
+        /// Загрузка информации из файла
+        /// </summary>
+        static void Load()
+        {
+            using (StreamReader reader = new StreamReader("params.txt"))
+            {
+                int index = 0;
+
+                while (true)
+                {
+                    string line = reader.ReadLine();
+
+                    index++;
+
+                    switch (index)
+                    {
+                        case 1:
+                            priceUp = decimal.Parse(line);
+                            break;
+                        case 2:
+                            countLevels = int.Parse(line);
+                            break;
+                        case 3:
+                            StepLevel = decimal.Parse(line);
+                            break;
+                    }
+
+                    if (line == null)
+                        break;
+                }
+            }
+        }
+        
 
         static string ReadLine(string message)
         {
@@ -186,9 +211,7 @@ namespace MyConsole
             {
                 Console.WriteLine("Connect is ExChange");
             }
-
         }
-
         #endregion
         //----------------------------------------------- Methods ---------------------------------------------------
     }
