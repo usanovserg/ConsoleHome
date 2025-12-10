@@ -204,7 +204,7 @@ namespace MyConsole
                 {
                     if (OldVolume > Volume) //Накопленного объема хватает для закрытия сделки
                     {
-                        if (OldDirectionOfTrade == "Long")
+                        if (OldDirectionOfTrade == directionOfTrade.Long.ToString())
                         {
                             PnL =  - (Price - OldAveragePrice) * Volume;                           
                         }
@@ -220,33 +220,39 @@ namespace MyConsole
                     }
                     else //Накопленного объема не хватает на закрытие сделки
                     {
-                        if (OldDirectionOfTrade == "Long")
+                        if (OldDirectionOfTrade == directionOfTrade.Long.ToString())
                         {
                             PnL = (Price - OldAveragePrice) * OldVolume;
 
-                            OldDirectionOfTrade = "Short";
+                            OldDirectionOfTrade = directionOfTrade.Short.ToString();
+
+                            DirectionOfTrade = directionOfTrade.Short.ToString();
                         }
                         else
                         {
                             PnL = - (Price - OldAveragePrice) * OldVolume;
 
-                            OldDirectionOfTrade = "Long";
+                            OldDirectionOfTrade = directionOfTrade.Long.ToString();
+
+                            DirectionOfTrade = directionOfTrade.Long.ToString();
                         }
 
                         if (OldVolume < Volume) 
                         {
                             OldVolume = Volume - OldVolume;
+                            AveragePrice = Price;
+                            OldAveragePrice = AveragePrice;
 
-                          //  AveragePrice = (OldAveragePrice * OldVolume + Price * Volume) / (Volume + OldVolume);
+                            //  AveragePrice = (OldAveragePrice * OldVolume + Price * Volume) / (Volume + OldVolume);
 
-                          // OldAveragePrice = AveragePrice;
+                            // OldAveragePrice = AveragePrice;
 
                             //Тут поставим метку что старая сделка закрыта
                         }
 
                         else  // Сюда попадем если объемы противоположных сделок одинаковы
                         {
-                            if (OldDirectionOfTrade == "Long") //тут знаки наоборот! Потому что направление уже поменено
+                            if (OldDirectionOfTrade == directionOfTrade.Long.ToString()) //тут знаки наоборот! Потому что направление уже поменено
                             {
                                 PnL = - (Price - OldPrice) * OldVolume;                                                               
                             }
