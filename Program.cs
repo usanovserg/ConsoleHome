@@ -130,17 +130,7 @@ namespace MyConsole
             Console.WriteLine(message);
 
             return Console.ReadLine();
-        }
-
-        static void XXXXX()
-        {
-           //trade.Price = 2225;    
-           //trade.Volume = 100;
-       
-           // Level level = new Level();
-
-            
-        }      
+        }       
 
         #endregion
         //----------------------------------------------- End Methods ---------------------------------------------------

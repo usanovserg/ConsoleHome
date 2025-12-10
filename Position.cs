@@ -162,18 +162,14 @@ namespace MyConsole
 
             Price = random.Next(100, 300); // Генерируем цену инструмента.
                                            // 
-            int num =  random.Next(-200, 200);   //Генерируем объем сделки
-                        
-          //  Get_TP_SL(); //Вычисляеи TP SL
-
+            int num =  random.Next(-200, 200);   //Генерируем объем сделки                        
+          
             Volume = Math.Abs(num); //Получаем объем.
                        
             DirectionOfTrade = GetDirection(num); //Генерируем направление сделки
 
-            SecCode = "BTCMMM"; //Задаем инструмент
-                        
-
-          //  Commission = trade.GetCommission(CalcCommission());   //Определяем комиссию         
+            SecCode = "BTCMMM"; //Задаем инструмент                      
+                     
 
             // Тут определяем первый проход
             if (IsFirstPrice)
@@ -243,10 +239,6 @@ namespace MyConsole
                             AveragePrice = Price;
                             OldAveragePrice = AveragePrice;
 
-                            //  AveragePrice = (OldAveragePrice * OldVolume + Price * Volume) / (Volume + OldVolume);
-
-                            // OldAveragePrice = AveragePrice;
-
                             //Тут поставим метку что старая сделка закрыта
                         }
 
@@ -299,30 +291,14 @@ namespace MyConsole
         public string GetDirection(int num)
         {
             if (num > 0)
-            {
-               // OldPrice = Price;
-                return directionOfTrade.Long.ToString();
-                 
+            {               
+                return directionOfTrade.Long.ToString();                 
             }
             else
-            {
-               // OldPrice = Price;
+            {              
                 return directionOfTrade.Short.ToString();
             }
-        }
-        public string CalcCommission()
-        {  Random random = new Random();
-          
-            if (random.Next(-100, 100) >= 0)
-            {
-                return Trade.typeOfComission.Limit.ToString();
-            }
-            else
-            {
-                return Trade.typeOfComission.Market.ToString();
-            }
-          
-        }
+        }        
 
         public void PrintPosition()
         {
@@ -351,36 +327,6 @@ namespace MyConsole
        // delegate void MessageOfChange(decimal price);
 
         
-    }
-    
-
-    //public class Connector
-    //{
-    //    //  public newTradeEvent NewTradeEvent;
-
-    //    public delegate void newTradeEvent();
-
-    //    public static event newTradeEvent NewTradeEvent;
-
-    //    public List<Trade> Trades = new List<Trade>();
-
-    //    public void NewTrade (Trade trade)
-    //    {
-    //        Trades.Add(trade);
-
-    //        NewTradeEvent();
-    //    }
-
-    //    public void Connect()
-    //    {
-    //        Console.WriteLine("Connect is Exchange");
-    //    }
-
-    //    //public void AddDelegate(newTradeEvent method)
-    //    //{
-    //    //    NewTradeEvent = method;
-    //    //}
-
-
-    //}
+    }   
+       
 }

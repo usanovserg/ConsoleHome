@@ -41,12 +41,7 @@ namespace MyConsole
         /// <summary>
         /// Направление торговли
         /// </summary>
-        public string DirectionOfTrade = "";
-      
-        /// <summary>
-        /// Комиссия за сделку
-        /// </summary>
-        public decimal Commission = 0;
+        public string DirectionOfTrade = "";                  
 
         public decimal AveragePrice = 0;
 
@@ -76,39 +71,10 @@ namespace MyConsole
 
         #endregion
         //----------------------------------------------- End Properties ---------------------------------------------------- 
-               
+             
 
-        public enum typeOfComission
-        {
-            Limit,
-            Market
-        }
         //----------------------------------------------- Methods ------------------------------------------------------
        
-        /// <summary>
-        /// Выдает значение комиссии по наименованию
-        /// </summary>
-        /// <param name="typeOfCommission"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
-        public decimal GetCommission(string typeOfCommission)
-        {
-            var Commission = new Dictionary<string, decimal>()
-                {
-                    { "Limit", 0.18m },
-                    { "Market", 1.05m }
-                };
-
-            try
-            {
-                return Commission[typeOfCommission];
-            }
-            catch (Exception)
-            {
-                throw new ArgumentException("Комиссия не известна!!! Требуется проверить!!!!!");
-            }
-
-        } 
         //----------------------------------------------- End Methods ---------------------------------------------------- 
     }
 
