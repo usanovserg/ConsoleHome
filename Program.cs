@@ -4,127 +4,143 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyConsole
+namespace ConsoleHome
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
+            Position position = new Position("SBER");
+            /*
 
-            levels = new List<decimal>();
+            levels = new List<Level>();
 
-            WriteLine();
+            priceUp = GetPricelValue(
+                PRICEUPTYPE,
+                "Введите цену верхнего уровня: ",
+                "Цена верхнего уровня должна быть больше 0"
+            );
 
-            string str = ReadLine("Введите количество уровней: ");
+            priceDown = GetPricelValue(
+                PRICEDOWNTYPE,
+                "Введите цену нижнего уровня: ",
+                "Цена нижнего уровня должна быть меньше цены верхнего уровня",
+                priceUp
+            );
 
-            countLevels = Convert.ToInt32(str);
+            stepLevel = GetPricelValue(
+                PRICESTEPTYPE,
+                "Введите шаг цены: ",
+                "Шаг цены должен быть больше 0"
+            );
 
-            str = ReadLine("Задайте верхнюю цену: ");
-
-            priceUp = decimal.Parse(str);
-
-            str = ReadLine("Введите шаг уровня: ");
-
-            StepLevel = decimal.Parse(str);
-
-            str = Console.ReadLine();
-
-            WriteLine();
-
+            LevelCount = (int)((priceUp - priceDown) / stepLevel) + 1;
+            */
             Console.ReadLine();
-
         }
 
-        //----------------------------------------------- Fields ---------------------------------------------------- 
-        #region Fields
+        // =============================== Constants ================================
+        #region Constants
 
-
-
-        static int countLevels;
-
-        static decimal priceUp;
-
-        static decimal priceLevel = priceUp;
-
-        static decimal stepLevel;
-        //=============================
-
-        static Trade trade = new Trade();
+        const string PRICEUPTYPE = "priceUp";
+        const string PRICEDOWNTYPE = "priceDown";
+        const string PRICESTEPTYPE = "priceStep";
 
         #endregion
-        //----------------------------------------------- Fields ----------------------------------------------------
 
-        //----------------------------------------------- Properties ------------------------------------------------
+        // =============================== Fields ================================
+        #region Fields 
+
+        static List<Level> levels;
+        static decimal priceUp;
+        static decimal priceDown;
+        static decimal stepLevel;
+
+        #endregion
+
+        // =============================== Properties ================================
         #region Properties
 
-        public static decimal StepLevel
+        static int levelCount;
+        static int LevelCount
         {
             get
             {
-                return StepLevel;
+                return levelCount;
             }
 
             set
             {
-                if (value <= 100)
-                {
-                    stepLevel = value;
+                levelCount = value;
+                Console.WriteLine("Количество уровней: " + (value).ToString());
 
-                    decimal priceLevel = priceUp;
-
-                    for (int i = 0; i < countLevels; i++)
-                    {
-                        levels.Add(priceLevel);
-
-                        priceLevel -= stepLevel;
-                    }
-                }
-
+                levels = Level.CalculateLevels(priceUp, priceDown, value);
             }
         }
 
         #endregion
-        //----------------------------------------------- Properties ------------------------------------------------
 
-        static List<decimal> levels;
+        static Trade trade = new Trade();
 
-        //----------------------------------------------- Methods ---------------------------------------------------
-        #region Methods
+        // =============================== Methods ================================
+        #region
 
-        static void WriteLine()
-        {
-            Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());
-            for (int i = 0; i < levels.Count; i++)
-            {
-                Console.WriteLine(levels[i]);
-            }
-            Console.ReadLine();
-            //1            
-            //2
-            //3
-
-        }
-
-        static string ReadLine(string message)
+        static decimal GetDecimalValue(string message)
         {
             Console.WriteLine(message);
-
-            return Console.ReadLine();
+            decimal outDecimalValue;
+            bool isValid;
+            do
+            {
+                string inputValue = Console.ReadLine();
+                isValid = decimal.TryParse(inputValue, out outDecimalValue);
+                if (!isValid)
+                {
+                    Console.WriteLine("Вводимое значение должно быть числовым");
+                }
+            } while (!isValid);
+            return outDecimalValue;
         }
 
-        static void Test()
+        static decimal GetPricelValue(string priceType, string infoMessage, string errorMessage, decimal? validateValue = null)
         {
-            trade.Price = 2225;
-            trade.Volume = 45654656;
-            string str = priceUp.ToString();
+            decimal value;
+            bool condition;
+            do
+            {
+                value = GetDecimalValue(infoMessage);
+                condition = GetCondition(priceType, value, validateValue);
+                if (condition)
+                {
+                    Console.WriteLine(errorMessage);
+                }
+            } while (condition);
+
+            return value;
+        }
+
+        static bool GetCondition(string priceType, decimal value, decimal? validateValue = null)
+        {
+            if (priceType != PRICEUPTYPE && priceType != PRICEDOWNTYPE && priceType != PRICESTEPTYPE)
+                throw new ArgumentException("Ошибка указания типа цены");
+
+            switch (priceType)
+            {
+                case PRICEUPTYPE:
+                    return value < 0;
+                case PRICEDOWNTYPE:
+                    if (validateValue == null)
+                        throw new ArgumentException("Ошибка указания цены");
+
+                    return value < 0 || value > validateValue;
+                case PRICESTEPTYPE:
+                    return value <= 0;
+                default:
+                    return false;
+            }
         }
 
         #endregion
-        //----------------------------------------------- Methods ---------------------------------------------------
-
-        //Создан класс Trade в котором есть несколько полей
-        
-       
     }
 
 }
