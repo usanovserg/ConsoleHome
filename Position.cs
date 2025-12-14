@@ -269,7 +269,7 @@ namespace MyConsole
                 }                       
 
             }
-            //  NewTradeEvent(Price);  // Вызов события
+              NewTradeEvent(Price);  // Вызов события
 
             PrintPosition();
         }
@@ -324,7 +324,7 @@ namespace MyConsole
         #endregion
         //----------------------------------------------- End Methods ------------------------------------------------ 
 
-       // delegate void MessageOfChange(decimal price);
+       delegate void MessageOfChange(decimal price);
 
         
     }   
