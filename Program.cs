@@ -53,12 +53,9 @@ namespace MyConsole
         #endregion
         //----------------------------------------------- End Comment-------------------------------------------------
       
-             Console.ReadLine();
-
-             
+             Console.ReadLine();           
           
-        }
-        
+        }        
        
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
@@ -83,27 +80,27 @@ namespace MyConsole
         //----------------------------------------------- Properties ------------------------------------------------
         #region Properties
 
-        public static decimal StepLevel
-        {
+        //public static decimal StepLevel
+        //{
             
-            get
-            {
-                return StepLevel;
-            }
+        //    get
+        //    {
+        //        return StepLevel;
+        //    }
 
-            set
-            {
-                if (value <= 100)
-                {
-                    stepLevel = value;
+        //    set
+        //    {
+        //        if (value <= 100)
+        //        {
+        //            stepLevel = value;
 
-                   levels = Level.CalculateLevels(priceUp, stepLevel, countLevels);
-                }
+        //           levels = Level.CalculateLevels(priceUp, stepLevel, countLevels);
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
-        static decimal stepLevel;
+         // static decimal stepLevel;
 
         #endregion
         //----------------------------------------------- End Properties ------------------------------------------------

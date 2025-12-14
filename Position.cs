@@ -6,11 +6,8 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using static MyConsole.ForTests;
 using static MyConsole.Trade;
 
-//using static MyConsole.Connector;
-//using static MyConsole.Position;
 using Timer = System.Timers.Timer;
 
 
@@ -31,8 +28,7 @@ namespace MyConsole
           
            timer.Start();                                 
 
-        }
-               
+        }               
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
         #region Fields
@@ -82,25 +78,6 @@ namespace MyConsole
         decimal _volume = 0;
 
         /// <summary>
-        /// Цена закрытия инструмента по SL
-        /// </summary>
-        public decimal PercentSL = 0.3m;
-
-        /// <summary>
-        /// Цена закрытия инструмента по TP
-        /// </summary>
-        public decimal PercentTP = 1.5m;
-
-        public decimal PriceSL = 0;
-
-        public decimal PriceTP = 0;
-
-        /// <summary>
-        /// Шаг трейлинг стопа
-        /// </summary>
-        public decimal StepTS = 0;
-
-        /// <summary>
         /// Наименование инструмента
         /// </summary>
         public string SecCode = "";
@@ -127,11 +104,6 @@ namespace MyConsole
 
         public string OldDirectionOfTrade = "";
 
-        /// <summary>
-        /// Комиссия за сделку
-        /// </summary>
-        public decimal Commission = 0;
-
         public decimal AveragePrice = 0;
         public decimal OldAveragePrice = 0;
 
@@ -139,8 +111,7 @@ namespace MyConsole
 
         public bool IsFirstPrice = true;
 
-        public decimal AllVolume = 0;
-              
+        public decimal AllVolume = 0;             
              
 
         #endregion Fields
@@ -148,7 +119,6 @@ namespace MyConsole
 
 
         //----------------------------------------------- Methods ---------------------------------------------------- 
-
 
         #region Methods
 
@@ -273,21 +243,7 @@ namespace MyConsole
 
             PrintPosition();
         }
-
-        public void Get_TP_SL()
-        {
-            if (DirectionOfTrade == directionOfTrade.Long.ToString())
-            {
-                PriceTP = Math.Round(Price * (1 + PercentTP / 100), 2);
-                PriceSL = Math.Round(Price * (1 - PercentSL / 100), 2);
-            }
-            else
-            {
-                PriceTP = Math.Round(Price * (1 - PercentTP / 100), 2);
-                PriceSL = Math.Round(Price * (1 + PercentSL / 100), 2);
-            }
-
-        }
+       
         public string GetDirection(int num)
         {
             if (num > 0)
