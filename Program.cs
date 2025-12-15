@@ -11,10 +11,7 @@ namespace MyConsole
 {
     public class Program
     {
-        public static void MessageOfChange(decimal price)
-        {
-            Console.WriteLine("СОБЫТИЕ !  Цена изменилась ! " + price);
-        }
+      
             static void Main(string[] args)
         {
                      
@@ -82,7 +79,7 @@ namespace MyConsole
 
         //public static decimal StepLevel
         //{
-            
+
         //    get
         //    {
         //        return StepLevel;
@@ -100,7 +97,7 @@ namespace MyConsole
         //    }
         //}
 
-         // static decimal stepLevel;
+        // static decimal stepLevel;
 
         #endregion
         //----------------------------------------------- End Properties ------------------------------------------------
@@ -110,7 +107,11 @@ namespace MyConsole
 
         //----------------------------------------------- Methods ---------------------------------------------------
         #region Methods
-       
+
+        public static void MessageOfChange(decimal price)
+        {
+            Console.WriteLine("СОБЫТИЕ !  Цена изменилась ! " + price);
+        }
         static void WriteLine()
         {
             Console.WriteLine("Кол-во элементов в списке: " + levels.Count.ToString());

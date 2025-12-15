@@ -47,12 +47,12 @@ namespace MyConsole
         /// <summary>
         /// Текущая цена инструмента
         /// </summary>
-        public decimal Price = 0;
+        public decimal Price { get; set; } = 0;
 
         /// <summary>
         /// Цена открытия позиции
         /// </summary>
-        public decimal PriceOpen = 0;
+        public decimal PriceOpen { get; set; } = 0;
 
         /// <summary>
         /// Объем сделки
@@ -71,47 +71,47 @@ namespace MyConsole
 
         }
 
-        public decimal OldVolume =0;
+        public decimal SumOfVolume { get; set; } = 0;
 
-        public decimal PnL = 0;
+        public decimal PnL { get; set; } = 0;
 
-        decimal _volume = 0;
+        decimal _volume { get; set; } = 0;
 
         /// <summary>
         /// Наименование инструмента
         /// </summary>
-        public string SecCode = "";
+        public string SecCode { get; set; } = "";
 
         /// <summary>
         /// Классификация
         /// </summary>
-        public string ClassCode = "";
+        public string ClassCode { get; set; } = "";
 
         /// <summary>
         /// Время
         /// </summary>
-        public DateTime DateTime = DateTime.MinValue;
+        public DateTime DateTime { get; set; } = DateTime.MinValue;
 
         /// <summary>
         /// Портфель (номер счета)
         /// </summary>
-        public string Portfolio = "";
+        public string Portfolio { get; set; } = "";
 
         /// <summary>
         /// Направление торговли
         /// </summary>
-        public string DirectionOfTrade = "";
+        public string DirectionOfTrade { get; set; } = "";
 
-        public string OldDirectionOfTrade = "";
+        public string OldDirectionOfTrade { get; set; } = "";
 
-        public decimal AveragePrice = 0;
-        public decimal OldAveragePrice = 0;
+        public decimal AveragePrice { get; set; } = 0;
+        public decimal OldAveragePrice { get; set; } = 0;
 
-        public decimal OldPrice = 1;
+        public decimal OldPrice { get; set; } = 1;
 
-        public bool IsFirstPrice = true;
+        public bool IsFirstPrice { get; set; } = true;
 
-        public decimal AllVolume = 0;             
+        public decimal AllVolume { get; set; } = 0;             
              
 
         #endregion Fields
@@ -146,7 +146,7 @@ namespace MyConsole
             {               
                 OldAveragePrice = Price; // Сохраняем первый уровень
                 OldDirectionOfTrade = DirectionOfTrade;
-                OldVolume = Volume;             
+                SumOfVolume = Volume;             
 
                 IsFirstPrice = false;
             }
@@ -159,36 +159,36 @@ namespace MyConsole
                 //Если направление сделки НЕ поменялось
                 if (OldDirectionOfTrade == DirectionOfTrade)
                 {
-                    AveragePrice = (OldAveragePrice * OldVolume + Price * Volume) / (Volume + OldVolume);
+                    AveragePrice = (OldAveragePrice * SumOfVolume + Price * Volume) / (Volume + SumOfVolume);
 
                     OldAveragePrice = AveragePrice;
-                    OldVolume += Volume;
+                    SumOfVolume += Volume;
                 }
 
                 //Если направление сделки поменялось
                 else
                 {
-                    if (OldVolume > Volume) //Накопленного объема хватает для закрытия сделки
+                    if (SumOfVolume > Volume) //Накопленного объема хватает для закрытия сделки
                     {
                         if (OldDirectionOfTrade == directionOfTrade.Long.ToString())
                         {
-                            PnL =  - (Price - OldAveragePrice) * Volume;                           
+                            PnL =  (Price - OldAveragePrice) * Volume;                           
                         }
                         else
                         {
-                            PnL = (Price - OldAveragePrice) * Volume;
+                            PnL = - (Price - OldAveragePrice) * Volume;
                         }
 
-                        OldVolume -= Volume;                                          
+                        SumOfVolume -= Volume;                                          
 
-                        OldAveragePrice = AveragePrice;
+                      //  OldAveragePrice = AveragePrice;
                         //Тут поставим метку что новая сделка закрыта
                     }
                     else //Накопленного объема не хватает на закрытие сделки
                     {
                         if (OldDirectionOfTrade == directionOfTrade.Long.ToString())
                         {
-                            PnL = (Price - OldAveragePrice) * OldVolume;
+                            PnL = (Price - OldAveragePrice) * SumOfVolume;
 
                             OldDirectionOfTrade = directionOfTrade.Short.ToString();
 
@@ -196,16 +196,16 @@ namespace MyConsole
                         }
                         else
                         {
-                            PnL = - (Price - OldAveragePrice) * OldVolume;
+                            PnL = - (Price - OldAveragePrice) * SumOfVolume;
 
                             OldDirectionOfTrade = directionOfTrade.Long.ToString();
 
                             DirectionOfTrade = directionOfTrade.Long.ToString();
                         }
 
-                        if (OldVolume < Volume) 
+                        if (SumOfVolume < Volume) 
                         {
-                            OldVolume = Volume - OldVolume;
+                            SumOfVolume = Volume - SumOfVolume;
                             AveragePrice = Price;
                             OldAveragePrice = AveragePrice;
 
@@ -216,11 +216,11 @@ namespace MyConsole
                         {
                             if (OldDirectionOfTrade == directionOfTrade.Long.ToString()) //тут знаки наоборот! Потому что направление уже поменено
                             {
-                                PnL = - (Price - OldPrice) * OldVolume;                                                               
+                                PnL = - (Price - OldPrice) * SumOfVolume;                                                               
                             }
                             else
                             {
-                                PnL = (Price - OldPrice) * OldVolume;                                                               
+                                PnL = (Price - OldPrice) * SumOfVolume;                                                               
                             }
 
                             IsFirstPrice = true;
@@ -228,7 +228,7 @@ namespace MyConsole
                             AveragePrice = 0;
                             OldPrice = 0;
                             Volume = 0;
-                            OldVolume = 0;
+                            SumOfVolume = 0;
                             DirectionOfTrade = "";
                             OldDirectionOfTrade = "";
 
@@ -262,7 +262,7 @@ namespace MyConsole
             string str = //"Время = " + DateTime.ToString() +
                           //" / Инструмент " + SecCode.ToString() +
                           " / Volume = " + Volume.ToString() +
-                          " / OldVolume = " + OldVolume.ToString() +
+                          " / SumOfVolume = " + SumOfVolume.ToString() +
                           " / Price = " + Price.ToString() +
                           //     " / PriceTP = " + PriceTP.ToString() +
                           //     " / PriceSL = " + PriceSL.ToString() +
@@ -274,6 +274,7 @@ namespace MyConsole
                     
 
             Console.WriteLine(str);
+            Console.WriteLine("");
 
         }
 
