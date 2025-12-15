@@ -70,12 +70,13 @@ namespace MyConsole
             }
 
         }
-
+        decimal _volume = 0;
+        /// <summary>
+        /// Общий объем позиции
+        /// </summary>
         public decimal SumOfVolume { get; set; } = 0;
 
-        public decimal PnL { get; set; } = 0;
-
-        decimal _volume { get; set; } = 0;
+        public decimal PnL { get; set; } = 0;        
 
         /// <summary>
         /// Наименование инструмента
@@ -102,11 +103,24 @@ namespace MyConsole
         /// </summary>
         public string DirectionOfTrade { get; set; } = "";
 
+        /// <summary>
+        /// Предыдущее направление торговли
+        /// </summary>
         public string OldDirectionOfTrade { get; set; } = "";
-
+        
+        /// <summary>
+        ///Средняя цена 
+        /// </summary>
         public decimal AveragePrice { get; set; } = 0;
+
+        /// <summary>
+        /// Предыдущая средняя цена
+        /// </summary>
         public decimal OldAveragePrice { get; set; } = 0;
 
+        /// <summary>
+        /// Предыдущая цена
+        /// </summary>
         public decimal OldPrice { get; set; } = 1;
 
         public bool IsFirstPrice { get; set; } = true;
@@ -259,18 +273,16 @@ namespace MyConsole
         public void PrintPosition()
         {
 
-            string str = //"Время = " + DateTime.ToString() +
-                          //" / Инструмент " + SecCode.ToString() +
+            string str =  "Время = " + DateTime.ToString() +
+                          " / Инструмент " + SecCode.ToString() +
                           " / Volume = " + Volume.ToString() +
                           " / SumOfVolume = " + SumOfVolume.ToString() +
-                          " / Price = " + Price.ToString() +
-                          //     " / PriceTP = " + PriceTP.ToString() +
-                          //     " / PriceSL = " + PriceSL.ToString() +
+                          " / Price = " + Price.ToString() +                         
                           " / Средняя цена = " + Math.Round(OldAveragePrice, 2).ToString() +
                           " / Direction = " + DirectionOfTrade.ToString() +
                            " / PnL = " + Math.Round(PnL, 2).ToString(); 
 
-                     //     " / Commission = " + Commission.ToString();
+                     
                     
 
             Console.WriteLine(str);
