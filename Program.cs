@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyConsole
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -48,6 +49,8 @@ namespace MyConsole
 
         #endregion
         //----------------------------------------------- Fields ----------------------------------------------------
+
+        static Trade trade = new Trade();
 
         //----------------------------------------------- Properties ------------------------------------------------
         #region Properties
