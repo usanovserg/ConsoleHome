@@ -73,6 +73,7 @@ namespace ConsoleHome
             else if ( (VolumeLots + num) == 0 ) { AveregePositionPrice = 0; }
             // Для иных случаев средняя цена позиции не меняется;
             
+
             // Вычисление общего объема позиции;
             if (num > 0)
             {
