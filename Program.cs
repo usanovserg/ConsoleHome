@@ -13,6 +13,7 @@ namespace MyConsole
         {
 
             Position position = new Position();
+            position.PosCh += change;
             /*
             levels = new List<Level>();
 
@@ -37,7 +38,8 @@ namespace MyConsole
             Console.ReadLine();
             
 
-        } // iofgijfpogj
+        }
+        static void change() { Console.WriteLine("позиция закрывается"); } 
 
         //----------------------------------------------- Fields ---------------------------------------------------- 
         #region Filds

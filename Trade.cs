@@ -13,7 +13,7 @@ namespace ConsoleHome
         /// Цена инструмента
         /// </summary>
         public decimal Price = 0;
-        public TradeDirect Tradedirect;
+        
         public string SecCode = "";
         public string ClassCode = "";
         public DateTime DateTime = DateTime.MinValue;
@@ -26,7 +26,7 @@ namespace ConsoleHome
         /// Объем сделки
         /// </summary>
 
-        public decimal Volume
+        public int Volume
         {
             get
             {
@@ -38,15 +38,10 @@ namespace ConsoleHome
             }
         }
 
-        decimal _volume = 0;
+        int _volume = 0;
 
         #endregion
 
-        public enum TradeDirect
-        {
-            Long,
-            Short
-                
-        }
+       
     }
 }
