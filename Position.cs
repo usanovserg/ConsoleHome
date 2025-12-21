@@ -9,18 +9,16 @@ using Timer = System.Timers.Timer;
 using System.Transactions;
 using static ConsoleHome.Trade;
 
+
 namespace ConsoleHome
 {
     public class Position
     {
-                    public Position() 
+                    public Position()                                                       // Выполнение метода генерации новых сделок по таймеру (мс);
         {
             Timer timer = new Timer();
-
-            timer.Interval = 5000;
-
+            timer.Interval = 3000;
             timer.Elapsed += NewTrade;
-
             timer.Start();
         }
 
@@ -35,95 +33,85 @@ namespace ConsoleHome
         /// <summary> Средняя цена открытия всей позиции </summary>
         public decimal AveregePositionPrice = 0;
 
-        /// <summary> Направление общей позиции (Long; Short) </summary>
+        /// <summary> Направление общей позиции (Short; None; Long) </summary>
         public TypeTrade TypePosition = TypeTrade.None;
 
         #endregion
         //----------------------------------------------- Fields ------------------------------
 
-        Random random = new Random();
-
+        Random random = new Random();                                                       // Генерация новых сделок (случайно);
 
         private void NewTrade(object? sender, ElapsedEventArgs e)
         {
             Trade trade = new Trade();
 
-            decimal _longAndShort;
+            DateTime dealTime = DateTime.Now;                                               // Задал возврат даты и времени генерируемой сделки;
+            string dealTimeStr = dealTime.ToString("dd.MM.yyyy  HH:mm:ss");                 // формат вывода: День.Месяц.Год час.минута.секунда;
 
-            //string typeTrade = "";
-
-            string tapeDeal = "";
+            decimal _bayOrSell;
 
             trade.Price = random.Next(70000, 80000);
 
             int num = random.Next(-10, 10);
 
-
-            // Расчет средней цены позиции;
-            if ((VolumeLots >= 0 && num > 0) || (VolumeLots <= 0 && num < 0))
+            // Расчет средней цены позиции;                                                                            
+            if ((VolumeLots >= 0 && num > 0) || (VolumeLots <= 0 && num < 0))               // Условие наращивания позиции Лонг или Шорт через новый объём (num);
             {
-                // Вычисление средней цены для ранее открытой позиции с увеличением лотов в такой позиции (без изменения направления позиции);
-                AveregePositionPrice = (Math.Abs(VolumeLots) * Math.Abs(AveregePositionPrice) + Math.Abs(num) * trade.Price) / (Math.Abs(VolumeLots) + Math.Abs(num));
+                AveregePositionPrice = (Math.Abs(VolumeLots * AveregePositionPrice) +       // Вычисление средней цены для ранее открытой позиции
+                  Math.Abs(num) * trade.Price) / (Math.Abs(VolumeLots) + Math.Abs(num));    // с увеличением лотов в такой позиции (без изменения направления позиции);
             }
-            // Объем текущей позиции (VolumeLots) меньше нового объема сделки (num), что позицию "переворачивает" (из Лонга в Шорт или наоборот)  - брать цену инструмента (последней сделки);
-            else if (num != 0 && Math.Abs(VolumeLots) < Math.Abs(num))
-            { AveregePositionPrice = trade.Price; }
-
-            // После добавления к объему текущей позиции (VolumeLots) нового объема сделки (num), позиция закрыта "в ноль" (нет средней цены позиции);
-            else if ( (VolumeLots + num) == 0 ) { AveregePositionPrice = 0; }
-            // Для иных случаев средняя цена позиции не меняется;
             
+            else if (num != 0 && Math.Abs(VolumeLots) < Math.Abs(num))                      // Объем текущей позиции (VolumeLots) меньше нового объема сделки (num), 
+            { AveregePositionPrice = trade.Price; }                                         // что позицию "переворачивает"(из Лонга в Шорт или наоборот)  - брать цену последней сделки;
 
-            // Вычисление общего объема позиции;
-            if (num > 0)
+            else if ( (VolumeLots + num) == 0 )                                             // После добавления к объему текущей позиции (VolumeLots) нового объема сделки (num),
+            { AveregePositionPrice = 0; }                                                   // позиция закрыта "в ноль" (нет средней цены позиции);
+
+                                                // Для иных случаев средняя цена позиции не меняется;   
+
+
+            // Присвоение направления Сделке + Вычисление общего объема позиции;
+            if (num > 0)                               // Сделка покупка (Bay);
             {
-                // Сделка в лонг;
-                trade.Side = TypeTrade.Long;
-                tapeDeal = "Deal Bay >>> ";
-
-                _longAndShort = VolumeLots + num;
+                trade.Side = TypeTransaction.Bay;                        
+                _bayOrSell = VolumeLots + num;
             }
-            else if (num < 0)
+            else if (num < 0)                          // Сделка продажа (Sell);
             {
-                // Сделка в шорт;
-                trade.Side = TypeTrade.Short;
-                tapeDeal = "Deal Sell <<< ";
-
-                _longAndShort = VolumeLots + num;
+                trade.Side = TypeTransaction.Sell;
+                _bayOrSell = VolumeLots + num;
             }
-            else
+            else                                       // в иных случаях, num = 0 (нет сделки) "TypeTransaction.None";
             {
-                tapeDeal = "Deal Not ------ ";
-                // trade.Side = TypeTrade.None;
-                _longAndShort = VolumeLots;
+                _bayOrSell = VolumeLots;
             }
 
             trade.Volume = Math.Abs(num);
 
-            VolumeLots = _longAndShort;
+            VolumeLots = _bayOrSell;
 
 
             if (VolumeLots > 0)
             {
-                trade.Side = TypeTrade.Long;
+                trade.Position = TypeTrade.Long;
             }
             else if (VolumeLots < 0)
             {
-                trade.Side = TypeTrade.Short;
+                trade.Position = TypeTrade.Short;
             }
-            else { trade.Side = TypeTrade.None; }
+            else { trade.Position = TypeTrade.None; }
 
 
-            //string str1 = typeTrade.ToString() + "Volume = " + trade.Volume.ToString() + " / Price = " + trade.Price.ToString();
+            string str0 = $"Time: {dealTimeStr}";
+
+            string str1 = $"New transaction: {trade.Side}  / Volume = {trade.Volume.ToString()} / Price = {trade.Price.ToString()}";
+
+            string str2 = "Current position (lot) = " + VolumeLots + " / Trade Side = " + trade.Position;
+
+            string str3 = "Averege price position (all lots) = " + Math.Round(AveregePositionPrice, 2);
 
 
-            string str1 = tapeDeal + "Volume = " + trade.Volume.ToString() + " / Price = " + trade.Price.ToString();
-
-            string str2 = "Current position (lot) = " + VolumeLots + " Trade Side = " + trade.Side;
-
-            string str3 = "Averege price position (all lots) " + Math.Round(AveregePositionPrice, 2);
-
-
+            Console.WriteLine(str0);
             Console.WriteLine(str1);
             Console.WriteLine(str2);
             Console.WriteLine(str3);
