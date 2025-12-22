@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleHome
 {
+    /// <summary>
+    /// Класс управления отдельной сделкой (Шорт или Лонг);
+    /// </summary>
     public class Trade
     {
         public Trade()
@@ -28,29 +31,9 @@ namespace ConsoleHome
 
         public string Portfolio = "";
 
-        /// <summary>
-        /// Направление позиции (Long; None; Short).
-        /// </summary>
-        public enum TypeTrade 
-        {
-            Short =-1,
-            None = 0,
-            Long = 1
-        }
-        public TypeTrade Position = TypeTrade.None;
+        public TypeTransaction Side { get; set; }
 
-
-        /// <summary>
-        /// Направление сделки (Transaction): Sell (-1); None (0); Bay (1).
-        /// </summary>
-        public enum TypeTransaction
-        {
-            Sell = -1,
-            None = 0,
-            Bay = 1
-        }
-        public TypeTransaction Side = TypeTransaction.None;
-
+        public TypeTrade Position { get; set; }
 
         #endregion
         //----------------------------------------------- Fields ------------------------------
@@ -78,13 +61,6 @@ namespace ConsoleHome
         #endregion
         //----------------------------------------------- Properties ------------------------------
 
-        //----------------------------------------------- MyTransaction ------------------------------
-        #region MyTransaction
-
-
-
-        #endregion
-        //----------------------------------------------- MyTransaction ------------------------------
     }
 
 }
