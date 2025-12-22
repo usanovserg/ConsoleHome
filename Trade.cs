@@ -19,7 +19,7 @@ namespace ConsoleHome
         //----------------------------------------------- Fields ------------------------------
         #region Fields
         /// <summary>
-        /// Цена инструмента
+        /// Цена совершения новой сделки;
         /// </summary>
         public decimal Price = 0;
 

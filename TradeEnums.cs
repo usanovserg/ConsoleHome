@@ -24,7 +24,7 @@ namespace ConsoleHome
             {
                 Sell = -1,
                 None = 0,
-                Bay = 1
+                Buy = 1
             }
 }
 
