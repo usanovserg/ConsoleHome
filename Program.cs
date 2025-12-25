@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace MyConsole
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-
-            levels = new List<decimal>();
+            Position position = new Position();
+         /*   levels = new List<decimal>();
 
             WriteLine();
 
@@ -29,7 +29,7 @@ namespace MyConsole
 
             str = Console.ReadLine();
 
-            WriteLine();
+            WriteLine();*/
 
             Console.ReadLine();
 
