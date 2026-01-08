@@ -14,6 +14,26 @@ namespace MyConsole
         {
             Position position = new Position();
 
+            position.PositionChanged += (changeType) =>               // Подписка на событие (изменение позиции);
+            {
+                switch (changeType)
+                {
+                    case PositionChangeType.Changed:
+                        Console.WriteLine("Позиция изменилась:");
+                        break;
+                    case PositionChangeType.NotChanged:
+                        Console.WriteLine("Позиция не менялась:");
+                        break;
+                }
+            };
+
+
+            //// Подписка на событие изменения позиции
+            //position.ChangePos += () =>
+            //{
+            //    Console.WriteLine("Позиция изменилась");
+            //};
+
             /*
             levels = new List<Level>();
 

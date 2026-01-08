@@ -41,9 +41,7 @@ namespace ConsoleHome
         //----------------------------------------------- Properties ------------------------------
         #region Properties
 
-        /// <summary>
-        /// Объем сделки
-        /// </summary>
+        /// <summary> Объем сделки. </summary>
         public decimal Volume
         {
             get

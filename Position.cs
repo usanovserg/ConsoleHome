@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Transactions;
+using static ConsoleHome.Position;
 using Timer = System.Timers.Timer;
 
 
@@ -24,7 +25,7 @@ namespace ConsoleHome
             timer.Start();
         }
 
-        //----------------------------------------------- Fields ------------------------------
+        //----------------------------------------------- Fields (поля) ------------------------------
         #region Fields
         /// <summary> Код инструмента (тикер). </summary>
         public string TickerCode = "";
@@ -44,9 +45,15 @@ namespace ConsoleHome
         /// <summary> Гарантийное обеспечение на 1 лот для короткой позиции (Short). </summary>
         public decimal marginLotShort = 13000;
 
+        /// <summary> Делегат (изменение позиции). </summary>
+        public delegate void PositionChangeHandler(PositionChangeType changeType);
+
+        /// <summary> Событие (изменение позиции). </summary>
+        public event PositionChangeHandler PositionChanged;
+
 
         #endregion
-        //----------------------------------------------- Fields ------------------------------
+        //----------------------------------------------- Fields (поля) ------------------------------
 
         Random random = new Random();                                                       // Генерация новых сделок (случайно);
 
@@ -61,7 +68,7 @@ namespace ConsoleHome
 
             trade.Price = random.Next(70000, 80000);
 
-            int num = random.Next(-10, 10);
+            int number = random.Next(-10, 10);
 
             //----------------------------------------------- ФИН.РЕЗУЛЬТАТ ( PnL ) Begin ------------------------------
             #region PnL
@@ -70,27 +77,27 @@ namespace ConsoleHome
             decimal _oldVolume = VolumeLots;                                     // сохранение объёма Позиции до новой сделки;
             bool _wasShort = _oldVolume < 0;
             bool _wasLong = _oldVolume > 0;
-            bool _newDealBuy = (num > 0);
-            bool _newDealSell = (num < 0);
+            bool _newDealBuy = (number > 0);
+            bool _newDealSell = (number < 0);
                         
-            if (_wasShort && _newDealBuy && (VolumeLots + num) < 0)              // Случай 1: частичное закрытие SHORT (была позиция Short, сделка Buy, осталась позиция Short);
+            if (_wasShort && _newDealBuy && (VolumeLots + number) < 0)              // Случай 1: частичное закрытие SHORT (была позиция Short, сделка Buy, осталась позиция Short);
             {
-                decimal _closedVolume = num;                                     // Закрыто (num) лотов (при Buy сделке 0 положительное число);
+                decimal _closedVolume = number;                                     // Закрыто (num) лотов (при Buy сделке 0 положительное число);
                 pnl = (AveregePricePosition - trade.Price) * _closedVolume;
             }
             
-            else if (_wasLong && _newDealSell && (VolumeLots + num) > 0)         // Случай 2: частичное закрытие LONG (была Long, сделка Sell, осталась Long)
+            else if (_wasLong && _newDealSell && (VolumeLots + number) > 0)         // Случай 2: частичное закрытие LONG (была Long, сделка Sell, осталась Long)
             {
-                decimal _closedVolume = Math.Abs(num);                           // Закрыто (num) лотов (при Sell сделке - отрицательное число, берём по модулю);
+                decimal _closedVolume = Math.Abs(number);                           // Закрыто (num) лотов (при Sell сделке - отрицательное число, берём по модулю);
                 pnl = (trade.Price - AveregePricePosition) * _closedVolume;
             }
 
-            else if (_wasShort && _newDealBuy && num >= Math.Abs(_oldVolume))    // Случай 3: Переворот позиции Short в Long или закрытие всей Позиции Short (в ноль);
+            else if (_wasShort && _newDealBuy && number >= Math.Abs(_oldVolume))    // Случай 3: Переворот позиции Short в Long или закрытие всей Позиции Short (в ноль);
             {
                 decimal _closedVolume = Math.Abs(_oldVolume);                    // Закрыто (_oldVolume) лотов из Позиции Short - отрицательное число (берём по модулю);
                 pnl = (AveregePricePosition - trade.Price) * _closedVolume;
             }
-            else if (_wasLong && _newDealSell && Math.Abs(num) >= _oldVolume)    // Случай 4: Переворот позиции Long в Short или закрытие всей Позиции Long (в ноль);
+            else if (_wasLong && _newDealSell && Math.Abs(number) >= _oldVolume)    // Случай 4: Переворот позиции Long в Short или закрытие всей Позиции Long (в ноль);
             {
                 decimal _closedVolume = _oldVolume;                              // Закрыто (_oldVolume) лотов Long (положительное число - не нужен модуль);
                 pnl = (trade.Price - AveregePricePosition) * _closedVolume;
@@ -105,16 +112,16 @@ namespace ConsoleHome
             //----------------------------------------------- Средняя цена Позиции ( Averege Price Position ) Begin ----
             #region Averege Price Position
             // Расчет средней цены позиции;                                                                            
-            if ((VolumeLots >= 0 && num > 0) || (VolumeLots <= 0 && num < 0))               // Условие наращивания позиции Лонг или Шорт через новый объём (num);
+            if ((VolumeLots >= 0 && number > 0) || (VolumeLots <= 0 && number < 0))               // Условие наращивания позиции Лонг или Шорт через новый объём (num);
             {
                 AveregePricePosition = (Math.Abs(VolumeLots * AveregePricePosition) +       // Вычисление средней цены для ранее открытой позиции
-                  Math.Abs(num * trade.Price)) / (Math.Abs(VolumeLots) + Math.Abs(num));    // с увеличением лотов в такой позиции (без изменения направления позиции);
+                  Math.Abs(number * trade.Price)) / (Math.Abs(VolumeLots) + Math.Abs(number));    // с увеличением лотов в такой позиции (без изменения направления позиции);
             }
             
-            else if (num != 0 && Math.Abs(VolumeLots) < Math.Abs(num))                      // Объем текущей позиции (VolumeLots) меньше нового объема сделки (num), 
+            else if (number != 0 && Math.Abs(VolumeLots) < Math.Abs(number))                      // Объем текущей позиции (VolumeLots) меньше нового объема сделки (num), 
             { AveregePricePosition = trade.Price; }                                         // что позицию "переворачивает"(из Лонга в Шорт или наоборот)  - брать цену последней сделки;
 
-            else if ( (VolumeLots + num) == 0 )                                             // После добавления к объему текущей позиции (VolumeLots) нового объема сделки (num),
+            else if ( (VolumeLots + number) == 0 )                                             // После добавления к объему текущей позиции (VolumeLots) нового объема сделки (num),
             { AveregePricePosition = 0; }                                                   // позиция закрыта "в ноль" (нет средней цены позиции);
 
             // Для иных случаев средняя цена позиции не меняется;   
@@ -123,24 +130,24 @@ namespace ConsoleHome
 
 
             // Присвоение направления Сделке + Вычисление общего объема позиции;
-            if (num > 0)                               // Сделка покупка (Buy);
+            if (number > 0)                               // Сделка покупка (Buy);
             {
                 trade.Side = TypeTransaction.Buy;                        
-                _buyOrSell = VolumeLots + num;
+                _buyOrSell = VolumeLots + number;
             }
-            else if (num < 0)                          // Сделка продажа (Sell);
+            else if (number < 0)                          // Сделка продажа (Sell);
             {
                 trade.Side = TypeTransaction.Sell;
-                _buyOrSell = VolumeLots + num;
+                _buyOrSell = VolumeLots + number;
             }
             else                                       // в иных случаях, num = 0 (нет сделки) "TypeTransaction.None";
             {
                 _buyOrSell = VolumeLots;
             }
 
-            trade.Volume = Math.Abs(num);
+            trade.Volume = Math.Abs(number);
 
-            VolumeLots = _buyOrSell;
+            VolumeLots = _buyOrSell;                   // Новый размер позиции;
 
 
             if (VolumeLots > 0)
@@ -157,7 +164,10 @@ namespace ConsoleHome
             decimal currentMargin = 0;                                                            // Расчёт текущего гарантийного обеспечения для Позиции;
             if (VolumeLots > 0)       { currentMargin = VolumeLots * marginLotLong;}              // Для Позиции Long;
             else if (VolumeLots < 0)  { currentMargin = Math.Abs(VolumeLots) * marginLotShort;}   // Для Позиции Short;
-            // Если VolumeLots = 0, размер гарантийного обеспечения = 0;
+                                                                                                  // Если VolumeLots = 0, размер гарантийного обеспечения = 0;
+
+            PositionChangeType changeType = (number != 0) ? PositionChangeType.Changed : PositionChangeType.NotChanged;  // Обращение к enum (сведения об изменении позиции);
+            PositionChanged?.Invoke(changeType);                                                                         // Вызов события (изменение позиции или без изменения);
 
 
             string str0 = $"Data Time: {dealTimeStr}";
