@@ -45,11 +45,13 @@ namespace ConsoleHome
         /// <summary> Гарантийное обеспечение на 1 лот для короткой позиции (Short). </summary>
         public decimal marginLotShort = 13000;
 
-        /// <summary> Делегат (изменение позиции). </summary>
-        public delegate void PositionChangeHandler(PositionChangeType changeType);
+        public event EventHandler<PositionChangedEventArgs> PositionChanged;                // Встроенный делегат EventHandle<>;
 
-        /// <summary> Событие (изменение позиции). </summary>
-        public event PositionChangeHandler PositionChanged;
+        ///// <summary> Делегат (изменение позиции). </summary>                             // Первоначальный вариант (можно удалить);
+        //public delegate void PositionChangeHandler(PositionChangeType changeType);
+
+        ///// <summary> Событие (изменение позиции). </summary>
+        //public event PositionChangeHandler PositionChanged;
 
 
         #endregion
@@ -166,13 +168,17 @@ namespace ConsoleHome
             else if (VolumeLots < 0)  { currentMargin = Math.Abs(VolumeLots) * marginLotShort;}   // Для Позиции Short;
                                                                                                   // Если VolumeLots = 0, размер гарантийного обеспечения = 0;
 
-            PositionChangeType changeType = (number != 0) ? PositionChangeType.Changed : PositionChangeType.NotChanged;  // Обращение к enum (сведения об изменении позиции);
-            PositionChanged?.Invoke(changeType);                                                                         // Вызов события (изменение позиции или без изменения);
+            PositionChangeType changeType = (number != 0) ? PositionChangeType.Changed : PositionChangeType.NotChanged;
+            var args = new PositionChangedEventArgs(changeType, VolumeLots);
+            PositionChanged?.Invoke(this, args);   // this ссылается на текущий экземпляр, т.к. делегату EventHandle<> нужен sender, можно игнорировать(убрать) (не рекомендуется);
+
+            //PositionChangeType changeType = (number != 0) ? PositionChangeType.Changed : PositionChangeType.NotChanged;  // Обращение к enum (сведения об изменении позиции);
+            //PositionChanged?.Invoke(changeType);                                                                         // Вызов события (изменение позиции или без изменения);
 
 
             string str0 = $"Data Time: {dealTimeStr}";
 
-            string str1 = $"New transaction: {trade.Side}\t Volume = {trade.Volume}\t Price = {trade.Price:N0}";
+            string str1 = $"New transaction: {trade.Side}\t\t Volume transaction = {trade.Volume}\t Price transaction = {trade.Price:N0}";
 
             string str2 = "Current position (lot) = " + VolumeLots + "\t Trade Side = " + trade.Position;
 

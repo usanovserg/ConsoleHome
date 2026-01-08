@@ -14,25 +14,40 @@ namespace MyConsole
         {
             Position position = new Position();
 
-            position.PositionChanged += (changeType) =>               // Подписка на событие (изменение позиции);
+            position.PositionChanged += (sender, args) =>               
             {
-                switch (changeType)
+                if (args.ChangeType == PositionChangeType.Changed)                                     // Подписка на событие (изменение позиции);
                 {
-                    case PositionChangeType.Changed:
-                        Console.WriteLine("Позиция изменилась:");
-                        break;
-                    case PositionChangeType.NotChanged:
-                        Console.WriteLine("Позиция не менялась:");
-                        break;
+                    Console.WriteLine($"The position has changed.\tNew volume: {args.NewVolume}");     // Сообщение при изменении позиции;
+                }
+                else
+                {
+                    Console.WriteLine($"The position has not changed.\tVolume: {args.NewVolume}");     // Сообщение при неизменяемой позиции (number = 0);
                 }
             };
+                                                                                                       // Первоначальный вариант (можно удалить);
+            //position.PositionChanged += (changeType) =>            // Подписка на событие (изменение позиции);
+            //{
+            //    switch (changeType)
+            //    {
+            //        case PositionChangeType.Changed:
+            //            Console.WriteLine("Позиция изменилась:");
+            //            break;
+            //        case PositionChangeType.NotChanged:
+            //            Console.WriteLine("Позиция не менялась:");
+            //            break;
+            //    }
+            //};
 
+                                                                                                       // Первоначальный вариант (можно удалить);
 
             //// Подписка на событие изменения позиции
             //position.ChangePos += () =>
             //{
             //    Console.WriteLine("Позиция изменилась");
             //};
+
+
 
             /*
             levels = new List<Level>();
