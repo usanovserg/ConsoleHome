@@ -132,6 +132,9 @@ namespace ConsoleHome
             //----------------------------------------------- Средняя цена Позиции ( Averege Price Position ) End ------
 
 
+            //----------------------------------------------- Объем и направление Позиции ( Volume, Side and Margin Position ) Begin ----
+            #region Volume, Side, Margin Position
+
             // Присвоение направления Позиции + Вычисление общего объема позиции;
             if (number > 0)                               // Сделка покупка (Buy);
             {
@@ -164,50 +167,78 @@ namespace ConsoleHome
             }
             else { trade.Position = SidePosition.None; }
 
-
-            
             decimal currentMargin = 0;                                                            // Расчёт текущего гарантийного обеспечения для Позиции;
             if (VolumeLots > 0)       { currentMargin = VolumeLots * marginLotLong;}              // Для Позиции Long;
             else if (VolumeLots < 0)  { currentMargin = Math.Abs(VolumeLots) * marginLotShort;}   // Для Позиции Short;
                                                                                                   // Если VolumeLots = 0, размер гарантийного обеспечения = 0;
 
-
-                                                                                       // Сведения об изменении позиции (через Событие);
-            PositionChangeType changeType = (number != 0) ?
-                PositionChangeType.Changed : PositionChangeType.NotChanged;            
-
-            var args = new PositionChangedEventArgs(changeType, VolumeLots);           
-            PositionChanged?.Invoke(this, args);                                       // this ссылается на текущий экземпляр, т.к. делегату EventHandle<> нужен sender,
-                                                                                       // можно игнорировать (убрать) (не рекомендуется);
+            #endregion
+            //----------------------------------------------- Объем и направление Позиции ( Volume, Side and Margin Position ) End ------
 
 
-            //PositionChangeType changeType = (number != 0) ? PositionChangeType.Changed : PositionChangeType.NotChanged;  // Обращение к enum (сведения об изменении позиции);
-            //PositionChanged?.Invoke(changeType);                                                                         // Вызов события (изменение позиции или без изменения);
+            // Создание событий;
+            var args = new PositionChangedEventArgs(
+                changeType: (number != 0) ? PositionChangeType.Changed : PositionChangeType.NotChanged,
+                newVolume: VolumeLots,
+                averagePrice: AveregePricePosition,
+                initialMargin: currentMargin,
+                pnl: pnl,
+                totalPnl: fixTotalPnL,
+                tradeSide: trade.Side,
+                tradeVolume: trade.Volume,
+                tradePrice: trade.Price,
+                dealTime: dealTimeStr
+            );
+
+            // Вызов событий;
+            PositionChanged?.Invoke(this, args);
 
 
-            string str0 = $"Data Time: {dealTimeStr}";
-
-            string str1 = $"New transaction: {trade.Side}\t\t Volume transaction = {trade.Volume}\t Price transaction = {trade.Price:N0}";
-
-            string str2 = "Current position (lot) = " + VolumeLots + "\t Trade Side = " + trade.Position;
-
-            string str3 = $"Averege price position (all lots) = {AveregePricePosition:N}";
-
-            string str4 = $"Initial Margin (IM): {currentMargin:N0}";
-
-            string str5 = $"PnL from trade: {pnl:N2}";
-
-            string str6 = $"Fixed total PnL: {fixTotalPnL:N2}";
 
 
-            Console.WriteLine(str0);
-            Console.WriteLine(str1);
-            Console.WriteLine(str2);
-            Console.WriteLine(str3);
-            Console.WriteLine(str4);
-            Console.WriteLine(str5);
-            Console.WriteLine(str6);
-            Console.WriteLine();
+
+
+
+
+
+
+
+            //                                                                           // Сведения об изменении позиции (через Событие);
+            //PositionChangeType changeType = (number != 0) ?
+            //    PositionChangeType.Changed : PositionChangeType.NotChanged;            
+
+            //var args = new PositionChangedEventArgs(changeType, VolumeLots);           
+            //PositionChanged?.Invoke(this, args);                                       // this ссылается на текущий экземпляр, т.к. делегату EventHandle<> нужен sender,
+            //                                                                           // можно игнорировать (убрать) (не рекомендуется);
+
+
+            ////PositionChangeType changeType = (number != 0) ? PositionChangeType.Changed : PositionChangeType.NotChanged;  // Обращение к enum (сведения об изменении позиции);
+            ////PositionChanged?.Invoke(changeType);                                                                         // Вызов события (изменение позиции или без изменения);
+
+
+            //string str0 = $"Data Time: {dealTimeStr}";
+
+            //string str1 = $"New transaction: {trade.Side}\t\t Volume transaction = {trade.Volume}\t Price transaction = {trade.Price:N0}";
+
+            //string str2 = "Current position (lot) = " + VolumeLots + "\t Trade Side = " + trade.Position;
+
+            //string str3 = $"Averege price position (all lots) = {AveregePricePosition:N}";
+
+            //string str4 = $"Initial Margin (IM): {currentMargin:N0}";
+
+            //string str5 = $"PnL from trade: {pnl:N2}";
+
+            //string str6 = $"Fixed total PnL: {fixTotalPnL:N2}";
+
+
+            //Console.WriteLine(str0);
+            //Console.WriteLine(str1);
+            //Console.WriteLine(str2);
+            //Console.WriteLine(str3);
+            //Console.WriteLine(str4);
+            //Console.WriteLine(str5);
+            //Console.WriteLine(str6);
+            //Console.WriteLine();
         }
     }
 }

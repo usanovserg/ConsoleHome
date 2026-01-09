@@ -15,18 +15,51 @@ namespace MyConsole
         {
             Position position = new Position();
 
-            position.PositionChanged += (sender, args) =>               
+            // Подписка на события;
+            position.PositionChanged += (sender, args) =>
             {
-                if (args.ChangeType == PositionChangeType.Changed)                                     // Подписка на событие (изменение позиции);
+                // Здесь вывод данных о позиции на консоль (по подписке на события);
+                Console.WriteLine($"\t Data Time: {args.DealTime}");                                                     // Время новой сделки;
+                Console.WriteLine($"New transaction: {args.TradeSide}" +                                                 // Направление новой сделки (покупка, продажа);
+                    $" \nVolume new transaction = {args.TradeVolume} \t Price new transaction = {args.TradePrice:N0}");  // Объем и Цена новой сделки;
+
+                if (args.ChangeType == PositionChangeType.Changed)
                 {
-                    Console.WriteLine($"The position has changed.\tNew volume: {args.NewVolume}");     // Сообщение при изменении позиции;
+                    Console.WriteLine($"The position has changed. \tNew volume position (lot): {args.NewVolume}");     // Сообщение при изменении позиции;
                 }
                 else
                 {
-                    Console.WriteLine($"The position has not changed.\tVolume: {args.NewVolume}");     // Сообщение при неизменяемой позиции (number = 0);
+                    Console.WriteLine($"The position has not changed. \tVolume position (lot): {args.NewVolume}");     // Сообщение при неизменяемой позиции (number = 0);
                 }
+
+                Console.WriteLine($"Trade Side = {(args.NewVolume > 0 ? SidePosition.Long : args.NewVolume < 0 ? SidePosition.Short : SidePosition.None)}");
+                Console.WriteLine($"Averege price position (all lots) = {args.AveragePrice:N}");                       // Средняя цена открытия позиции;
+                Console.WriteLine($"Initial Margin (IM): {args.InitialMargin:N0}");                                    // Размер ГО на текущую позицию;
+                Console.WriteLine($"PnL from trade: {args.PnL:N2}");                                                   // Фиксированная прибыль/убыток на часть закрытой позиции;
+                Console.WriteLine($"Fixed total PnL: {args.TotalPnL:N2}");                                             // Фиксированная прибыль/убыток (накопительно);
+                Console.WriteLine();
             };
-                                                                                                       // Первоначальный вариант (можно удалить);
+
+
+
+
+
+            //position.PositionChanged += (sender, args) =>                                       // Второй вариант (можно удалить);
+            //{
+            //    if (args.ChangeType == PositionChangeType.Changed)                                     // Подписка на событие (изменение позиции);
+            //    {
+            //        Console.WriteLine($"The position has changed.\tNew volume: {args.NewVolume}");     // Сообщение при изменении позиции;
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine($"The position has not changed.\tVolume: {args.NewVolume}");     // Сообщение при неизменяемой позиции (number = 0);
+            //    }
+            //};
+
+
+
+
+            // Первоначальный вариант (можно удалить);
             //position.PositionChanged += (changeType) =>            // Подписка на событие (изменение позиции);
             //{
             //    switch (changeType)
@@ -40,7 +73,7 @@ namespace MyConsole
             //    }
             //};
 
-                                                                                                       // Первоначальный вариант (можно удалить);
+            // Первоначальный вариант (можно удалить);
 
             //// Подписка на событие изменения позиции
             //position.ChangePos += () =>
