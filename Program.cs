@@ -1,4 +1,5 @@
 ﻿using ConsoleHome;
+using ConsoleHome.Enums;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;

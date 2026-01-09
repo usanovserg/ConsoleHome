@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome.Enums;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace ConsoleHome
         {
             
         }
-        //----------------------------------------------- Fields ------------------------------
+        //----------------------------------------------- Fields (поля) Begin ------------------------------
         #region Fields
         /// <summary>
         /// Цена совершения новой сделки;
@@ -31,14 +32,14 @@ namespace ConsoleHome
 
         public string Portfolio = "";
 
-        public TypeTransaction Side { get; set; }
+        public SideTransaction Side { get; set; }
 
-        public TypeTrade Position { get; set; }
+        public SidePosition Position { get; set; }
 
         #endregion
-        //----------------------------------------------- Fields ------------------------------
+        //----------------------------------------------- Fields (поля) End ------------------------------
 
-        //----------------------------------------------- Properties ------------------------------
+        //----------------------------------------------- Properties Begin ------------------------------
         #region Properties
 
         /// <summary> Объем сделки. </summary>
@@ -57,7 +58,7 @@ namespace ConsoleHome
         decimal _volume = 0;
 
         #endregion
-        //----------------------------------------------- Properties ------------------------------
+        //----------------------------------------------- Properties End ------------------------------
 
     }
 

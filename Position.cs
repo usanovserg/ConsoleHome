@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,7 @@ namespace ConsoleHome
             timer.Start();
         }
 
-        //----------------------------------------------- Fields (поля) ------------------------------
+        //----------------------------------------------- Fields (поля) Begin ------------------------------
         #region Fields
         /// <summary> Код инструмента (тикер). </summary>
         public string TickerCode = "";
@@ -45,7 +46,7 @@ namespace ConsoleHome
         /// <summary> Гарантийное обеспечение на 1 лот для короткой позиции (Short). </summary>
         public decimal marginLotShort = 13000;
 
-        public event EventHandler<PositionChangedEventArgs> PositionChanged;                // Встроенный делегат EventHandle<>;
+        public event EventHandler<PositionChangedEventArgs> PositionChanged;                // Встроенный делегат EventHandler<>;
 
         ///// <summary> Делегат (изменение позиции). </summary>                             // Первоначальный вариант (можно удалить);
         //public delegate void PositionChangeHandler(PositionChangeType changeType);
@@ -55,7 +56,7 @@ namespace ConsoleHome
 
 
         #endregion
-        //----------------------------------------------- Fields (поля) ------------------------------
+        //----------------------------------------------- Fields (поля) End ------------------------------
 
         Random random = new Random();                                                       // Генерация новых сделок (случайно);
 
@@ -131,15 +132,15 @@ namespace ConsoleHome
             //----------------------------------------------- Средняя цена Позиции ( Averege Price Position ) End ------
 
 
-            // Присвоение направления Сделке + Вычисление общего объема позиции;
+            // Присвоение направления Позиции + Вычисление общего объема позиции;
             if (number > 0)                               // Сделка покупка (Buy);
             {
-                trade.Side = TypeTransaction.Buy;                        
+                trade.Side = SideTransaction.Buy;                        
                 _buyOrSell = VolumeLots + number;
             }
             else if (number < 0)                          // Сделка продажа (Sell);
             {
-                trade.Side = TypeTransaction.Sell;
+                trade.Side = SideTransaction.Sell;
                 _buyOrSell = VolumeLots + number;
             }
             else                                       // в иных случаях, num = 0 (нет сделки) "TypeTransaction.None";
@@ -151,16 +152,18 @@ namespace ConsoleHome
 
             VolumeLots = _buyOrSell;                   // Новый размер позиции;
 
-
+            
+            // Присвоение направления Позиции (общая позиция);
             if (VolumeLots > 0)
             {
-                trade.Position = TypeTrade.Long;
+                trade.Position = SidePosition.Long;
             }
             else if (VolumeLots < 0)
             {
-                trade.Position = TypeTrade.Short;
+                trade.Position = SidePosition.Short;
             }
-            else { trade.Position = TypeTrade.None; }
+            else { trade.Position = SidePosition.None; }
+
 
             
             decimal currentMargin = 0;                                                            // Расчёт текущего гарантийного обеспечения для Позиции;
@@ -168,9 +171,15 @@ namespace ConsoleHome
             else if (VolumeLots < 0)  { currentMargin = Math.Abs(VolumeLots) * marginLotShort;}   // Для Позиции Short;
                                                                                                   // Если VolumeLots = 0, размер гарантийного обеспечения = 0;
 
-            PositionChangeType changeType = (number != 0) ? PositionChangeType.Changed : PositionChangeType.NotChanged;
-            var args = new PositionChangedEventArgs(changeType, VolumeLots);
-            PositionChanged?.Invoke(this, args);   // this ссылается на текущий экземпляр, т.к. делегату EventHandle<> нужен sender, можно игнорировать(убрать) (не рекомендуется);
+
+                                                                                       // Сведения об изменении позиции (через Событие);
+            PositionChangeType changeType = (number != 0) ?
+                PositionChangeType.Changed : PositionChangeType.NotChanged;            
+
+            var args = new PositionChangedEventArgs(changeType, VolumeLots);           
+            PositionChanged?.Invoke(this, args);                                       // this ссылается на текущий экземпляр, т.к. делегату EventHandle<> нужен sender,
+                                                                                       // можно игнорировать (убрать) (не рекомендуется);
+
 
             //PositionChangeType changeType = (number != 0) ? PositionChangeType.Changed : PositionChangeType.NotChanged;  // Обращение к enum (сведения об изменении позиции);
             //PositionChanged?.Invoke(changeType);                                                                         // Вызов события (изменение позиции или без изменения);
