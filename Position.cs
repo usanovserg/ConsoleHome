@@ -1,8 +1,11 @@
 ﻿using ConsoleHome;
+using MyConsole;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,8 +13,8 @@ namespace ConsoleHome
 {
     public enum PositionType
     {
-         Buy,
-         Sell
+        Buy,
+        Sell
 
     }
 
@@ -26,15 +29,18 @@ namespace ConsoleHome
         MarginCall,
         Expiration
     }
-    
+
     public class Position
     {
+        // Начало Класса Position "Позиция"
+        #region Position
+
         // ==================================== Идентификация ====================================
         public long Ticket  // главный ключ, по которому робот находит, модифицирует (двигает стоп-лосс) или закрывает конкретную сделку на стороне брокера
         {
-            get; 
+            get;
 
-            set; 
+            set;
         }
 
         public string Symbol // Наименование торгуемого инструмента
@@ -192,22 +198,22 @@ namespace ConsoleHome
         }
 
         // ==================================== Вычисляемая чистая прибыль ====================================
-       /* public decimal NetProfit // Общая прибыль
-        {
-            get
-            {
-                if (!IsClosed && CurrentPrice == 0) 
-                    return 0;
+        /* public decimal NetProfit // Общая прибыль
+         {
+             get
+             {
+                 if (!IsClosed && CurrentPrice == 0) 
+                     return 0;
 
-                decimal price = IsClosed ? ClosePrice.Value : CurrentPrice;
-                decimal grossProfit = CalculateGrossProfit(price);
+                 decimal price = IsClosed ? ClosePrice.Value : CurrentPrice;
+                 decimal grossProfit = CalculateGrossProfit(price);
 
-                // Формула: Валовая прибыль - Комиссия - Своп
-                return grossProfit - Commission - Swap;
-            }
-        }
-       */
-        
+                 // Формула: Валовая прибыль - Комиссия - Своп
+                 return grossProfit - Commission - Swap;
+             }
+         }
+        */
+
         private decimal CalculateGrossProfit(decimal closePrice)
         {
             decimal diff;
@@ -256,9 +262,10 @@ namespace ConsoleHome
             }
         }
 
-        
+
         private Position() { }
 
+        public static void Print() => Console.WriteLine("Welcome");
 
         public static Position CreateNewPosition(
            long ticket,
@@ -316,10 +323,91 @@ namespace ConsoleHome
             Console.WriteLine(new string('-', 50));
         }
 
-        
+
+
+
+        // Конец Класса Position "Позиция"
+        #endregion Position
+    }
+
+    public class Connector
+    {
+        // Начало Класса Connector "Соединение"
+        #region Connector
+
+        public delegate void newTradeEvent();          // Создаем тип "Уведомления"
+        public event newTradeEvent NewTradeEvent;      // Создаем событие на основе шаблона
+
+        public List<Trade> Trades = new List<Trade>(); // Списаок всех заказов (Сделок)
+
+        public decimal CurrentPrice { get; private set; }
+
+        private void NewTrade(Trade trade)  // Метод о появлении нового заказа (сделки)
+        {
+            Trades.Add(trade);              // Добавляем (записываем) торговую сделку (заказ)
+
+            NewTradeEvent();                // Событие. Уведомление всех, кто подписан на событие. (Все реагируют одновременно, но каждый делает свое дело)
+
+        }
+
+        public void Connect()
+        {
+            Console.Write("Connect is ExChange");
+        }
+
+
+
+
+
+
+        public class PositionEventArgs(string msg, decimal price, decimal profit, long ticket, string symbol, decimal oldprice, decimal newprice) : EventArgs
+        // Объявляем событие. Наследуем от базового класса событий
+        {
+
+            public long Ticket                  // Тикет. (запрос, заявка)
+            { get; } = ticket;
+
+            public string Symbol                // Название инструмента
+            { get; } = symbol;
+
+            public decimal OldPrice             // Старая Цена
+            { get; } = oldprice;
+
+            public decimal NewPrice             // Новая Цена
+            { get; } = newprice;
+
+            public decimal Profit               // Прибыль
+            { get; } = profit;
+
+            public DateTime Time                // Время
+            { get; } = DateTime.Now;
+
+            public string Message               // место для сообщения (текст), комментарий
+            { get; } = msg;
+
+        }
+
+
+    
+    #endregion Connector
+    
+    void DisplayMessage(Position sender, PositionEventArgs e)  // расшифоровка по словам: Метод(функция); ничего не возращает; Имя метода(функции); Кто вызвал событие; Данные события)
+        {
+            Console.WriteLine($"Тикет: {e.Ticket}");
+            Console.WriteLine($"Инструмент: {e.Symbol}");
+            Console.WriteLine($"Старая цена: {e.OldPrice}");
+            Console.WriteLine($"Новая цена: {e.NewPrice}");
+            Console.WriteLine($"Прибыль: {e.Profit}");
+            Console.WriteLine($"Время: {e.Time}");
+            Console.WriteLine($"Комментарий: {e.Message}");
+
+            //Ссылка, параметры из метода "class PositionEventArgs"
+        }
 
     }
 }
+
+    
 
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleHome;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,11 @@ namespace MyConsole
     {
         static void Main(string[] args)
         {
+            Connector.Connect();
+
+
+
+
 
             levels = new List<decimal>();
 
@@ -47,6 +53,9 @@ namespace MyConsole
         static decimal priceLevel = priceUp;
 
         static decimal stepLevel;
+
+
+
         //=============================
 
         static Trade trade = new Trade();
@@ -125,6 +134,8 @@ namespace MyConsole
         //Создан класс Trade. 
         //Создан класс Position.
         
+
+
        
     }
 
