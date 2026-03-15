@@ -400,6 +400,7 @@ namespace ConsoleHome
             Console.WriteLine($"Прибыль: {e.Profit}");
             Console.WriteLine($"Время: {e.Time}");
             Console.WriteLine($"Комментарий: {e.Message}");
+            Console.WriteLine("Позиция изменилась!");
 
             //Ссылка, параметры из метода "class PositionEventArgs"
         }
